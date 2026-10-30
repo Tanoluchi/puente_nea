@@ -1,0 +1,135 @@
+/* Automatización, "estación de pedidos": built by figures/auto/build.mjs with the Anatomy kit (MIT) */
+  .pa-au.iso[data-theme="light"] {
+    --anatomy-paper: var(--cream); --anatomy-card: var(--cream); --anatomy-text: var(--ink-2); --anatomy-strong: var(--ink); --anatomy-muted: var(--ink-2);
+    --anatomy-face: #fff; --anatomy-top: #fff;
+    --anatomy-shade-0: color-mix(in srgb, var(--ink) 14%, var(--cream)); --anatomy-shade-1: color-mix(in srgb, var(--ink) 9%, var(--cream));
+    --anatomy-shade-2: color-mix(in srgb, var(--ink) 5%, var(--cream)); --anatomy-shade-3: color-mix(in srgb, var(--ink) 2%, var(--cream));
+    --anatomy-hi: color-mix(in srgb, var(--ink) 62%, transparent); --anatomy-mid: color-mix(in srgb, var(--ink) 42%, transparent); --anatomy-lo: color-mix(in srgb, var(--ink) 28%, transparent);
+    --anatomy-faint: color-mix(in srgb, var(--ink) 14%, transparent); --anatomy-lit: var(--terra); --anatomy-halo: var(--petrol); --anatomy-halo-opacity: .2; --anatomy-dot: var(--ink);
+    --anatomy-mono: var(--mono); --anatomy-weight: .6px;
+  }
+  .pam-paper { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #FFFDF7); --anatomy-top: #FFFFFF; --anatomy-shade-3: color-mix(in srgb, white 12%, #FFFDF7); --anatomy-shade-2: #FFFDF7; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #FFFDF7); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #FFFDF7); }
+  .pam-bank { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #E2CFAE); --anatomy-top: var(--paper); --anatomy-shade-3: color-mix(in srgb, white 12%, #E2CFAE); --anatomy-shade-2: #E2CFAE; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #E2CFAE); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #E2CFAE); }
+  .pam-petrol { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, var(--petrol)); --anatomy-top: color-mix(in srgb, white 22%, var(--petrol)); --anatomy-shade-3: color-mix(in srgb, white 12%, var(--petrol)); --anatomy-shade-2: var(--petrol); --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, var(--petrol)); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, var(--petrol)); }
+  .pam-ink { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #2A3A40); --anatomy-top: #3A4C53; --anatomy-shade-3: color-mix(in srgb, white 12%, #2A3A40); --anatomy-shade-2: #2A3A40; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #2A3A40); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #2A3A40); }
+  .pam-cream { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); --anatomy-top: var(--cream); --anatomy-shade-3: color-mix(in srgb, white 12%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); --anatomy-shade-2: color-mix(in srgb, var(--petrol) 6%, var(--cream)); --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); }
+  .pam-sun { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #F08A3A); --anatomy-top: #F5A361; --anatomy-shade-3: color-mix(in srgb, white 12%, #F08A3A); --anatomy-shade-2: #F08A3A; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #F08A3A); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #F08A3A); }
+  .pam-kraft { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #C99A5E); --anatomy-top: #DDB57F; --anatomy-shade-3: color-mix(in srgb, white 12%, #C99A5E); --anatomy-shade-2: #C99A5E; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #C99A5E); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #C99A5E); }
+  #fig-flow { display: flex; flex-direction: column; overflow: hidden; background:
+    radial-gradient(46% 30% at 40% 30%, color-mix(in srgb, #F08A3A 13%, transparent), transparent 72%),
+    linear-gradient(to bottom, var(--cream) 0%, var(--cream) 50%, color-mix(in srgb, var(--paper) 70%, var(--cream)) 100%); }
+  #fig-flow .pa-au { flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; background: transparent; min-width: 0; }
+  #fig-flow .flow-foot { flex-wrap: wrap; }
+  #fig-flow .counter { flex: 1 1 220px; color: var(--ink); line-height: 1.45; }
+  #fig-flow .pa-ctl { display: flex; align-items: center; gap: 6px 14px; flex-wrap: wrap; justify-content: flex-end; margin-left: auto; }
+  #fig-flow .mini { white-space: nowrap; flex: none; }
+  #fig-flow .pa-alt { min-height: 44px; padding: 0 2px; background: none; border: 0; color: var(--terra-ink); font: 600 14px/1.2 var(--sans); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; border-radius: 6px; }
+  #fig-flow .pa-alt:hover { color: var(--terra); }
+  #fig-flow .pa-alt:focus-visible, #fig-flow .mini:focus-visible { outline: 2px solid var(--terra); outline-offset: 3px; }
+  /* order card: entry and result */
+  .pa-order { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 9px 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 18px -14px rgba(30,42,47,.5); font: 14px/1.35 var(--sans); color: var(--ink); transition: transform .5s var(--ease, ease-out), opacity .5s ease-out, border-color .3s; }
+  .pa-au[data-phase="enter"] .pa-order { animation: pa-in .6s var(--ease, ease-out) both; }
+  @keyframes pa-in { from { opacity: 0; transform: translateX(-18px); } }
+  .pa-order-src { font: 600 12px/1 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
+  .pa-order-line { flex: 1 1 auto; }
+  .pa-order-line strong { font-weight: 700; }
+  .pa-order-checks { display: flex; gap: 6px; }
+  .pa-tick { font: 600 12px/1 var(--mono); padding: 5px 8px; border-radius: 999px; background: var(--paper); color: var(--ink-2); transition: background .25s, color .25s; }
+  .pa-tick::after { content: " ○"; }
+  .pa-tick[data-on] { background: var(--terra); color: #fff; }
+  .pa-tick[data-on]::after { content: "\00a0✓"; }
+  .pa-au[data-phase="paused"] .pa-order { border-color: var(--terra); }
+  .pa-au[data-phase="paused"] .pa-tick::after { content: " –"; }
+  /* stage and gate verdict */
+  .pa-stage { position: relative; margin: 0 -10px; }
+  .pa-check { position: absolute; transform: translate(-8%, calc(-100% - 6px)); display: grid; gap: 3px; padding: 6px 9px; background: rgba(255,255,255,.94); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 16px -12px rgba(30,42,47,.55); font: 600 12px/1.25 var(--sans); color: var(--ink); white-space: nowrap; pointer-events: none; transition: border-color .25s; }
+  .pa-check-flag { display: none; margin: -6px -9px 2px; padding: 5px 9px; border-radius: 9px 9px 0 0; background: var(--terra); color: #fff; font-weight: 700; }
+  .pa-check-flag::before { content: "⚠ "; }
+  .pa-check[data-bad] { border-color: var(--terra); }
+  .pa-check[data-bad] .pa-check-flag { display: block; }
+  .pa-check-row { display: flex; align-items: center; gap: 6px; color: var(--ink-2); }
+  .pa-check-row i { width: 9px; height: 9px; border-radius: 50%; background: color-mix(in srgb, var(--petrol) 30%, var(--cream)); flex: none; }
+  .pa-check-row[data-state="scan"] i { background: var(--river); box-shadow: 0 0 0 3px color-mix(in srgb, var(--river) 45%, transparent); }
+  .pa-check-row[data-state="ok"] { color: var(--ink); }
+  .pa-check-row[data-state="ok"] i { background: #3F8F5F; }
+  .pa-check-row[data-state="ok"] [data-row-text]::after { content: "\00a0✓"; color: #3F8F5F; }
+  .pa-check-row[data-state="bad"] { color: var(--terra-ink); }
+  .pa-check-row[data-state="bad"] i { background: #F08A3A; box-shadow: 0 0 0 3px color-mix(in srgb, #F08A3A 35%, transparent); }
+  .pa-check-row[data-state="bad"] [data-row-text]::after { content: "\00a0✗"; }
+  /* the three actions */
+  .pa-acts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .pa-act { display: grid; gap: 2px; align-content: start; padding: 8px 10px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.6); transition: background .3s, border-color .3s; }
+  .pa-act-name { font: 700 14px/1.2 var(--sans); color: var(--ink-2); }
+  .pa-act-detail { font: 600 12px/1.3 var(--mono); color: var(--ink-2); }
+  .pa-act[data-on] { background: color-mix(in srgb, var(--terra) 10%, #fff); border-color: var(--terra); }
+  .pa-act[data-on] .pa-act-name { color: var(--terra-ink); }
+  .pa-act[data-on] .pa-act-name::after { content: "\00a0✓"; }
+  .pa-act[data-on] .pa-act-detail { color: var(--ink); }
+  .pa-au[data-phase="paused"] .pa-act { opacity: .55; }
+  /* svg parts */
+  .pa-svg { touch-action: pan-y; }
+  .pa-au .pa-sun { fill: #F08A3A; opacity: .85; }
+  .pa-au .pa-sun-glow { fill: #F08A3A; opacity: .1; }
+  .pa-au .pa-slab-word { fill: var(--terra-ink); font-weight: 700; letter-spacing: .1em; }
+  .pa-au .pa-screen { fill: var(--petrol); }
+  .pa-au .pa-chat-in { fill: color-mix(in srgb, var(--river) 70%, #fff); }
+  .pa-au .pa-chat { fill: #8CC59A; }
+  .pa-au .pa-chat-row { fill: #fff; opacity: .85; }
+  .pa-au .pa-badge { fill: var(--terra); stroke: #fff; stroke-width: .6px; vector-effect: non-scaling-stroke; transition: r .2s; }
+  .pa-au .pa-roller { stroke: color-mix(in srgb, var(--cream) 22%, transparent); }
+  .pa-au .pa-run { fill: none; stroke: var(--cream); stroke-opacity: .28; stroke-width: 1.2px; stroke-dasharray: 3 5; stroke-linecap: round; transition: stroke-opacity .3s, stroke .3s; }
+  .pa-au[data-run] .pa-run { stroke: #F5A361; stroke-opacity: .95; animation: pa-belt .6s linear infinite; }
+  @keyframes pa-belt { to { stroke-dashoffset: -8; } }
+  .pa-au[data-off] .pa-run { animation-play-state: paused; }
+  .pa-au .pa-curtain { fill: var(--river); opacity: 0; transition: opacity .2s; }
+  .pa-au[data-scan] .pa-curtain { opacity: .45; }
+  .pa-au .pa-lamp { fill: color-mix(in srgb, var(--petrol) 40%, var(--cream)); stroke: var(--cream); stroke-width: .8px; vector-effect: non-scaling-stroke; transition: fill .2s; }
+  .pa-au .pa-lamp-glow { fill: #3F8F5F; opacity: 0; transition: opacity .25s, fill .2s; }
+  .pa-au .pa-lamp[data-state="scan"] { fill: var(--river); }
+  .pa-au .pa-lamp[data-state="ok"] { fill: #5FBF82; }
+  .pa-au .pa-lamp-glow[data-state="ok"] { opacity: .35; }
+  .pa-au .pa-lamp[data-state="bad"] { fill: #F08A3A; }
+  .pa-au .pa-lamp-glow[data-state="bad"] { fill: #F08A3A; opacity: .5; animation: pa-blink 1s steps(2, jump-none) infinite; }
+  @keyframes pa-blink { 50% { opacity: .1; } }
+  .pa-au .pa-flag path { fill: var(--terra); stroke: var(--terra-ink); stroke-width: .6px; vector-effect: non-scaling-stroke; }
+  .pa-au .pa-flag { opacity: 0; transition: opacity .25s; }
+  .pa-au[data-phase="paused"] .pa-flag { opacity: 1; }
+  .pa-au .pa-band { fill: var(--terra); stroke: none; }
+  .pa-au .pa-pad .iso-top { transition: fill .3s; }
+  .pa-au .pa-pad[data-on] .iso-top { fill: color-mix(in srgb, var(--terra) 70%, #fff); }
+  .pa-au .pa-pad[data-on] .iso-edge { stroke: var(--terra-ink); }
+  .pa-tape { stroke: color-mix(in srgb, #C99A5E 55%, var(--ink)); stroke-width: 1px; }
+  .pa-au .pa-window { fill: var(--ink); }
+  .pa-au .pa-count { fill: var(--cream); font-family: var(--mono); font-weight: 700; transition: fill .2s; }
+  .pa-au .pa-count[data-on] { fill: #F5A361; }
+  .pa-au .pa-count-u { fill: var(--cream); opacity: .7; font-family: var(--mono); }
+  .pa-au .pa-slot { fill: var(--ink); opacity: .8; stroke: none; }
+  .pa-au .pa-dot { fill: color-mix(in srgb, var(--petrol) 40%, var(--cream)); transition: fill .2s; }
+  .pa-au .pa-dot[data-on] { fill: #5FBF82; }
+  .pa-au .pa-slip { fill: #fff; stroke: var(--anatomy-hi); stroke-width: .6px; vector-effect: non-scaling-stroke; }
+  .pa-au .pa-slip-word { fill: var(--ink); font-family: var(--mono); font-weight: 700; letter-spacing: .04em; }
+  .pa-au .pa-slip-small { fill: var(--ink-2); font-family: var(--mono); font-weight: 600; }
+  .pa-au .pa-slip-row { fill: var(--ink); opacity: .22; }
+  .pa-au .pa-alert-lamp { fill: color-mix(in srgb, var(--petrol) 55%, var(--cream)); stroke: var(--cream); stroke-width: .8px; vector-effect: non-scaling-stroke; transition: fill .2s; }
+  .pa-au .pa-alert-lamp[data-on] { fill: var(--terra); }
+  .pa-au .pa-alert-glow { fill: #F08A3A; opacity: 0; transition: opacity .3s; }
+  .pa-au .pa-alert-glow[data-on] { opacity: .4; }
+  .pa-au .pa-bell { fill: var(--cream); }
+  .pa-au .pa-board-strip { fill: color-mix(in srgb, var(--petrol) 60%, var(--cream)); transition: fill .2s; }
+  .pa-au .pa-board-strip[data-on] { fill: var(--cream); }
+  .pa-au .pa-beacon { opacity: .55; transition: opacity .3s; }
+  .pa-au .pa-beacon[data-on] { opacity: 1; }
+  .pa-au .pa-ok { transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; transition: transform .35s cubic-bezier(.3,1.6,.5,1), opacity .2s; }
+  .pa-au .pa-ok[data-on] { transform: scale(1); opacity: 1; }
+  .pa-au .pa-ok circle { fill: var(--terra); stroke: #fff; stroke-width: 1.4px; vector-effect: non-scaling-stroke; }
+  .pa-au .pa-ok path { fill: none; stroke: #fff; stroke-width: 2.2px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .pa-au .pa-pulse circle { fill: var(--terra); }
+  .pa-au .pa-pulse-head { stroke: #fff; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+  @media (max-width: 560px) {
+    .pa-stage { margin: 0 -16px; }
+    .pa-order { padding: 8px 10px; gap: 6px 10px; }
+    .pa-acts { gap: 6px; }
+    .pa-act { padding: 7px 8px; }
+    .pa-act-name { font-size: 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .pa-au *, .pa-au { transition: none !important; animation: none !important; } }

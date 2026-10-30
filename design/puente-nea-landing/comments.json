@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "comments": [
+    {
+      "id": "puxctoxe",
+      "file": "01-puente-editorial.html",
+      "selector": "#top > div:nth-of-type(2) > img",
+      "excerpt": "Ilustración del puente General Belgrano entre Corrientes y Resistencia: a la izquierda, el puente en planos y andamios; a la derecha, terminado al atardecer, con paneles de software conectados por encima.",
+      "comment": "Reemplaza la imagen por este, los graficos estan mas alineados.",
+      "createdAt": "2026-10-30T00:35:16.302Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:35:16.326Z",
+      "resolvedAt": "2026-10-30T00:36:23.459Z",
+      "screenshot": ".screenshots/puxctoxe.png"
+    },
+    {
+      "id": "0l4yrgqt",
+      "file": "01-puente-editorial.html",
+      "selector": "body > footer > img",
+      "excerpt": "",
+      "comment": "El footer es demasiado grande, acortalo. Recorta la imagen si es necesario",
+      "createdAt": "2026-10-30T00:35:37.996Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:35:38.003Z",
+      "resolvedAt": "2026-10-30T00:37:35.876Z"
+    },
+    {
+      "id": "m3f0qz9n",
+      "file": "01-puente-editorial.html",
+      "selector": "#hablemos > div > p",
+      "excerpt": "Contanos en una charla de 30 minutos qué te frena. Si no podemos ayudarte, te lo decimos.",
+      "comment": "Quita lo de si no podemos ayudarte te lo decimos. No es necesario",
+      "createdAt": "2026-10-30T00:36:05.928Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:36:05.933Z",
+      "resolvedAt": "2026-10-30T00:37:51.444Z"
+    },
+    {
+      "id": "j5maxf4r",
+      "file": "01-puente-editorial.html",
+      "selector": "#top > div:nth-of-type(2) > img",
+      "excerpt": "Ilustración del puente General Belgrano entre Corrientes y Resistencia: a la izquierda, el puente en planos y andamios; a la derecha, terminado al atardecer. Arriba, cuatro paneles de software alineados y conectados entre sí, unidos al puente por líneas verticales.",
+      "comment": "En el primer grafico debe estar el nodo de \"partimos de tu idea\"",
+      "createdAt": "2026-10-30T00:37:55.425Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:37:55.431Z",
+      "resolvedAt": "2026-10-30T00:38:07.720Z"
+    },
+    {
+      "id": "9z7ponc6",
+      "file": "01-puente-editorial.html",
+      "selector": "#fig-ba",
+      "excerpt": "Antes Después stock_FINAL_v3(2).xlsx Producto Stock Precio Últ. act. Taladro 650W -2 $ 89.900 ¿? Taladro 650W 14 $ 84.500 03/08 Amoladora 4½ #REF! $ 61.200 12/07 Disco corte 130 ver WhatsApp — Mecha 8mm 40 $ 2.100 01/06 ¡NO TOCAR la columna C! Preguntar a Rubén VENTAS HOY $ 0 ▲ 12% vs. ayer PEDIDOS",
+      "comment": "Averigua como shipperlab realizaron estos tipos de imagenes interactivos, necesito que lo realices mas de este estilo. Me gusta el concepto, tomalo como inspiracion",
+      "createdAt": "2026-10-30T00:46:24.258Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:46:24.277Z",
+      "resolvedAt": "2026-10-30T16:24:13.509Z",
+      "screenshot": ".screenshots/9z7ponc6.png"
+    },
+    {
+      "id": "lgzs5bc1",
+      "file": "01-puente-editorial.html",
+      "selector": "#steps > div:nth-of-type(1)",
+      "excerpt": "1 Charla Nos contás qué te lleva tiempo o qué se te escapa. Escuchamos antes de proponer. 30 min · gratis",
+      "comment": "Cambia 30 minutos por 1h y quita el gratis",
+      "createdAt": "2026-10-30T00:52:06.735Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:54:17.591Z",
+      "resolvedAt": "2026-10-30T00:55:17.628Z"
+    },
+    {
+      "id": "n2zzcvc5",
+      "file": "01-puente-editorial.html",
+      "selector": "#steps > div:nth-of-type(3)",
+      "excerpt": "3 Construcción Trabajamos por etapas cortas. Cada semana ves y probás avances reales. avance semanal",
+      "comment": "Necesito que este alineado el texto de avance semanal con los otros textos en la misma linea",
+      "createdAt": "2026-10-30T00:52:32.157Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:54:17.591Z",
+      "resolvedAt": "2026-10-30T00:55:17.628Z"
+    },
+    {
+      "id": "v6fyn17s",
+      "file": "01-puente-editorial.html",
+      "selector": "#steps > div:nth-of-type(4)",
+      "excerpt": "4 Lanzamiento Capacitamos a tu equipo y quedamos de soporte para ajustar lo que haga falta. soporte incluido",
+      "comment": "Necesito uqe este alineado el texto de soporte incluido, con los textos de la misma linea",
+      "createdAt": "2026-10-30T00:52:59.902Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:54:17.591Z",
+      "resolvedAt": "2026-10-30T00:55:17.628Z"
+    },
+    {
+      "id": "39ejxzl7",
+      "file": "01-puente-editorial.html",
+      "selector": "#quienes-somos > div",
+      "excerpt": "QUIÉNES SOMOS Ingenieros del NEA, construyendo para pymes de acá y de todo el país. Somos un equipo chico de desarrollo de software del Noreste argentino. Nos gusta entender cómo funciona tu negocio por dentro y convertirlo en herramientas simples que tu equipo realmente use. Ingeniería de software",
+      "comment": "Ademas tambien agrega espacio para poder agregar una imagen mia y de mi compañero, al estilo de shipperslab",
+      "createdAt": "2026-10-30T00:53:58.202Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:54:17.591Z",
+      "resolvedAt": "2026-10-30T00:55:17.628Z",
+      "screenshot": ".screenshots/39ejxzl7.png"
+    },
+    {
+      "id": "vqbmk6ja",
+      "file": "01-puente-editorial.html",
+      "selector": "#hablemos > div",
+      "excerpt": "EMPECEMOS Crucemos el puente. Contanos en una charla de 1 hora qué te frena. Escribinos por WhatsApp → Agendá una llamada",
+      "comment": "En vez de \"Escribinos por whatsapp\", deja un boton de hablemos, que este llevara a otra pagina donde vamos a tener un formulario con 3 pasos, con nombre, nombre del negocio, un email o whatsapp y al final que nos cuente el tipo de problema que tienen y asi a nuestro correo nos llega con toda informacion y podemos contactarlo. Sino abajo podes dejar nuestro correo para que nos contacten directamente",
+      "createdAt": "2026-10-30T00:56:54.773Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:57:40.496Z",
+      "resolvedAt": "2026-10-30T01:00:41.164Z"
+    },
+    {
+      "id": "jo0ca9uy",
+      "file": "01-puente-editorial.html",
+      "selector": "#quienes-somos > div > div:nth-of-type(2)",
+      "excerpt": "Tu foto 1:1 Nombre Apellido Cofundador · Ingeniería y producto Es con quien hablás primero. Entiende cómo opera tu negocio y lo convierte en un sistema que tu equipo usa todos los días. Ver perfil ↗ Foto de tu compañero Nombre Apellido Cofundador · Automatización e IA Diseña las automatizaciones y l",
+      "comment": "Me encanta aunque necesito que rediseñes las card, queria que fuera una inspiracion la imagen anterior, hazlo mas propio con lo que tenemos.",
+      "createdAt": "2026-10-30T00:58:49.923Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T00:58:55.113Z",
+      "resolvedAt": "2026-10-30T10:36:30.947Z"
+    },
+    {
+      "id": "pvgp6ax6",
+      "file": "01-puente-editorial.html",
+      "selector": "#fig-ba > div",
+      "excerpt": "Fig 1 CLASIFICADORA TOCÁ UNA BANDEJA Stock Pedidos Turnos Clientes 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 Stock · 128 u. Stock: 128 unidades",
+      "comment": "Me encanto la animacion y el concepto que armaste, ahora hazlo mucho mas propio que no parezca sacado shipperslab que es la inspiracion. Haz algo mas original, teniendo en cuenta nuestro concepto y que se entienda lo que hacemos y que problemas resolvemos.",
+      "createdAt": "2026-10-30T01:02:19.272Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T01:02:20.441Z",
+      "resolvedAt": "2026-10-30T10:56:49.734Z"
+    },
+    {
+      "id": "jmhqhlir",
+      "file": "01-puente-editorial.html",
+      "selector": "#steps > div:nth-of-type(1) > span",
+      "excerpt": "1 h",
+      "comment": "En vez de 1h, pone charlemos lo necesario o algo que parezca atractivo, que estamos dispuesto a poder entender el problema o su idea para poder llevarlo acabo.",
+      "createdAt": "2026-10-30T01:04:37.863Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T10:45:50.089Z",
+      "resolvedAt": "2026-10-30T10:49:13.353Z"
+    },
+    {
+      "id": "iqfg1ysl",
+      "file": "01-puente-editorial.html",
+      "selector": "#como-trabajamos > div",
+      "excerpt": "CÓMO TRABAJAMOS De la charla al sistema funcionando, sin sorpresas. Precio y fecha por escrito antes de arrancar. Avances cada semana. Y nada de jerga técnica. 1 Charla Nos contás qué te lleva tiempo o qué se te escapa. Escuchamos antes de proponer. 1 h 2 Propuesta Te mandamos por escrito qué vamos",
+      "comment": "Para esta seccion quiero que adaptes con nuestro diseño claramente esta imagen. Donde siento que es mas entendible y facil de leer",
+      "createdAt": "2026-10-30T10:43:29.007Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T10:45:50.089Z",
+      "resolvedAt": "2026-10-30T10:49:13.353Z",
+      "screenshot": ".screenshots/iqfg1ysl.png"
+    },
+    {
+      "id": "cbj2h62a",
+      "file": "01-puente-editorial.html",
+      "selector": "#quienes-somos",
+      "excerpt": "QUIÉNES SOMOS Ingenieros del NEA, construyendo para pymes de acá y de todo el país. Somos un equipo chico de desarrollo de software del Noreste argentino. Nos gusta entender cómo funciona tu negocio por dentro y convertirlo en herramientas simples que tu equipo realmente use. Ingeniería de software",
+      "comment": "En esta parte quita lo de ingenieria de software, automatizacion e ia, acompañamiento. Esto podria tener oportunidad en otra seccion.\nAca solamente centremosno en mostrar a los responsables, a los detras de los que ofrecen el servicio.",
+      "createdAt": "2026-10-30T10:44:46.275Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T10:45:50.089Z",
+      "resolvedAt": "2026-10-30T10:49:13.353Z"
+    },
+    {
+      "id": "2pgxwym7",
+      "file": "01-puente-editorial.html",
+      "selector": "#contenido > div > div",
+      "excerpt": "stock_FINAL_v3(2).xlsx “¿Me pasás el precio?” 40 veces por día Turnos anotados en un cuaderno Cargar lo mismo en tres lugares “Quiero usar IA, pero ¿por dónde empiezo?” Saber cuánto vendiste recién a fin de mes stock_FINAL_v3(2).xlsx “¿Me pasás el precio?” 40 veces por día Turnos anotados en un cuad",
+      "comment": "Me gusta esto pero hazlo mucho mas amigable, profesional y atractivo. Por ejemplo hay un texto de stock final v3, no se entiende que seria ese texto. Adapta los textos correctamente",
+      "createdAt": "2026-10-30T10:45:48.345Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T10:45:50.089Z",
+      "resolvedAt": "2026-10-30T10:49:13.353Z"
+    },
+    {
+      "id": "jxkm1w4c",
+      "file": "01-puente-editorial.html",
+      "selector": "#que-hacemos > div > div:nth-of-type(2) > article:nth-of-type(2)",
+      "excerpt": "02 — Automatización Cargás una vez. El resto pasa solo. Conectamos lo que ya usás (WhatsApp, planillas, facturación, Mercado Pago, tu tienda online) para que la información viaje sola y nadie copie y pegue. WhatsApp + planillas Facturación sin carga doble Avisos automáticos Reportes que llegan solos",
+      "comment": "Adapta la figura como el diseño 01 - Software a medida, toma el mismo concepto. Pero que se entienda con la figura el ejemplo y el problema que queremos resolver que es automatizacion y como trabajaria.",
+      "createdAt": "2026-10-30T10:48:48.923Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T10:49:12.191Z",
+      "resolvedAt": "2026-10-30T16:24:13.509Z"
+    },
+    {
+      "id": "yfecp705",
+      "file": "01-puente-editorial.html",
+      "selector": "#que-hacemos > div > div:nth-of-type(2) > article:nth-of-type(3)",
+      "excerpt": "03 — IA para pymes IA que atiende, ordena y te avisa. Te ayudamos a implementar inteligencia artificial donde de verdad te ahorra tiempo: un asistente que responde a tus clientes, toma pedidos y turnos, y te pasa la conversación cuando hace falta una persona. Asistente en WhatsApp Respuestas con tu",
+      "comment": "Adapta la figura como el diseño 01 - Software a medida, toma el mismo concepto. Pero que se entienda con la figura el ejemplo y el problema que queremos resolver que es IA para Pymes y como trabajaria.",
+      "createdAt": "2026-10-30T10:49:10.276Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T10:49:12.191Z",
+      "resolvedAt": "2026-10-30T16:24:13.509Z"
+    },
+    {
+      "id": "uv0t9je1",
+      "file": "01-puente-editorial.html",
+      "selector": "#fig-flow",
+      "excerpt": "automatización: pedido → 3 tareas 0 1 2 3 4 5 6 7 8 9 0 Hoy: lo cargás 3 veces Automatizado tareas solas Stock · 13 ×3 Factura FACTURA Depósito Pedido #1043 · 3 tareas hechas solas +6 min · 78 min ahorrados hoy Entra un pedido →",
+      "comment": "Se entiende mejor que la anterior, pero depende mucho del texto para explicar la automatización. El contraste entre “lo cargás tres veces” y “automatizado” funciona; lo que falta es mostrar claramente cómo un pedido provoca las tres acciones.\nModifica el diseño, el puente se lleva el protagonismo, mientras que stock, factura y aviso al depósito —lo que realmente vendemos— quedan pequeños. El contador tampoco explica qué ocurrió, y repetir la misma figura en software a medida y automatización hace que ambos servicios parezcan iguales.\n\nMantendría la estética de maqueta, pero cambiaría la escena por una estación de procesamiento de pedidos:\nElemento\tQué mostraría\nEntrada\tUn pedido claramente visible: “10 unidades · Cliente Ana”.\nValidación\tUna comprobación de datos y disponibilidad.\nAcciones conectadas\tTres módulos grandes: “Stock actualizado”, “Factura emitida” y “Depósito avisado”.\nResultado\tEl mismo pedido con las tres acciones completadas.\nExcepción\tSi falta información o stock: “Necesita tu revisión”.\n\n\nAl tocar “Simular un pedido”, el pedido entra, se valida y se iluminan los módulos correspondientes. Así la animación explica el servicio y el visitante puede seguir qué pasó.\n\nTambién ajustaría los textos:\n- Título: “Cargá el pedido una vez. Evitá repetir el trabajo.”\n- Descripción: “Conectamos las herramientas de tu negocio para registrar pedidos, actualizar stock y enviar avisos según las reglas que acordemos con vos.”\n- Ejemplo: “Un pedido confirmado puede actualizar el stock, generar la factura y avisar al depósito, sin volver a cargar los mismos datos.”\n- Botón: “Simular un pedido”.\n“El resto pasa solo” es atractivo, pero demasiado amplio. Conviene mostrar qué tareas se automatizan y cuándo interviene una persona. También quitaría “78 minutos ahorrados” si no proviene de una medición; para una demo, mostraría “3 acciones completadas · Ejemplo ilustrativo”.",
+      "createdAt": "2026-10-30T11:14:09.813Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T11:17:00.985Z",
+      "resolvedAt": "2026-10-30T15:53:04.700Z"
+    },
+    {
+      "id": "abi2t8z8",
+      "file": "01-puente-editorial.html",
+      "selector": "#fig-ba",
+      "excerpt": "puente: planillas → sistema Hoy Con tu sistema 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 Stock Pedidos Turnos Clientes Pedidos · 14 hoy Cruzar un dato →",
+      "comment": "La figura del puente funciona como identidad de marca, pero explica poco el servicio. Representa una transformación, aunque no permite ver qué hace el sistema. El contador, los papeles y “Cruzar un dato” requieren interpretación; además, mezclar stock, turnos y pedidos dispersa el mensaje.",
+      "createdAt": "2026-10-30T11:15:30.222Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T11:17:00.985Z",
+      "resolvedAt": "2026-10-30T15:53:04.700Z"
+    },
+    {
+      "id": "oe3ga9jf",
+      "file": "01-puente-editorial.html",
+      "selector": "#fig-bot",
+      "excerpt": "Asistente activo asistente: mensajes → respuestas Hoy: 46 sin leer Con IA 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 0 1 2 3 4 5 6 7 8 9 0 respondidos hoy 46 23:47 ¿Cuánto? $ 89.900 Jue 10 h Anotado Persona Reclamo Un pedido Un turno ¿Cuánto? $ 89.900 Respondido Jue 10 h Turno",
+      "comment": "La figura del puente funciona como identidad de marca, pero explica poco el servicio. Mantendria lo de la maqueta pero cambiaría la escena, mantendria mas protagonismo el robot (IA), que se entienda perfectamente que hacemos o que se esta tratando de vender esta seccion.",
+      "createdAt": "2026-10-30T11:16:49.355Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T11:17:00.985Z",
+      "resolvedAt": "2026-10-30T15:53:04.700Z"
+    },
+    {
+      "id": "4e13s6dn",
+      "file": "01-puente-editorial.html",
+      "selector": "#quienes-somos > div > div:nth-of-type(1) > p",
+      "excerpt": "Somos ingenieros del Noreste argentino. Con nosotros hablás desde la primera charla hasta que tu equipo usa lo que construimos: sin intermediarios.",
+      "comment": "Podes cambiar el texto, por que somos un equipo de profesionales con experiencia en distintas empresas, experiencia en ingenieria y diseño. Lo de nosotros hablas desde la primera charla me gustaria mantenerlo.",
+      "createdAt": "2026-10-30T11:19:29.661Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T11:20:31.518Z",
+      "resolvedAt": "2026-10-30T15:34:47.308Z"
+    },
+    {
+      "id": "khfsfd1i",
+      "file": "01-puente-editorial.html",
+      "selector": "#fig-ba",
+      "excerpt": "software a medida: planillas → un sistema 1 sistema · el mismo dato en la compu y en el celular 164 u. 152 u. 170 u. ¿? ¿Cuánta yerba hay? Stock · Yerba 1 kg Depósito Centro 164 u. Depósito Norte 48 u. Total 212 u. ¿? Yerba 212 u. Con tu sistema: 212 u. de Yerba 1 kg en 2 depósitos · Ejemplo ilustra",
+      "comment": "Me gusta, pero mostra un poco mas que lo del stock, algo como podemos simplicarlo mas y como ayudariamos a reducir el tiempo",
+      "createdAt": "2026-10-30T15:54:41.307Z",
+      "status": "resolved",
+      "sentAt": "2026-10-30T15:54:48.095Z",
+      "resolvedAt": "2026-10-30T16:24:13.509Z"
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hablemos · Puente NEA</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -28 100 100'%3E%3Cg fill='%23274B57'%3E%3Cpolygon points='31,0 34,0 27,43 15.5,43'/%3E%3Cpolygon points='33.5,0 35.5,0 41,43 31.5,43'/%3E%3Cpolygon points='66,0 69,0 84.5,43 73,43'/%3E%3Cpolygon points='64.5,0 66.5,0 68.5,43 59,43'/%3E%3C/g%3E%3Ccircle cx='50' cy='12.5' r='7.5' fill='%23F08A3A'/%3E%3Cpolygon points='0,30.6 100,30.6 94,34 6,34' fill='%23E8642F'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --cream: #FCF8EF;
+    --paper: #F5EDDE;
+    --line: #E6D9C3;
+    --ink: #1E2A2F;
+    --ink-2: #4A5459;
+    --terra: #D9572B;
+    --terra-ink: #A23C16;
+    --river: #A8CFE3;
+    --river-ink: #2B6684;
+    --petrol: #274B57;
+    --serif: ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --ease: cubic-bezier(.22,.8,.26,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--terra); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 8px 14px; z-index: 99; }
+  .skip:focus { left: 8px; }
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+  .eyebrow { font: 600 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--terra-ink); }
+  h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; margin: 0; }
+  .lead { color: var(--ink-2); font-size: 19px; max-width: 46ch; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font: 600 16px var(--sans); text-decoration: none; border: 1.5px solid var(--ink); transition: transform .25s var(--ease), background .25s, color .25s; cursor: pointer; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--ink); color: var(--cream); }
+  .btn-primary:hover { background: var(--terra-ink); border-color: var(--terra-ink); }
+  .btn-ghost { background: transparent; color: var(--ink); }
+  .btn .arrow { transition: transform .25s var(--ease); }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* Nav */
+  .nav { border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; font-size: 18px; letter-spacing: -.01em; }
+  .iso { flex: none; overflow: visible; }
+  .back { font-size: 15px; color: var(--ink-2); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+
+  /* Layout */
+  main { padding: 88px 0 120px; }
+  .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 72px; align-items: start; }
+  .intro h1 { font-size: clamp(44px, 5.4vw, 72px); line-height: 1; margin: 18px 0 20px; }
+  .intro h1 em { color: var(--terra-ink); }
+  .next { list-style: none; padding: 0; margin: 36px 0 0; display: grid; gap: 18px; counter-reset: n; }
+  .next li { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; counter-increment: n; color: var(--ink-2); }
+  .next li::before { content: counter(n); width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--terra); display: grid; place-items: center; font: 700 14px var(--mono); color: var(--terra-ink); }
+  .next b { display: block; color: var(--ink); font-weight: 600; }
+  .direct { margin-top: 40px; padding: 20px 22px; border-radius: 18px; background: var(--paper); font-size: 16px; color: var(--ink-2); }
+  .direct a { color: var(--terra-ink); font-weight: 600; text-underline-offset: 3px; }
+
+  /* Form card */
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 36px; box-shadow: 0 40px 80px -50px rgba(30,42,47,.4); position: relative; overflow: hidden; }
+  .stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; list-style: none; padding: 0; margin: 0 0 30px; }
+  .stepper li { font: 600 12px var(--mono); color: var(--ink-2); }
+  .stepper li::before { content: ""; display: block; height: 4px; border-radius: 4px; background: var(--line); margin-bottom: 10px; transition: background .4s var(--ease); }
+  .stepper li.done::before, .stepper li[aria-current="step"]::before { background: var(--terra); }
+  .stepper li[aria-current="step"] { color: var(--ink); }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .step { display: none; }
+  .step.on { display: block; animation: stepIn .45s var(--ease); }
+  .step.on.back-in { animation-name: stepBack; }
+  @keyframes stepIn { from { opacity: 0; transform: translateX(24px); } }
+  @keyframes stepBack { from { opacity: 0; transform: translateX(-24px); } }
+  .step h2 { font-size: 32px; line-height: 1.1; margin-bottom: 6px; outline: none; }
+  .step .hint { color: var(--ink-2); margin: 0 0 26px; font-size: 16px; }
+  .field { margin-bottom: 20px; }
+  .field label, .legend { display: block; font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .field input, .field textarea { width: 100%; font: 17px var(--sans); color: var(--ink); background: var(--cream); border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 16px; transition: border-color .2s, background .2s; }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(217, 87, 43, .25); }
+  .field [aria-invalid="true"] { border-color: var(--terra-ink); background: #FDF1EC; }
+  .err { display: block; min-height: 1.3em; margin-top: 6px; font-size: 14px; color: var(--terra-ink); font-weight: 600; }
+  .seg { display: inline-flex; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 4px; margin-bottom: 16px; }
+  .seg label { cursor: pointer; }
+  .seg input, .chips input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg span { display: inline-block; padding: 8px 18px; border-radius: 999px; font-weight: 600; font-size: 15px; color: var(--ink-2); transition: background .2s, color .2s; }
+  .seg input:checked + span { background: var(--ink); color: var(--cream); }
+  .seg input:focus-visible + span, .chips input:focus-visible + span { outline: 3px solid var(--terra); outline-offset: 2px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .chips label { cursor: pointer; }
+  .chips span { display: inline-block; padding: 9px 14px; border-radius: 12px; border: 1.5px solid var(--line); font-size: 15px; font-weight: 600; background: var(--cream); transition: background .2s, border-color .2s, color .2s; }
+  .chips input:checked + span { background: #FBE6DA; border-color: var(--terra); color: var(--terra-ink); }
+  .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 12px; }
+  .actions .count { font: 600 12px var(--mono); color: var(--ink-2); }
+  .actions .btns { display: flex; gap: 10px; margin-left: auto; }
+  .privacy { margin: 22px 0 0; font-size: 13px; color: var(--ink-2); }
+
+  /* Success */
+  .done-panel { display: none; }
+  .card.sent form, .card.sent .stepper { display: none; }
+  .card.sent .done-panel { display: block; animation: stepIn .5s var(--ease); }
+  .check { width: 64px; height: 64px; }
+  .check circle { fill: #FBE6DA; }
+  .check path { fill: none; stroke: var(--terra-ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; }
+  .card.sent .check path { animation: draw .6s var(--ease) .25s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .done-panel h2 { font-size: 36px; margin: 18px 0 8px; outline: none; }
+  .done-panel > p { color: var(--ink-2); margin: 0 0 24px; }
+  .mail { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 15px; margin-bottom: 26px; }
+  .mail-head { background: var(--paper); padding: 12px 16px; font: 12px/1.7 var(--mono); color: var(--ink-2); }
+  .mail-head b { color: var(--ink); }
+  .mail-body { padding: 16px; white-space: pre-line; line-height: 1.55; }
+
+  /* Footer */
+  .footer { position: relative; background: var(--petrol); }
+  .footer img { display: block; width: 100%; height: auto; aspect-ratio: 1944 / 300; object-fit: cover; object-position: 50% 85%; }
+  .legal { position: absolute; left: 0; right: 0; bottom: 16px; }
+  .legal .wrap { display: flex; justify-content: space-between; font: 600 12px var(--mono); color: #EAF1F2; }
+  .legal span { background: rgba(30,42,47,.82); padding: 5px 10px; border-radius: 999px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    .card.sent .check path { stroke-dashoffset: 0; }
+  }
+  @media (max-width: 900px) {
+    .card { order: -1; }
+    .grid { grid-template-columns: 1fr; gap: 48px; }
+    main { padding-top: 48px; }
+    .card { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="isotipo" viewBox="0 -1 100 45">
+    <g id="iso-pylon" fill="var(--iso-pylon, #274B57)">
+      <polygon points="31,0 34,0 27,43 15.5,43"/>
+      <polygon points="33.5,0 35.5,0 41,43 31.5,43"/>
+      <polygon points="30,6 31.6,7.6 9.6,30.8 7,30.8"/>
+      <polygon points="29.2,12.4 30.6,14 14.6,30.8 12,30.8"/>
+    </g>
+    <use href="#iso-pylon" transform="translate(100 0) scale(-1 1)"/>
+    <circle cx="50" cy="12.5" r="7.5" fill="var(--iso-sun, #F08A3A)"/>
+    <polygon points="0,30.6 100,30.6 94,34 6,34" fill="var(--iso-deck, #E8642F)"/>
+  </symbol>
+</svg>
+<a class="skip" href="#contenido">Saltar al formulario</a>
+
+<nav class="nav" aria-label="Principal">
+  <div class="wrap">
+    <a class="brand" href="01-puente-editorial.html" aria-label="Puente NEA, volver al inicio"><svg class="iso" width="58" height="26" aria-hidden="true"><use href="#isotipo"/></svg>Puente NEA</a>
+    <a class="back" href="01-puente-editorial.html">← Volver al inicio</a>
+  </div>
+</nav>
+
+<main id="contenido">
+  <div class="wrap grid">
+    <section class="intro" aria-labelledby="page-title">
+      <span class="eyebrow">Empecemos</span>
+      <h1 id="page-title">Contanos qué <em>te frena.</em></h1>
+      <p class="lead">Son tres pasos cortos. Tu consulta le llega directo a nuestro equipo y te responde una persona, no un bot.</p>
+      <ol class="next" aria-label="Qué pasa después">
+        <li><span><b>Te respondemos en menos de 24 h hábiles</b>Por el medio que elijas: email o WhatsApp.</span></li>
+        <li><span><b>Charla de 1 hora</b>Entendemos cómo trabaja tu negocio y qué te lleva tiempo.</span></li>
+        <li><span><b>Propuesta por escrito</b>Qué hacemos, cuánto cuesta y cuándo lo entregamos.</span></li>
+      </ol>
+      <p class="direct">¿Preferís escribirnos directo? <a href="mailto:hola@puentenea.com">hola@puentenea.com</a></p>
+    </section>
+
+    <div class="card" id="card">
+      <ol class="stepper" aria-label="Progreso del formulario">
+        <li aria-current="step">1 · Vos</li>
+        <li>2 · Contacto</li>
+        <li>3 · Tu problema</li>
+      </ol>
+
+      <form id="form" novalidate>
+        <fieldset class="step on" data-step="0">
+          <h2 tabindex="-1">¿Con quién hablamos?</h2>
+          <p class="hint">Así sabemos a quién escribirle.</p>
+          <div class="field">
+            <label for="name">Tu nombre</label>
+            <input id="name" name="name" autocomplete="name" required aria-describedby="name-err" placeholder="Ej.: Laura Gómez">
+            <span class="err" id="name-err" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="business">Nombre del negocio</label>
+            <input id="business" name="business" autocomplete="organization" required aria-describedby="business-err" placeholder="Ej.: Ferretería del Centro">
+            <span class="err" id="business-err" aria-live="polite"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-step="1">
+          <h2 tabindex="-1">¿Cómo te contactamos?</h2>
+          <p class="hint">Elegí el medio que más uses. Solo lo usamos para responderte.</p>
+          <span class="legend" id="channel-label">Preferís que te escribamos por</span>
+          <div class="seg" role="radiogroup" aria-labelledby="channel-label">
+            <label><input type="radio" name="channel" value="email" checked><span>Email</span></label>
+            <label><input type="radio" name="channel" value="whatsapp"><span>WhatsApp</span></label>
+          </div>
+          <div class="field">
+            <label for="contact" id="contact-label">Tu email</label>
+            <input id="contact" name="contact" type="email" autocomplete="email" inputmode="email" required aria-describedby="contact-err" placeholder="nombre@negocio.com">
+            <span class="err" id="contact-err" aria-live="polite"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-step="2">
+          <h2 tabindex="-1">¿Qué te gustaría resolver?</h2>
+          <p class="hint">Marcá lo que aplique y contanos un poco más con tus palabras.</p>
+          <div class="chips" role="group" aria-label="Tipo de problema">
+            <label><input type="checkbox" name="topic" value="Planillas y stock"><span>Planillas y stock</span></label>
+            <label><input type="checkbox" name="topic" value="WhatsApp saturado"><span>WhatsApp saturado</span></label>
+            <label><input type="checkbox" name="topic" value="Carga doble de datos"><span>Carga doble de datos</span></label>
+            <label><input type="checkbox" name="topic" value="Turnos y agenda"><span>Turnos y agenda</span></label>
+            <label><input type="checkbox" name="topic" value="Empezar con IA"><span>Empezar con IA</span></label>
+            <label><input type="checkbox" name="topic" value="Otro"><span>Otro</span></label>
+          </div>
+          <div class="field">
+            <label for="problem">Contanos el problema</label>
+            <textarea id="problem" name="problem" required aria-describedby="problem-err" placeholder="Ej.: Llevamos el stock en tres planillas distintas y nunca coinciden con lo que hay en el depósito."></textarea>
+            <span class="err" id="problem-err" aria-live="polite"></span>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <span class="count" id="count">Paso 1 de 3</span>
+          <div class="btns">
+            <button class="btn btn-ghost" type="button" id="prev" hidden>← Atrás</button>
+            <button class="btn btn-primary" type="button" id="next">Siguiente <span class="arrow" aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <p class="privacy">Usamos tus datos solo para responder esta consulta. Nada de spam.</p>
+      </form>
+
+      <div class="done-panel" role="status">
+        <svg class="check" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32"/><path d="M20 33 l8 8 l16 -18"/></svg>
+        <h2 tabindex="-1" id="done-title">¡Listo!</h2>
+        <p id="done-text"></p>
+        <div class="mail" aria-label="Vista previa del correo que recibe el equipo">
+          <div class="mail-head" id="mail-head"></div>
+          <div class="mail-body" id="mail-body"></div>
+        </div>
+        <a class="btn btn-ghost" href="01-puente-editorial.html">← Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <img src="assets/footer-taller.jpg" width="1944" height="809" alt="" loading="lazy">
+  <div class="legal"><div class="wrap"><span>© 2026 Puente NEA</span><span>Hecho en el NEA, Argentina.</span></div></div>
+</footer>
+
+<script>
+(() => {
+  const form = document.getElementById('form');
+  const steps = [...form.querySelectorAll('.step')];
+  const marks = [...document.querySelectorAll('.stepper li')];
+  const prev = document.getElementById('prev'), next = document.getElementById('next'), count = document.getElementById('count');
+  const contact = document.getElementById('contact'), contactLabel = document.getElementById('contact-label');
+  let at = 0;
+
+  const rules = {
+    name: v => v.trim().length >= 2 || 'Escribí tu nombre.',
+    business: v => v.trim().length >= 2 || 'Escribí el nombre de tu negocio.',
+    contact: v => form.channel.value === 'email'
+      ? /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Revisá el email: falta algo (ej.: nombre@negocio.com).'
+      : v.replace(/\D/g, '').length >= 10 || 'Escribí tu WhatsApp con código de área (ej.: 379 412-3456).',
+    problem: v => v.trim().length >= 15 || 'Contanos un poco más (al menos una oración).'
+  };
+  const check = el => {
+    const res = rules[el.name](el.value), ok = res === true;
+    el.setAttribute('aria-invalid', String(!ok));
+    document.getElementById(el.id + '-err').textContent = ok ? '' : res;
+    return ok;
+  };
+  const validStep = () => {
+    const fields = [...steps[at].querySelectorAll('input[required], textarea[required]')];
+    const bad = fields.filter(f => !check(f));
+    if (bad.length) bad[0].focus();
+    return !bad.length;
+  };
+  steps.forEach(s => s.querySelectorAll('[required]').forEach(f => f.addEventListener('input', () => f.getAttribute('aria-invalid') === 'true' && check(f))));
+
+  form.addEventListener('change', e => {
+    if (e.target.name !== 'channel') return;
+    const wa = e.target.value === 'whatsapp';
+    contact.type = wa ? 'tel' : 'email';
+    contact.inputMode = wa ? 'tel' : 'email';
+    contact.autocomplete = wa ? 'tel' : 'email';
+    contact.placeholder = wa ? '379 412-3456' : 'nombre@negocio.com';
+    contactLabel.textContent = wa ? 'Tu WhatsApp' : 'Tu email';
+    contact.value = ''; contact.removeAttribute('aria-invalid'); document.getElementById('contact-err').textContent = '';
+  });
+
+  const go = (to, back) => {
+    steps[at].classList.remove('on', 'back-in');
+    at = to;
+    steps[at].classList.add('on'); steps[at].classList.toggle('back-in', !!back);
+    marks.forEach((m, i) => { m.classList.toggle('done', i < at); i === at ? m.setAttribute('aria-current', 'step') : m.removeAttribute('aria-current'); });
+    prev.hidden = at === 0;
+    next.innerHTML = at === steps.length - 1 ? 'Enviar consulta <span class="arrow" aria-hidden="true">→</span>' : 'Siguiente <span class="arrow" aria-hidden="true">→</span>';
+    count.textContent = `Paso ${at + 1} de ${steps.length}`;
+    steps[at].querySelector('h2').focus();
+  };
+  prev.addEventListener('click', () => go(at - 1, true));
+
+  // The design canvas sandboxes artboards without allow-forms, so a native submit is blocked: drive steps from the button and Enter.
+  form.addEventListener('submit', e => e.preventDefault());
+  form.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input:not([type=radio]):not([type=checkbox])')) { e.preventDefault(); advance(); } });
+  next.addEventListener('click', () => advance());
+  const advance = () => {
+    if (!validStep()) return;
+    if (at < steps.length - 1) return go(at + 1);
+    // shortcut: design mock, no backend. Production: POST these fields to an API route that emails hola@puentenea.com.
+    const d = new FormData(form);
+    const topics = d.getAll('topic');
+    const first = d.get('name').trim().split(/\s+/)[0];
+    const via = d.get('channel') === 'email' ? 'email' : 'WhatsApp';
+    document.getElementById('done-title').textContent = `¡Listo, ${first}!`;
+    document.getElementById('done-text').textContent = `Te escribimos por ${via} en menos de 24 h hábiles. Mientras tanto, así nos llegó tu consulta:`;
+    const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    document.getElementById('mail-head').innerHTML = `<b>Para:</b> hola@puentenea.com<br><b>Asunto:</b> Nueva consulta · ${esc(d.get('business').trim())}`;
+    document.getElementById('mail-body').textContent =
+      `Nombre: ${d.get('name').trim()}\nNegocio: ${d.get('business').trim()}\nContacto (${via}): ${d.get('contact').trim()}\nTemas: ${topics.length ? topics.join(', ') : 'Sin marcar'}\n\n${d.get('problem').trim()}`;
+    document.getElementById('card').classList.add('sent');
+    document.getElementById('done-title').focus();
+  };
+})();
+</script>
+</body>
+</html>

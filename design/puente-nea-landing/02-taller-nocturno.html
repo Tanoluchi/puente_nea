@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puente NEA · Taller digital para pymes</title>
+<style>
+  :root {
+    --bg: #1B3640;
+    --petrol: #274B57;
+    --petrol-2: #2F5866;
+    --line: rgba(234,241,242,.14);
+    --text: #EAF1F2;
+    --muted: #B9CCD1;
+    --cream: #FCF8EF;
+    --terra: #E8693A;
+    --terra-soft: #F4A47F;
+    --river: #A8CFE3;
+    --green: #7FD6A4;
+    --ink: #1E2A2F;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --ease: cubic-bezier(.22,.8,.26,1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--terra-soft); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--cream); color: var(--ink); padding: 8px 14px; z-index: 99; }
+  .skip:focus { left: 8px; }
+  .wrap { width: min(1240px, 100% - 48px); margin-inline: auto; }
+  .label { font: 600 13px/1 var(--mono); color: var(--terra-soft); letter-spacing: .04em; }
+  .label::before { content: "// "; opacity: .6; }
+  h1, h2, h3 { margin: 0; font-weight: 750; letter-spacing: -.035em; }
+  h2 { font-size: clamp(36px, 4.6vw, 60px); line-height: 1.02; }
+  .muted { color: var(--muted); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 12px; font-weight: 650; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-size: 16px; transition: transform .2s var(--ease), background .2s, box-shadow .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-terra { background: var(--terra); color: #1b1b1b; box-shadow: 0 10px 30px -10px rgba(232,105,58,.6); }
+  .btn-terra:hover { background: var(--terra-soft); }
+  .btn-line { border-color: var(--line); color: var(--text); background: rgba(255,255,255,.04); }
+  .btn-line:hover { background: rgba(255,255,255,.1); }
+  .kbd { font: 600 12px var(--mono); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; color: var(--muted); }
+
+  /* Nav */
+  .nav { position: fixed; inset: 16px 0 auto; z-index: 40; }
+  .nav .bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 10px 10px 18px; border-radius: 16px; background: rgba(27,54,64,.82); backdrop-filter: blur(12px); border: 1px solid var(--line); }
+  .brand { display: flex; gap: 10px; align-items: center; font-weight: 750; text-decoration: none; letter-spacing: -.02em; }
+  .nav ul { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .nav ul a { text-decoration: none; color: var(--muted); padding: 8px 12px; border-radius: 10px; }
+  .nav ul a:hover { color: var(--text); background: rgba(255,255,255,.06); }
+  .nav .btn { padding: 10px 16px; font-size: 15px; }
+
+  /* Hero */
+  .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-start; overflow: hidden; background: #FCF8EF; }
+  .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 100%; transform: scale(1.08); animation: settle 2.4s var(--ease) forwards; }
+  @keyframes settle { to { transform: scale(1); } }
+  .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 90px; background: linear-gradient(transparent, var(--bg)); }
+  .term { position: relative; z-index: 2; margin-top: 118px; width: min(620px, 100%); background: rgba(27,54,64,.94); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 40px 80px -30px rgba(27,54,64,.7); overflow: hidden; animation: up 1s var(--ease) .2s both; }
+  @keyframes up { from { opacity: 0; transform: translateY(30px); } }
+  .term-top { display: flex; gap: 8px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); font: 600 12px var(--mono); color: var(--muted); }
+  .term-top i { width: 11px; height: 11px; border-radius: 50%; background: #e06c4b; } .term-top i:nth-child(2) { background: #e8b64a; } .term-top i:nth-child(3) { background: #6dc98d; }
+  .term-top span { margin-left: 8px; }
+  .term-body { padding: 26px 28px 30px; }
+  .prompt { font: 500 14px var(--mono); color: var(--river); margin-bottom: 14px; min-height: 1.6em; }
+  .prompt .caret { display: inline-block; width: 8px; height: 1em; background: var(--river); vertical-align: -2px; animation: caret 1s steps(1) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  .hero h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1; }
+  .rotator { display: inline-grid; color: var(--terra-soft); }
+  .rotator span { grid-area: 1 / 1; opacity: 0; transform: translateY(.5em); transition: opacity .5s, transform .5s var(--ease); white-space: nowrap; }
+  .rotator span.on { opacity: 1; transform: none; }
+  .hero p { color: var(--muted); margin: 16px 0 24px; font-size: 18px; }
+  .hero .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .scroll-hint { position: absolute; z-index: 2; left: 50%; bottom: 28px; transform: translateX(-50%); font: 600 12px var(--mono); color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; }
+  .scroll-hint span { background: rgba(27,54,64,.9); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+  .scroll-hint i { width: 2px; height: 34px; background: linear-gradient(var(--terra-soft), transparent); animation: drop 1.6s ease-in-out infinite; }
+  @keyframes drop { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  section { padding: 120px 0; position: relative; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 56px; }
+  .head h2 { margin-top: 14px; max-width: 16ch; }
+  .head p { max-width: 44ch; margin: 0; }
+
+  /* Pains: flip cards */
+  .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pain { perspective: 1200px; height: 230px; }
+  .pain button { all: unset; display: block; width: 100%; height: 100%; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform .7s var(--ease); border-radius: 18px; }
+  .pain button:focus-visible { outline: 3px solid var(--terra-soft); outline-offset: 3px; }
+  .pain:hover button, .pain button[aria-pressed="true"] { transform: rotateY(180deg); }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+  .front { background: var(--petrol); border: 1px solid var(--line); }
+  .front .q { font-size: 22px; font-weight: 650; line-height: 1.25; letter-spacing: -.02em; }
+  .front small, .back small { font: 600 12px var(--mono); color: var(--muted); }
+  .back { background: var(--cream); color: var(--ink); transform: rotateY(180deg); }
+  .back small { color: #8a3a1a; }
+  .back .a { font-size: 17px; line-height: 1.45; }
+  .back b { color: #2B6684; }
+
+  /* Bento */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(150px, auto); gap: 16px; }
+  .tile { background: var(--petrol); border: 1px solid var(--line); border-radius: 22px; padding: 26px; position: relative; overflow: hidden; transition: border-color .3s, transform .4s var(--ease); }
+  .tile:hover { border-color: rgba(244,164,127,.5); }
+  .tile h3 { font-size: 28px; line-height: 1.1; margin: 10px 0 10px; }
+  .tile p { color: var(--muted); margin: 0; font-size: 16px; }
+  .t-soft { grid-column: span 4; grid-row: span 2; display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; }
+  .t-auto { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
+  .t-ai { grid-column: span 3; }
+  .t-int { grid-column: span 3; }
+  .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; padding: 0; list-style: none; }
+  .pill-list li { font: 600 13px var(--mono); padding: 6px 10px; border-radius: 8px; background: rgba(255,255,255,.06); color: var(--text); }
+  .mini-dash { background: var(--cream); color: var(--ink); border-radius: 14px; padding: 16px; align-self: stretch; display: grid; grid-template-rows: auto 1fr auto; gap: 12px; }
+  .mini-dash .row { display: flex; justify-content: space-between; font: 600 12px var(--mono); color: #4A5459; }
+  .mini-dash .big { font-size: 34px; font-weight: 750; letter-spacing: -.03em; }
+  .spark { width: 100%; height: 120px; }
+  .spark path.l { fill: none; stroke: #E8693A; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 600; stroke-dashoffset: 600; transition: stroke-dashoffset 2s var(--ease); }
+  .in .spark path.l { stroke-dashoffset: 0; }
+  .stock { display: grid; gap: 6px; font-size: 13px; }
+  .stock div { display: grid; grid-template-columns: 1fr 90px 34px; align-items: center; gap: 8px; }
+  .stock span.bar { height: 8px; border-radius: 4px; background: #e8dfcf; overflow: hidden; }
+  .stock span.bar i { display: block; height: 100%; background: #A8CFE3; width: 0; transition: width 1.4s var(--ease); }
+  .stock .low i { background: #E8693A; }
+  .stream { margin-top: 18px; flex: 1; background: #142a32; border-radius: 14px; padding: 14px; font: 12px/1.75 var(--mono); color: var(--muted); overflow: hidden; height: 220px; position: relative; }
+  .stream::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 40px; background: linear-gradient(#142a32, transparent); }
+  .stream p { margin: 0; animation: fadeIn .4s var(--ease); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stream .ok { color: var(--green); }
+  .stream .t { color: var(--river); }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } }
+  .tile .go { margin-top: 18px; display: inline-flex; gap: 8px; font-weight: 650; color: var(--terra-soft); text-decoration: none; }
+  .tile .go:hover { text-decoration: underline; }
+
+  /* Demo */
+  .demo { background: linear-gradient(180deg, var(--bg), #16303a); }
+  .demo-grid { display: grid; grid-template-columns: 380px 120px 1fr; gap: 28px; align-items: center; }
+  .phone { background: #0f2128; border-radius: 42px; padding: 12px; border: 1px solid var(--line); box-shadow: 0 50px 90px -40px rgba(0,0,0,.8); }
+  .screen { background: #EFE7DA; border-radius: 32px; overflow: hidden; height: 620px; display: flex; flex-direction: column; color: var(--ink); }
+  .wa-top { background: #274B57; color: #fff; padding: 18px 16px 12px; display: flex; gap: 10px; align-items: center; }
+  .wa-top .av { width: 38px; height: 38px; border-radius: 50%; background: var(--terra-soft); display: grid; place-items: center; font-weight: 800; color: var(--ink); }
+  .wa-top small { display: block; color: #bfe0cf; font-size: 12px; }
+  .msgs { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; scroll-behavior: smooth; }
+  .m { max-width: 82%; padding: 8px 12px; border-radius: 12px; font-size: 14px; line-height: 1.4; animation: pop .3s var(--ease); box-shadow: 0 1px 1px rgba(0,0,0,.08); }
+  .m.user { align-self: flex-end; background: #D9F2CF; border-top-right-radius: 3px; }
+  .m.bot { align-self: flex-start; background: #fff; border-top-left-radius: 3px; }
+  .m.sys { align-self: center; background: #FDF0C9; font: 600 11px var(--mono); }
+  .m .time { display: block; text-align: right; font-size: 10px; color: #6a7378; margin-top: 2px; }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.96); } }
+  .dots { display: inline-flex; gap: 4px; padding: 4px 0; } .dots i { width: 7px; height: 7px; border-radius: 50%; background: #9aa5aa; animation: b 1s infinite; } .dots i:nth-child(2) { animation-delay: .15s; } .dots i:nth-child(3) { animation-delay: .3s; }
+  @keyframes b { 50% { transform: translateY(-4px); } }
+  .chips { padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; background: #f7f1e6; border-top: 1px solid #e2d8c6; }
+  .chips button { border: 1px solid #c9bda8; background: #fff; border-radius: 999px; padding: 7px 12px; font: 600 13px var(--sans); color: var(--ink); cursor: pointer; transition: background .2s; }
+  .chips button:hover { background: #FBE6DA; }
+  .chips button:disabled { opacity: .45; cursor: default; }
+  .mascot { display: grid; justify-items: center; gap: 10px; }
+  .mascot svg { width: 120px; overflow: visible; }
+  .mascot .say { font: 600 12px var(--mono); color: var(--muted); text-align: center; min-height: 3em; }
+  #mbot .eye { transition: transform .12s linear; }
+  #mbot .face-happy, #mbot .face-think { transition: opacity .3s; }
+  #mbot.thinking .face-happy { opacity: 0; } #mbot:not(.thinking) .face-think { opacity: 0; }
+  #mbot .float { animation: float 3s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-8px); } }
+  #mbot.thinking .ant { animation: blinkant .4s infinite alternate; }
+  @keyframes blinkant { to { fill: #FCF8EF; } }
+  .backstage { background: var(--petrol); border: 1px solid var(--line); border-radius: 22px; padding: 24px; }
+  .backstage h3 { font-size: 22px; display: flex; justify-content: space-between; align-items: center; }
+  .live { font: 600 12px var(--mono); color: var(--green); display: inline-flex; gap: 6px; align-items: center; }
+  .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(127,214,164,.15); } }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
+  .stat { background: rgba(255,255,255,.05); border-radius: 14px; padding: 14px; }
+  .stat small { font: 600 11px var(--mono); color: var(--muted); text-transform: uppercase; }
+  .stat b { display: block; font-size: 30px; letter-spacing: -.03em; transition: color .3s; }
+  .stat b.bump { color: var(--terra-soft); }
+  .events { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; min-height: 264px; }
+  .events li { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 14px; animation: slideIn .45s var(--ease); }
+  .events li .ic { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: rgba(168,207,227,.15); font: 700 13px var(--mono); color: var(--river); }
+  .events li time { font: 12px var(--mono); color: var(--muted); }
+  .events .empty { color: var(--muted); font: 13px var(--mono); border-style: dashed; grid-template-columns: 1fr; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } }
+
+  /* Process */
+  .proc { display: grid; grid-template-columns: .9fr 1.1fr; gap: 80px; }
+  .proc-side { position: sticky; top: 120px; align-self: start; }
+  .timeline { position: relative; padding-left: 48px; }
+  .timeline .rail { position: absolute; left: 15px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .timeline .rail i { position: absolute; inset: 0 0 auto; height: 0; background: var(--terra); }
+  .tl-step { position: relative; padding-bottom: 56px; }
+  .tl-step:last-child { padding-bottom: 0; }
+  .tl-step .dot { position: absolute; left: -48px; top: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--bg); border: 2px solid var(--line); display: grid; place-items: center; font: 700 13px var(--mono); transition: border-color .3s, background .3s, color .3s; }
+  .tl-step.on .dot { border-color: var(--terra); background: var(--terra); color: var(--ink); }
+  .tl-step h3 { font-size: 30px; margin-bottom: 8px; }
+  .tl-step p { color: var(--muted); margin: 0 0 10px; max-width: 48ch; }
+  .tl-step .meta { font: 600 12px var(--mono); color: var(--river); }
+
+  /* About */
+  .manifesto { font-size: clamp(30px, 3.6vw, 48px); line-height: 1.18; font-weight: 700; letter-spacing: -.03em; max-width: 24ch; margin: 18px 0 64px; }
+  .manifesto .wd { opacity: .18; transition: opacity .3s; }
+  .manifesto .wd.lit { opacity: 1; }
+  .manifesto .hl { color: var(--terra-soft); }
+  .roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .role { border-top: 2px solid var(--terra); padding-top: 18px; }
+  .role h3 { font-size: 22px; margin-bottom: 6px; }
+  .role p { color: var(--muted); margin: 0; font-size: 16px; }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+  details { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; list-style: none; padding: 22px 0; font-size: 19px; font-weight: 650; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font: 400 24px/1 var(--mono); color: var(--terra-soft); transition: transform .3s var(--ease); }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--muted); margin: 0 0 22px; }
+
+  /* CTA builder */
+  .cta-box { background: var(--cream); color: var(--ink); border-radius: 28px; padding: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .cta-box h2 { color: var(--ink); }
+  .cta-box .label { color: #8a3a1a; }
+  .cta-box p.sub { color: #4A5459; }
+  fieldset { border: 0; padding: 0; margin: 0 0 18px; }
+  legend { font-weight: 700; margin-bottom: 10px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts label { cursor: pointer; }
+  .opts input { position: absolute; opacity: 0; }
+  .opts span { display: inline-block; padding: 9px 14px; border-radius: 10px; border: 1.5px solid #d5c9b4; font-size: 15px; font-weight: 600; transition: background .2s, border-color .2s; }
+  .opts input:checked + span { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .opts input:focus-visible + span { outline: 3px solid var(--terra); outline-offset: 2px; }
+  .preview { background: #EFE7DA; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+  .preview .m { max-width: 100%; }
+  .preview small { font: 600 12px var(--mono); color: #4A5459; }
+  .cta-box .btn-terra { color: #1b1b1b; align-self: flex-start; }
+
+  /* Footer */
+  .footer { position: relative; background: #274B57; }
+  .footer img { display: block; width: 100%; height: auto; }
+  .f-in { position: absolute; inset: 0 0 auto; padding-top: 64px; }
+  .f-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+  .f-grid h4 { margin: 0 0 12px; font: 600 12px var(--mono); color: var(--terra-soft); text-transform: uppercase; letter-spacing: .06em; }
+  .f-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .f-grid a { text-decoration: none; color: #d5e2e5; }
+  .f-grid a:hover { color: #fff; text-decoration: underline; }
+  .f-big { font-size: 44px; font-weight: 750; letter-spacing: -.04em; line-height: 1; margin: 0 0 12px; }
+  .f-legal { position: absolute; bottom: 16px; left: 0; right: 0; }
+  .f-legal .wrap { display: flex; justify-content: space-between; font: 600 12px var(--mono); color: #EAF1F2; }
+  .f-legal span { background: rgba(27,54,64,.85); padding: 5px 10px; border-radius: 999px; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+    .manifesto .wd { opacity: 1; }
+  }
+  @media (max-width: 960px) {
+    .nav ul { display: none; }
+    .pains, .roles, .faq, .cta-box, .proc, .demo-grid { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr; } .tile { grid-column: auto !important; grid-row: auto !important; } .t-soft { grid-template-columns: 1fr; }
+    .head { flex-direction: column; align-items: start; }
+    .proc-side { position: static; }
+    .f-in { position: static; padding: 48px 0; }
+    .f-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Principal">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Puente NEA, inicio">
+      <svg width="30" height="26" viewBox="0 0 34 28" aria-hidden="true"><path d="M10 26 L14 3 L18 26 M14 3 L2 17 M14 3 L26 17 M1 20 H33" fill="none" stroke="#F4A47F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Puente NEA
+    </a>
+    <ul>
+      <li><a href="#problemas">Problemas</a></li>
+      <li><a href="#que-hacemos">Qué hacemos</a></li>
+      <li><a href="#demo">Probalo</a></li>
+      <li><a href="#como-trabajamos">Proceso</a></li>
+      <li><a href="#quienes-somos">Nosotros</a></li>
+      <li><a href="#preguntas">FAQ</a></li>
+    </ul>
+    <a class="btn btn-terra" href="#hablemos">Hablemos</a>
+  </div>
+</nav>
+
+<main id="contenido">
+  <header class="hero" id="top">
+    <img src="assets/hero-puente.jpg" width="1942" height="809" alt="Ilustración del puente General Belgrano sobre el río Paraná al atardecer, con paneles de software conectados sobre sus torres.">
+    <div class="wrap">
+      <div class="term" role="group" aria-label="Presentación">
+        <div class="term-top" aria-hidden="true"><i></i><i></i><i></i><span>puente-nea — taller</span></div>
+        <div class="term-body">
+          <div class="prompt" aria-hidden="true"><span id="typed"></span><span class="caret"></span></div>
+          <h1>Construimos <span class="rotator" aria-hidden="true"><span class="on">software a medida</span><span>automatizaciones</span><span>asistentes con IA</span></span><span class="sr-only" style="position:absolute;left:-9999px">software a medida, automatizaciones y asistentes con IA</span><br>para pymes.</h1>
+          <p>Somos un taller de software del Noreste argentino. Tu negocio deja de depender de planillas, copiar y pegar y responder lo mismo todo el día.</p>
+          <div class="ctas">
+            <a class="btn btn-terra" href="#hablemos">Contanos tu problema →</a>
+            <a class="btn btn-line" href="#demo">Probá la demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="scroll-hint" href="#problemas"><span>¿Te suena alguno de estos?</span><i aria-hidden="true"></i></a>
+  </header>
+
+  <section id="problemas" aria-labelledby="p-title">
+    <div class="wrap">
+      <div class="head reveal">
+        <div><span class="label">problemas que resolvemos</span><h2 id="p-title">¿Te suena alguno?</h2></div>
+        <p class="muted">Pasá el mouse (o tocá) cada tarjeta para ver cómo lo resolvemos.</p>
+      </div>
+      <div class="pains reveal">
+        <div class="pain"><button type="button" aria-pressed="false"><span class="face front"><small>01 · planillas</small><span class="q">“Tengo cinco Excel y ninguno coincide.”</span><small>Ver solución ↻</small></span><span class="face back"><small>software a medida</small><span class="a">Un <b>sistema de gestión</b> con stock, pedidos y clientes en un solo lugar. Una sola verdad.</span><small>→ menos errores, cero versiones</small></span></button></div>
+        <div class="pain"><button type="button" aria-pressed="false"><span class="face front"><small>02 · whatsapp</small><span class="q">“Respondo los mismos precios 40 veces por día.”</span><small>Ver solución ↻</small></span><span class="face back"><small>ia para pymes</small><span class="a">Un <b>asistente con IA</b> responde con tu información y te pasa la charla cuando hace falta.</span><small>→ atendés a toda hora</small></span></button></div>
+        <div class="pain"><button type="button" aria-pressed="false"><span class="face front"><small>03 · carga doble</small><span class="q">“Cargo el pedido, después la factura, después el stock.”</span><small>Ver solución ↻</small></span><span class="face back"><small>automatización</small><span class="a">Conectamos tus herramientas: <b>cargás una vez</b> y el resto se actualiza solo.</span><small>→ horas libres por semana</small></span></button></div>
+        <div class="pain"><button type="button" aria-pressed="false"><span class="face front"><small>04 · turnos</small><span class="q">“Los turnos están en un cuaderno y se pisan.”</span><small>Ver solución ↻</small></span><span class="face back"><small>software a medida</small><span class="a">Un <b>turnero online</b> con recordatorios automáticos por WhatsApp.</span><small>→ menos ausencias</small></span></button></div>
+        <div class="pain"><button type="button" aria-pressed="false"><span class="face front"><small>05 · números</small><span class="q">“Sé cuánto vendí recién a fin de mes.”</span><small>Ver solución ↻</small></span><span class="face back"><small>software a medida</small><span class="a">Un <b>tablero</b> con ventas, cobros y stock al día, desde el celular.</span><small>→ decidís con datos</small></span></button></div>
+        <div class="pain"><button type="button" aria-pressed="false"><span class="face front"><small>06 · ia</small><span class="q">“Todos hablan de IA y no sé qué me sirve.”</span><small>Ver solución ↻</small></span><span class="face back"><small>acompañamiento</small><span class="a">Un <b>diagnóstico</b> de tus tareas para elegir qué automatizar primero, y capacitación al equipo.</span><small>→ IA con propósito</small></span></button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="que-hacemos" aria-labelledby="s-title">
+    <div class="wrap">
+      <div class="head reveal">
+        <div><span class="label">qué hacemos</span><h2 id="s-title">Un taller, tres herramientas.</h2></div>
+        <p class="muted">Diseñamos, construimos y mantenemos. Vos seguís atendiendo tu negocio.</p>
+      </div>
+      <div class="bento">
+        <article class="tile t-soft reveal" id="tile-soft">
+          <div>
+            <span class="label">01</span>
+            <h3>Software a medida</h3>
+            <p>Sistemas de gestión, turneros, catálogos y webs, hechos para cómo trabaja tu negocio. Desde la compu o el celular.</p>
+            <ul class="pill-list"><li>stock</li><li>pedidos</li><li>turnos</li><li>clientes</li><li>cobros</li></ul>
+          </div>
+          <div class="mini-dash" aria-label="Ejemplo de tablero: ventas del mes en alza y stock por producto">
+            <div class="row"><span>VENTAS · OCTUBRE</span><span style="color:#2e7d4f">▲ 18%</span></div>
+            <div><div class="big">$ 6.482.300</div>
+              <svg class="spark" viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120 L0 92 C40 88 60 96 90 74 S150 70 180 52 S240 40 300 14 L300 120Z" fill="#A8CFE3" opacity=".35"/><path class="l" d="M0 92 C40 88 60 96 90 74 S150 70 180 52 S240 40 300 14"/></svg>
+            </div>
+            <div class="stock">
+              <div><span>Yerba 1 kg</span><span class="bar"><i data-w="82"></i></span><span>164</span></div>
+              <div><span>Aceite 900 ml</span><span class="bar"><i data-w="56"></i></span><span>98</span></div>
+              <div class="low"><span>Harina 000</span><span class="bar"><i data-w="12"></i></span><span>9</span></div>
+            </div>
+          </div>
+        </article>
+        <article class="tile t-auto reveal">
+          <span class="label">02</span>
+          <h3>Automatización</h3>
+          <p>WhatsApp, planillas, facturación y tu tienda, hablando entre sí.</p>
+          <div class="stream" id="stream" aria-label="Registro de tareas automáticas" aria-live="off"></div>
+        </article>
+        <article class="tile t-ai reveal">
+          <span class="label">03</span>
+          <h3>IA para pymes</h3>
+          <p>Te ayudamos a implementarla donde rinde: asistentes que atienden clientes, toman pedidos y resumen lo importante.</p>
+          <a class="go" href="#demo">Probala ahora ↓</a>
+        </article>
+        <article class="tile t-int reveal">
+          <span class="label">integraciones</span>
+          <h3>Con lo que ya usás</h3>
+          <p>No hace falta cambiar todo. Conectamos tus herramientas.</p>
+          <ul class="pill-list"><li>WhatsApp</li><li>Google Sheets</li><li>Excel</li><li>Mercado Pago</li><li>Tiendanube</li><li>Facturación ARCA</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" id="demo" aria-labelledby="d-title">
+    <div class="wrap">
+      <div class="head reveal">
+        <div><span class="label">demo en vivo</span><h2 id="d-title">Escribile al asistente. Mirá qué pasa atrás.</h2></div>
+        <p class="muted">Un almacén mayorista ficticio. Elegí un mensaje: el asistente responde y, mientras tanto, el sistema registra pedidos, descuenta stock y avisa al dueño.</p>
+      </div>
+      <div class="demo-grid reveal">
+        <div class="phone">
+          <div class="screen">
+            <div class="wa-top"><span class="av" aria-hidden="true">AL</span><div><b>Almacén La Costanera</b><small>asistente · en línea</small></div></div>
+            <div class="msgs" id="msgs" aria-live="polite">
+              <div class="m bot">¡Hola! Soy el asistente de La Costanera. Puedo pasarte precios, tomar tu pedido o comunicarte con alguien del equipo.<span class="time">09:12</span></div>
+            </div>
+            <div class="chips" id="chips" role="group" aria-label="Mensajes de ejemplo">
+              <button type="button" data-k="precio">¿Precio de la yerba por bulto?</button>
+              <button type="button" data-k="pedido">Quiero 10 bultos de yerba</button>
+              <button type="button" data-k="horario">¿Hasta qué hora reciben pedidos?</button>
+              <button type="button" data-k="persona">Necesito hablar con alguien</button>
+            </div>
+          </div>
+        </div>
+        <div class="mascot" aria-hidden="true">
+          <svg id="mbot" viewBox="0 0 120 150">
+            <g class="float">
+              <line x1="60" y1="22" x2="60" y2="8" stroke="#EAF1F2" stroke-width="3"/>
+              <circle class="ant" cx="60" cy="7" r="6" fill="#E8693A"/>
+              <rect x="14" y="22" width="92" height="74" rx="28" fill="#FCF8EF"/>
+              <rect x="24" y="32" width="72" height="50" rx="18" fill="#1B3640"/>
+              <g class="eye"><circle cx="46" cy="55" r="7" fill="#A8CFE3"/></g>
+              <g class="eye"><circle cx="74" cy="55" r="7" fill="#A8CFE3"/></g>
+              <path class="face-happy" d="M50 68 Q60 76 70 68" stroke="#F4A47F" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <g class="face-think" fill="#F4A47F"><circle cx="50" cy="71" r="2.5"/><circle cx="60" cy="71" r="2.5"/><circle cx="70" cy="71" r="2.5"/></g>
+              <rect x="38" y="100" width="44" height="30" rx="12" fill="#FCF8EF"/>
+              <circle cx="60" cy="115" r="6" fill="#E8693A"/>
+            </g>
+            <ellipse cx="60" cy="144" rx="30" ry="4" fill="#000" opacity=".25"/>
+          </svg>
+          <div class="say" id="say">Hola, soy Tito.<br>Probame →</div>
+        </div>
+        <div class="backstage">
+          <h3>Lo que pasa atrás <span class="live"><i></i>en vivo</span></h3>
+          <div class="stats">
+            <div class="stat"><small>Pedidos hoy</small><b id="st-orders">14</b></div>
+            <div class="stat"><small>Yerba en stock</small><b id="st-stock">164</b></div>
+            <div class="stat"><small>Minutos ahorrados</small><b id="st-min">96</b></div>
+          </div>
+          <ul class="events" id="events" aria-live="polite">
+            <li class="empty">Esperando un mensaje del cliente…</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-trabajamos" aria-labelledby="c-title">
+    <div class="wrap proc">
+      <div class="proc-side reveal">
+        <span class="label">cómo trabajamos</span>
+        <h2 id="c-title" style="margin:14px 0 18px">Sin sorpresas, de punta a punta.</h2>
+        <p class="muted">Precio y fecha de entrega por escrito antes de arrancar. Avances cada semana. Soporte después.</p>
+        <a class="btn btn-line" href="#hablemos" style="margin-top:12px">Agendá la primera charla</a>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="rail" aria-hidden="true"><i id="rail-fill"></i></div>
+        <div class="tl-step"><span class="dot">1</span><h3>Charla de diagnóstico</h3><p>30 minutos, gratis. Nos contás qué te lleva tiempo y qué se te escapa. Escuchamos antes de proponer.</p><span class="meta">› gratis · videollamada o presencial</span></div>
+        <div class="tl-step"><span class="dot">2</span><h3>Propuesta por escrito</h3><p>Qué vamos a construir, cuánto cuesta y cuándo lo entregamos. Sin letra chica.</p><span class="meta">› precio cerrado · en 48 h</span></div>
+        <div class="tl-step"><span class="dot">3</span><h3>Construcción por etapas</h3><p>Trabajamos en entregas cortas. Cada semana probás avances reales y ajustamos con tu feedback.</p><span class="meta">› demo semanal</span></div>
+        <div class="tl-step"><span class="dot">4</span><h3>Lanzamiento y capacitación</h3><p>Ponemos todo en marcha, capacitamos a tu equipo y quedamos cerca para lo que haga falta.</p><span class="meta">› soporte incluido</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quienes-somos" aria-labelledby="n-title" style="background:var(--petrol)">
+    <div class="wrap">
+      <span class="label">quiénes somos</span>
+      <h2 id="n-title" class="manifesto" data-manifesto>Somos un equipo de ingenieros del <span class="hl">Noreste argentino.</span> Creemos que una pyme no necesita más tecnología: necesita <span class="hl">herramientas simples</span> que le devuelvan tiempo.</h2>
+      <div class="roles reveal">
+        <div class="role"><h3>Ingeniería de software</h3><p>Sistemas, webs y apps pensadas para durar y crecer con tu negocio.</p></div>
+        <div class="role"><h3>Automatización e IA</h3><p>Integraciones y asistentes que se ganan su lugar ahorrando horas reales.</p></div>
+        <div class="role"><h3>Producto y acompañamiento</h3><p>Diseño claro, capacitación y soporte. El código y los datos son tuyos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preguntas" aria-labelledby="f-title">
+    <div class="wrap">
+      <div class="head reveal"><div><span class="label">preguntas frecuentes</span><h2 id="f-title">Antes de escribirnos.</h2></div><p class="muted">Lo que más nos preguntan, en pocas líneas.</p></div>
+      <div class="faq reveal">
+        <div>
+          <details><summary>¿Cuánto cuesta?</summary><p>Depende de qué haya que resolver. Después de la primera charla te mandamos el precio cerrado por escrito, antes de arrancar.</p></details>
+          <details><summary>¿Cuánto tarda?</summary><p>Una automatización puede estar en días; un sistema de gestión, en semanas. La fecha va en la propuesta y ves avances cada semana.</p></details>
+          <details><summary>¿Tengo que cambiar todo lo que uso?</summary><p>No. Si tus planillas, tu facturación o tu WhatsApp te sirven, los conectamos en lugar de reemplazarlos.</p></details>
+        </div>
+        <div>
+          <details><summary>¿Necesito saber de IA?</summary><p>No. Elegimos juntos qué tareas automatizar, lo configuramos con la información de tu negocio y capacitamos a tu equipo.</p></details>
+          <details><summary>¿Mis datos quedan seguros?</summary><p>Sí. Los datos son tuyos, con accesos que vos controlás y copias de seguridad.</p></details>
+          <details><summary>No sé qué necesito, ¿igual podemos hablar?</summary><p>Claro. Contanos qué te lleva tiempo y vemos juntos por dónde empezar.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hablemos" aria-labelledby="h-title" style="padding-top:40px">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div>
+          <span class="label">empecemos</span>
+          <h2 id="h-title" style="margin:14px 0 14px">Pegá el salto al otro lado del puente.</h2>
+          <p class="sub">Elegí lo que más te pesa hoy y te armamos el primer mensaje.</p>
+          <form id="builder" onsubmit="return false">
+            <fieldset><legend>¿Qué te gustaría resolver?</legend>
+              <div class="opts">
+                <label><input type="radio" name="need" value="ordenar el stock y los pedidos" checked><span>Stock y pedidos</span></label>
+                <label><input type="radio" name="need" value="dejar de responder lo mismo por WhatsApp"><span>WhatsApp saturado</span></label>
+                <label><input type="radio" name="need" value="dejar de cargar todo dos veces"><span>Carga doble</span></label>
+                <label><input type="radio" name="need" value="empezar a usar IA en el negocio"><span>Empezar con IA</span></label>
+              </div>
+            </fieldset>
+            <fieldset><legend>¿Qué tipo de negocio tenés?</legend>
+              <div class="opts">
+                <label><input type="radio" name="biz" value="un comercio" checked><span>Comercio</span></label>
+                <label><input type="radio" name="biz" value="una distribuidora"><span>Distribuidora</span></label>
+                <label><input type="radio" name="biz" value="un consultorio"><span>Consultorio</span></label>
+                <label><input type="radio" name="biz" value="un estudio profesional"><span>Estudio</span></label>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="preview">
+          <small>Tu mensaje</small>
+          <div class="m user" id="preview-msg" aria-live="polite"></div>
+          <a class="btn btn-terra" href="#hablemos">Enviar por WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <img src="assets/footer-taller.jpg" width="1944" height="809" alt="" loading="lazy">
+  <div class="f-in">
+    <div class="wrap f-grid">
+      <div><p class="f-big">Puente NEA</p><p class="muted" style="margin:0;max-width:34ch">Taller de software para pymes. Software a medida, automatización e IA, desde el Noreste argentino.</p></div>
+      <div><h4>Servicios</h4><ul><li><a href="#que-hacemos">Software a medida</a></li><li><a href="#que-hacemos">Automatización</a></li><li><a href="#demo">IA para pymes</a></li></ul></div>
+      <div><h4>Explorar</h4><ul><li><a href="#problemas">Problemas</a></li><li><a href="#como-trabajamos">Proceso</a></li><li><a href="#quienes-somos">Nosotros</a></li></ul></div>
+      <div><h4>Contacto</h4><ul><li><a href="#hablemos">WhatsApp</a></li><li><a href="#hablemos">hola@puentenea.com</a></li><li><a href="#hablemos">Corrientes · Resistencia</a></li></ul></div>
+    </div>
+  </div>
+  <div class="f-legal"><div class="wrap"><span>© 2026 Puente NEA</span><span>Hecho en el NEA, Argentina.</span></div></div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sleep = ms => new Promise(r => setTimeout(r, reduce ? 30 : ms));
+
+  // Typed prompt
+  const typed = document.getElementById('typed');
+  const cmd = '$ puente-nea build --para "tu pyme"';
+  if (reduce) typed.textContent = cmd;
+  else { let i = 0; const t = () => { typed.textContent = cmd.slice(0, ++i); if (i < cmd.length) setTimeout(t, 45 + Math.random() * 50); }; setTimeout(t, 700); }
+
+  // Rotating words
+  const words = document.querySelectorAll('.rotator span');
+  let w = 0;
+  if (!reduce) setInterval(() => { words[w].classList.remove('on'); w = (w + 1) % words.length; words[w].classList.add('on'); }, 2400);
+
+  // Reveal
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Flip cards (tap / keyboard)
+  document.querySelectorAll('.pain button').forEach(b => b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
+
+  // Stock bars
+  new IntersectionObserver(([e], o) => { if (e.isIntersecting) { document.querySelectorAll('.stock .bar i').forEach(i => i.style.width = i.dataset.w + '%'); o.disconnect(); } }, { threshold: .4 }).observe(document.getElementById('tile-soft'));
+
+  // Automation stream
+  const stream = document.getElementById('stream');
+  const feed = [
+    ['ok', 'pedido #2187 → planilla de stock'], ['t', 'whatsapp: confirmación enviada'], ['ok', 'factura B emitida (ARCA)'],
+    ['t', 'mercado pago: cobro acreditado'], ['ok', 'stock: harina 000 bajo mínimo'], ['t', 'aviso al dueño enviado'],
+    ['ok', 'turno 16:30 recordado al cliente'], ['t', 'tiendanube: 2 productos sincronizados'], ['ok', 'reporte diario enviado por mail']
+  ];
+  let f = 0;
+  const pushLine = () => {
+    const [c, txt] = feed[f++ % feed.length];
+    const p = document.createElement('p');
+    p.innerHTML = `<span class="${c}">${c === 'ok' ? '✓' : '→'}</span> ${txt}`;
+    stream.append(p); while (stream.children.length > 9) stream.firstChild.remove();
+  };
+  for (let i = 0; i < 6; i++) pushLine();
+  if (!reduce) setInterval(pushLine, 1300);
+
+  // Demo
+  const msgs = document.getElementById('msgs');
+  const chips = document.querySelectorAll('#chips button');
+  const events = document.getElementById('events');
+  const mbot = document.getElementById('mbot');
+  const say = document.getElementById('say');
+  const orders = document.getElementById('st-orders'), stock = document.getElementById('st-stock'), mins = document.getElementById('st-min');
+  let clock = 12;
+  const now = () => `09:${String(++clock).padStart(2, '0')}`;
+  const bubble = (cls, html) => { const d = document.createElement('div'); d.className = 'm ' + cls; d.innerHTML = html; msgs.append(d); msgs.scrollTop = msgs.scrollHeight; return d; };
+  const event = (ic, txt) => {
+    const empty = events.querySelector('.empty'); if (empty) empty.remove();
+    const li = document.createElement('li'); li.innerHTML = `<span class="ic" aria-hidden="true">${ic}</span><span>${txt}</span><time>${`09:${String(clock).padStart(2, '0')}`}</time>`;
+    events.prepend(li); while (events.children.length > 5) events.lastChild.remove();
+  };
+  const bump = (el, delta) => { el.textContent = +el.textContent + delta; el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 700); };
+  const flows = {
+    precio: { a: 'El bulto de yerba 1 kg (10 u.) está $ 38.500. Llevando 5 bultos o más, 8% de descuento. ¿Te armo el pedido?', say: 'Respondí con la lista de precios actualizada.', ev: [['$', 'Consulta de precio respondida sola'], ], min: 3 },
+    pedido: { a: 'Listo: 10 bultos de yerba 1 kg con 8% off. Total $ 354.200. Lo entregamos mañana antes de las 12. ¿Confirmás?', say: 'Pedido cargado. Nadie tuvo que tipearlo.', ev: [['#', 'Pedido #2188 creado: 10 bultos de yerba'], ['−', 'Stock descontado: yerba 1 kg −100 u.'], ['!', 'Aviso al dueño: pedido grande para mañana']], order: 1, stock: -100, min: 8 },
+    horario: { a: 'Recibimos pedidos hasta las 18 h para entregar al día siguiente. Los sábados, hasta las 12 h.', say: 'Fácil: lo sabía por la información del negocio.', ev: [['?', 'Consulta de horario respondida sola']], min: 2 },
+    persona: { a: 'Claro, te paso con alguien del equipo. En unos minutos te escriben por acá.', say: 'Esto lo tiene que ver una persona. Ya avisé.', ev: [['→', 'Conversación derivada a ventas'], ['!', 'Notificación enviada al celular del encargado']], human: true, min: 0 }
+  };
+  let busy = false;
+  chips.forEach(btn => btn.addEventListener('click', async () => {
+    if (busy) return; busy = true; chips.forEach(c => c.disabled = true);
+    const fl = flows[btn.dataset.k];
+    bubble('user', `${btn.textContent}<span class="time">${now()} ✓✓</span>`);
+    mbot.classList.add('thinking'); say.textContent = 'Pensando…';
+    const typing = bubble('bot', '<span class="dots" aria-label="Escribiendo"><i></i><i></i><i></i></span>');
+    await sleep(1200);
+    typing.innerHTML = `${fl.a}<span class="time">${now()}</span>`;
+    msgs.scrollTop = msgs.scrollHeight;
+    mbot.classList.remove('thinking'); say.textContent = fl.say;
+    for (const [ic, txt] of fl.ev) { await sleep(450); event(ic, txt); }
+    if (fl.order) bump(orders, fl.order);
+    if (fl.stock) bump(stock, fl.stock);
+    if (fl.min) bump(mins, fl.min);
+    if (fl.human) bubble('sys', 'Una persona del equipo se sumó al chat');
+    busy = false; chips.forEach(c => c.disabled = false);
+  }));
+  if (!reduce) addEventListener('pointermove', e => {
+    const r = mbot.getBoundingClientRect();
+    const dx = Math.max(-1, Math.min(1, (e.clientX - r.left - r.width / 2) / 300));
+    const dy = Math.max(-1, Math.min(1, (e.clientY - r.top - r.height / 3) / 300));
+    mbot.querySelectorAll('.eye').forEach(el => el.style.transform = `translate(${dx * 4}px, ${dy * 3}px)`);
+  }, { passive: true });
+
+  // Timeline progress
+  const tl = document.getElementById('timeline'), fill = document.getElementById('rail-fill'), steps = tl.querySelectorAll('.tl-step');
+  const mf = document.querySelector('[data-manifesto]');
+  // Split manifesto into words (keep highlight spans)
+  const split = node => [...node.childNodes].forEach(c => {
+    if (c.nodeType === 3) { const fr = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(t => { if (!t.trim()) return fr.append(t); const s = document.createElement('span'); s.className = 'wd'; s.textContent = t; fr.append(s); }); c.replaceWith(fr); }
+    else split(c);
+  });
+  split(mf);
+  const wds = mf.querySelectorAll('.wd');
+  const onScroll = () => {
+    const r = tl.getBoundingClientRect(), vh = innerHeight;
+    const p = Math.max(0, Math.min(1, (vh * .6 - r.top) / r.height));
+    fill.style.height = (p * 100) + '%';
+    steps.forEach(s => s.classList.toggle('on', s.getBoundingClientRect().top < vh * .6));
+    const m = mf.getBoundingClientRect();
+    const q = Math.max(0, Math.min(1, (vh * .85 - m.top) / (m.height + vh * .35)));
+    wds.forEach((el, i) => el.classList.toggle('lit', reduce || i / wds.length < q));
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // CTA message builder
+  const builder = document.getElementById('builder'), prev = document.getElementById('preview-msg');
+  const upd = () => { const d = new FormData(builder); prev.innerHTML = `Hola, Puente NEA. Tengo ${d.get('biz')} y quiero ${d.get('need')}. ¿Podemos agendar una charla?<span class="time">ahora</span>`; };
+  builder.addEventListener('change', upd); upd();
+})();
+</script>
+</body>
+</html>

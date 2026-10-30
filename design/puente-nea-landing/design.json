@@ -1,0 +1,10 @@
+{
+  "title": "Puente NEA — Landing",
+  "brief": "Landing page for Puente NEA, a software factory from northeast Argentina (custom software, automation, AI adoption for SMBs). Inspired by shipperslab.tech sections (hero, services with interactive figures incl. a robot, team, FAQ, CTA, footer). Hero uses the bridge illustration; footer uses the petrol-blue digital workshop illustration.",
+  "artboards": [
+    { "file": "01-puente-editorial.html", "title": "Puente editorial", "tradeoff": "Closest to the reference: calm, editorial and very readable, with a robot, before/after and an automation flow inline per service; the least surprising of the three", "width": 1440, "height": 900 },
+    { "file": "02-taller-nocturno.html", "title": "Taller nocturno", "tradeoff": "Dark, product-like and demo-first: a live WhatsApp assistant drives a backstage dashboard and makes automation + AI tangible; the dark theme carries less of the bridge's warmth", "width": 1440, "height": 900 },
+    { "file": "03-cruzar-el-puente.html", "title": "Cruzar el puente", "tradeoff": "Most memorable: a horizontal scroll journey across the bridge guided by Nea, a capybara-robot mascot, plus a time-savings calculator; playful tone and scroll-jacking may not suit conservative buyers", "width": 1440, "height": 900 },
+    { "file": "04-hablemos.html", "title": "Hablemos (formulario)", "tradeoff": "Contact page linked from the 01 CTA: 3-step form (who, contact by email or WhatsApp, problem) that shows the email the team receives; one field group per step lowers friction but adds two clicks versus a single form", "width": 1440, "height": 900 }
+  ]
+}

@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puente NEA · Cruzá al otro lado</title>
+<style>
+  :root {
+    --cream: #FCF8EF;
+    --sand: #F4EADA;
+    --line: #E4D6BF;
+    --ink: #172A33;
+    --ink-2: #45545B;
+    --terra: #D9572B;
+    --terra-ink: #A23C16;
+    --river: #A8CFE3;
+    --river-2: #D7E9F2;
+    --deep: #1F5F80;
+    --petrol: #274B57;
+    --capy: #A0613A;
+    --capy-d: #7E4A2B;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --round: ui-rounded, "SF Pro Rounded", ui-sans-serif, system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --ease: cubic-bezier(.22,.8,.26,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--terra); outline-offset: 3px; border-radius: 8px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 8px 14px; z-index: 99; }
+  .skip:focus { left: 8px; }
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+  h1, h2, h3 { font-family: var(--round); font-weight: 800; letter-spacing: -.035em; margin: 0; }
+  h2 { font-size: clamp(38px, 5vw, 68px); line-height: 1; }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font: 700 13px var(--mono); color: var(--terra-ink); text-transform: uppercase; letter-spacing: .06em; }
+  .kicker::before { content: ""; width: 18px; height: 2px; background: var(--terra); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 16px; font: 700 17px var(--round); text-decoration: none; border: 2px solid var(--ink); cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s; box-shadow: 4px 4px 0 var(--ink); }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+  .btn-terra { background: var(--terra); color: #fff; }
+  .btn-cream { background: var(--cream); color: var(--ink); }
+
+  /* Progress + nav */
+  .progress { position: fixed; inset: 0 0 auto; height: 4px; background: transparent; z-index: 60; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--terra); }
+  .nav { position: fixed; inset: 18px 0 auto; z-index: 50; pointer-events: none; }
+  .nav .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .nav a, .nav ul { pointer-events: auto; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 800 19px var(--round); background: var(--cream); padding: 9px 16px 9px 12px; border-radius: 14px; border: 2px solid var(--ink); }
+  .nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 6px; background: var(--cream); border: 2px solid var(--ink); border-radius: 14px; }
+  .nav ul a { display: block; text-decoration: none; padding: 6px 12px; border-radius: 9px; font-weight: 600; font-size: 15px; }
+  .nav ul a:hover { background: var(--sand); }
+  .nav .btn { padding: 10px 18px; font-size: 15px; box-shadow: 3px 3px 0 var(--ink); }
+
+  /* Mascot (shared) */
+  .capy { overflow: visible; }
+  .capy .pupil { transition: transform .12s linear; }
+  .capy .leg { transform-box: fill-box; transform-origin: top center; }
+  .capy.walking .leg.a { animation: step .36s ease-in-out infinite alternate; }
+  .capy.walking .leg.b { animation: step .36s ease-in-out infinite alternate-reverse; }
+  .capy.walking .bodyg { animation: bob .36s ease-in-out infinite alternate; }
+  @keyframes step { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+  @keyframes bob { to { transform: translateY(-2px); } }
+  .capy .led { animation: led 1.4s steps(1) infinite; } .capy .led:nth-of-type(2) { animation-delay: .45s; } .capy .led:nth-of-type(3) { animation-delay: .9s; }
+  @keyframes led { 50% { fill: #A8CFE3; } }
+  .capy .bulb { animation: bulb 2s ease-in-out infinite; }
+  @keyframes bulb { 50% { fill: #FFC2A5; } }
+  .capy.hop { animation: hop .5s var(--ease); }
+  @keyframes hop { 40% { transform: translateY(-22px); } }
+  .speech { position: absolute; background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 10px 14px; font: 600 15px/1.35 var(--round); box-shadow: 3px 3px 0 var(--ink); max-width: 260px; transition: opacity .3s, transform .3s var(--ease); }
+  .speech::after { content: ""; position: absolute; left: 26px; bottom: -9px; width: 14px; height: 14px; background: #fff; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); }
+  .speech.swap { opacity: 0; transform: translateY(6px); }
+
+  /* Hero */
+  .hero { position: relative; height: 100vh; height: 100svh; min-height: 860px; overflow: hidden; background: var(--cream); }
+  .hero-img { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 62%; object-fit: cover; object-position: 50% 100%; will-change: transform; transform-origin: 50% 100%; }
+  .hero-copy { position: relative; z-index: 2; padding-top: 100px; text-align: center; }
+  .hero h1 { font-size: clamp(46px, 6.1vw, 88px); line-height: .92; }
+  .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+  .hero h1 .line span { display: inline-block; transform: translateY(110%); animation: lineUp 1s var(--ease) forwards; }
+  .hero h1 .line:nth-child(2) span { animation-delay: .15s; color: var(--terra-ink); }
+  @keyframes lineUp { to { transform: none; } }
+  .hero p { max-width: 64ch; margin: 18px auto 0; color: var(--ink-2); font-size: 19px; opacity: 0; animation: fade .8s ease .5s forwards; }
+  .hero .ctas { display: flex; gap: 14px; justify-content: center; margin-top: 22px; opacity: 0; animation: fade .8s ease .7s forwards; }
+  @keyframes fade { to { opacity: 1; } }
+  .hero-capy { position: absolute; z-index: 3; left: 6%; bottom: 7%; width: 170px; cursor: pointer; }
+  .chips-row { position: absolute; z-index: 3; right: 4%; bottom: 6%; display: flex; gap: 8px; }
+  .chips-row span { background: rgba(252,248,239,.94); border: 2px solid var(--ink); border-radius: 999px; padding: 6px 12px; font: 700 13px var(--round); }
+
+  /* Journey */
+  .journey { position: relative; height: 520vh; background: linear-gradient(var(--cream), var(--river-2)); }
+  .j-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  .j-track { position: absolute; top: 0; left: 0; height: 100%; display: flex; width: 500vw; will-change: transform; }
+  .panel { width: 100vw; height: 100%; flex: none; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; padding: 110px max(48px, calc((100vw - 1200px) / 2)) 210px; }
+  .panel h2 { font-size: clamp(36px, 4.4vw, 60px); margin: 14px 0 16px; }
+  .panel p { color: var(--ink-2); margin: 0 0 16px; max-width: 46ch; }
+  .panel ul.checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .panel ul.checks li { display: flex; gap: 10px; align-items: baseline; font-weight: 600; }
+  .panel ul.checks li::before { content: "✓"; color: var(--deep); font-weight: 800; }
+  .card { background: #fff; border: 2px solid var(--ink); border-radius: 22px; box-shadow: 8px 8px 0 var(--ink); padding: 22px; position: relative; }
+  .deck { position: absolute; left: 0; bottom: 0; width: 500vw; height: 200px; pointer-events: none; }
+  .j-capy { position: absolute; z-index: 5; left: 50%; bottom: 112px; width: 150px; transform: translateX(-50%); }
+  .j-capy .flip { transition: transform .3s; transform-origin: center; transform-box: fill-box; }
+  .j-capy.left .flip { transform: scaleX(-1); }
+  .j-capy .speech { left: 160px; bottom: 34px; width: 300px; }
+  .j-capy .speech::after { left: -9px; bottom: 24px; border-right: 0; border-left: 2px solid var(--ink); }
+  .j-steps { position: absolute; z-index: 6; top: 96px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; background: var(--cream); border: 2px solid var(--ink); border-radius: 999px; padding: 5px; }
+  .j-steps button { border: 0; background: transparent; border-radius: 999px; padding: 5px 12px; font: 700 13px var(--round); color: var(--ink-2); cursor: pointer; }
+  .j-steps button.on { background: var(--ink); color: var(--cream); }
+
+  /* Panel 0 chaos */
+  .chaos { position: relative; height: 380px; }
+  .chaos > * { position: absolute; }
+  .jit { animation: jit 3s ease-in-out infinite; }
+  .jit:nth-child(2) { animation-delay: -.7s; } .jit:nth-child(3) { animation-delay: -1.4s; } .jit:nth-child(4) { animation-delay: -2.1s; } .jit:nth-child(5) { animation-delay: -1s; }
+  @keyframes jit { 25% { translate: 3px -4px; rotate: 1deg; } 75% { translate: -3px 3px; rotate: -1deg; } }
+  .note { background: #FFF1A8; padding: 14px; width: 190px; font: 700 15px/1.3 var(--round); box-shadow: 4px 6px 0 rgba(23,42,51,.18); }
+  .phone-mini { width: 190px; background: var(--ink); color: #fff; border-radius: 26px; padding: 14px; }
+  .phone-mini .notif { background: #fff; color: var(--ink); border-radius: 12px; padding: 8px 10px; font-size: 13px; margin-top: 8px; }
+  .phone-mini .badge { display: inline-block; background: var(--terra); color: #fff; font: 800 12px var(--mono); padding: 2px 8px; border-radius: 999px; }
+  .xls { width: 260px; background: #fff; border: 2px solid var(--ink); border-radius: 10px; font: 12px var(--mono); overflow: hidden; }
+  .xls b { display: block; background: #e5eee6; padding: 6px 8px; }
+  .xls span { display: block; padding: 5px 8px; border-top: 1px solid #e6e6e6; }
+  .xls .err { color: var(--terra-ink); background: #fde3db; }
+
+  /* Panel 1 system */
+  .sys { display: grid; grid-template-columns: 120px 1fr; gap: 14px; min-height: 330px; }
+  .sys nav { display: grid; gap: 6px; align-content: start; font: 600 13px var(--round); }
+  .sys nav span { padding: 8px 10px; border-radius: 10px; }
+  .sys nav span.on { background: var(--sand); }
+  .sys .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+  .sys .kpis div { background: var(--river-2); border-radius: 12px; padding: 10px; }
+  .sys .kpis small { font: 700 11px var(--mono); color: var(--ink-2); }
+  .sys .kpis b { display: block; font: 800 24px var(--round); }
+  .sys table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .sys td { padding: 8px 6px; border-bottom: 1px dashed var(--line); }
+  .tagg { font: 700 11px var(--mono); padding: 3px 8px; border-radius: 999px; background: #e1f2e7; color: #1f6b44; }
+  .tagg.w { background: #fff1d6; color: #8a5a00; }
+
+  /* Panel 2 flow */
+  .flow svg { width: 100%; height: auto; display: block; }
+  .flow .node rect { fill: var(--cream); stroke: var(--ink); stroke-width: 2; }
+  .flow .node text { font: 700 13px var(--round); fill: var(--ink); }
+  .flow .wire { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 5 6; animation: dash 1s linear infinite; }
+  @keyframes dash { to { stroke-dashoffset: -11; } }
+
+  /* Panel 3 ai */
+  .ai-chat { display: grid; gap: 10px; }
+  .ai-chat .b { padding: 10px 14px; border-radius: 16px; max-width: 85%; font-size: 15px; line-height: 1.4; }
+  .ai-chat .u { justify-self: end; background: var(--river-2); border-bottom-right-radius: 4px; }
+  .ai-chat .r { justify-self: start; background: var(--petrol); color: #fff; border-bottom-left-radius: 4px; }
+  .ai-chat .s { justify-self: center; font: 700 12px var(--mono); background: #e1f2e7; color: #1f6b44; padding: 5px 12px; border-radius: 999px; }
+  .ai-chat .b { opacity: 0; transform: translateY(10px); transition: opacity .4s, transform .4s var(--ease); }
+  .panel.active .ai-chat .b { opacity: 1; transform: none; }
+  .panel.active .ai-chat .b:nth-child(2) { transition-delay: .5s; } .panel.active .ai-chat .b:nth-child(3) { transition-delay: 1s; } .panel.active .ai-chat .b:nth-child(4) { transition-delay: 1.5s; } .panel.active .ai-chat .b:nth-child(5) { transition-delay: 2s; }
+
+  /* Panel 4 results */
+  .results { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .res { background: #fff; border: 2px solid var(--ink); border-radius: 18px; padding: 18px; box-shadow: 5px 5px 0 var(--ink); }
+  .res b { display: block; font: 800 38px/1 var(--round); color: var(--deep); margin-bottom: 6px; }
+  .res span { font-weight: 600; font-size: 15px; color: var(--ink-2); }
+  .res.t b { color: var(--terra-ink); }
+
+  section.block { padding: 120px 0; }
+
+  /* Calculator */
+  .calc { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .calc-box { background: #fff; border: 2px solid var(--ink); border-radius: 26px; box-shadow: 10px 10px 0 var(--ink); padding: 32px; position: relative; }
+  .field { margin-bottom: 26px; }
+  .field label { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 10px; }
+  .field output { font: 800 20px var(--round); color: var(--terra-ink); }
+  input[type="range"] { width: 100%; appearance: none; height: 10px; border-radius: 999px; background: var(--sand); border: 2px solid var(--ink); }
+  input[type="range"]::-webkit-slider-thumb { appearance: none; width: 28px; height: 28px; border-radius: 50%; background: var(--terra); border: 2px solid var(--ink); cursor: grab; box-shadow: 2px 2px 0 var(--ink); }
+  input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--terra); border: 2px solid var(--ink); cursor: grab; }
+  .answer { background: var(--petrol); color: #fff; border-radius: 18px; padding: 22px; }
+  .answer small { font: 700 12px var(--mono); color: #F4A47F; text-transform: uppercase; }
+  .answer b { display: block; font: 800 64px/1 var(--round); margin: 6px 0; }
+  .answer p { margin: 0; color: #cfdde1; }
+  .calc-capy { position: absolute; right: 18px; top: -86px; width: 120px; }
+  .fine { font-size: 13px; color: var(--ink-2); margin-top: 12px; }
+
+  /* Process: pylons */
+  .pylons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: end; margin-top: 56px; position: relative; }
+  .pylon { background: var(--cream); border: 2px solid var(--ink); border-radius: 22px 22px 6px 6px; padding: 22px; box-shadow: 6px 6px 0 var(--ink); transform: translateY(40px); opacity: 0; transition: transform .8s var(--ease), opacity .8s; }
+  .pylons.in .pylon { transform: none; opacity: 1; }
+  .pylons.in .pylon:nth-child(2) { transition-delay: .12s; } .pylons.in .pylon:nth-child(3) { transition-delay: .24s; } .pylons.in .pylon:nth-child(4) { transition-delay: .36s; }
+  .pylon:nth-child(1) { min-height: 230px; } .pylon:nth-child(2) { min-height: 270px; } .pylon:nth-child(3) { min-height: 310px; } .pylon:nth-child(4) { min-height: 350px; background: var(--terra); color: #fff; }
+  .pylon:nth-child(4) p { color: #fff; }
+  .pylon .n { font: 800 44px/1 var(--round); color: var(--terra); }
+  .pylon:nth-child(4) .n { color: #fff; }
+  .pylon h3 { font-size: 24px; margin: 10px 0 8px; }
+  .pylon p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+  /* About */
+  .about { background: var(--petrol); color: #EAF1F2; }
+  .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: center; }
+  .about .kicker { color: #F4A47F; } .about .kicker::before { background: #F4A47F; }
+  .about h2 em { font-style: normal; color: #F4A47F; }
+  .about p { color: #cfdde1; font-size: 18px; }
+  .postal { background: var(--cream); color: var(--ink); border-radius: 22px; padding: 26px; border: 2px solid #0e1d22; box-shadow: 10px 10px 0 #0e1d22; transform: rotate(-2deg); transition: transform .4s var(--ease); }
+  .postal:hover { transform: rotate(0); }
+  .postal svg { width: 100%; height: auto; }
+  .postal .meta { display: flex; justify-content: space-between; font: 700 13px var(--mono); color: var(--ink-2); margin-top: 10px; }
+  .vals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+  .vals div { border: 2px solid rgba(255,255,255,.2); border-radius: 18px; padding: 18px; }
+  .vals b { font: 800 20px var(--round); display: block; margin-bottom: 4px; color: #fff; }
+  .vals span { color: #cfdde1; font-size: 15px; }
+
+  /* FAQ chat */
+  .faq { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: start; }
+  .qs { display: grid; gap: 10px; }
+  .qs button { text-align: left; border: 2px solid var(--ink); background: var(--cream); border-radius: 16px; padding: 14px 18px; font: 700 17px var(--round); cursor: pointer; transition: background .2s, transform .2s var(--ease); }
+  .qs button:hover { transform: translateX(4px); }
+  .qs button[aria-selected="true"] { background: var(--ink); color: var(--cream); }
+  .answer-pane { position: sticky; top: 110px; display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: end; min-height: 260px; }
+  .answer-pane .bub { background: #fff; border: 2px solid var(--ink); border-radius: 22px 22px 22px 6px; padding: 22px; box-shadow: 6px 6px 0 var(--ink); font-size: 18px; line-height: 1.5; }
+  .answer-pane .bub b { display: block; font: 800 22px var(--round); margin-bottom: 8px; }
+
+  /* CTA */
+  .cta { text-align: center; padding: 140px 0; background: var(--river-2); position: relative; overflow: hidden; }
+  .cta h2 { font-size: clamp(64px, 11vw, 160px); line-height: .9; }
+  .cta p { color: var(--ink-2); font-size: 19px; max-width: 48ch; margin: 18px auto 30px; }
+  .cta .ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-capy { width: 130px; margin: 0 auto 10px; display: block; }
+
+  /* Footer */
+  .footer { position: relative; background: var(--petrol); color: #EAF1F2; }
+  .footer img { display: block; width: 100%; height: auto; }
+  .f-in { position: absolute; inset: 0 0 auto; padding-top: 70px; }
+  .f-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+  .f-grid h4 { margin: 0 0 12px; font: 700 12px var(--mono); color: #F4A47F; text-transform: uppercase; }
+  .f-grid ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .f-grid a { text-decoration: none; color: #d5e2e5; }
+  .f-grid a:hover { color: #fff; text-decoration: underline; }
+  .f-brand { font: 800 34px var(--round); letter-spacing: -.03em; margin: 0 0 8px; }
+  .sleep { position: absolute; left: 25.6%; bottom: 7.5%; width: 80px; }
+  .zzz { position: absolute; left: 30.5%; bottom: 15%; font: 800 18px var(--round); color: #F4A47F; animation: zz 2.6s ease-in-out infinite; }
+  @keyframes zz { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(14px, -26px); } }
+  .f-legal { position: absolute; left: 0; right: 0; bottom: 16px; }
+  .f-legal .wrap { display: flex; justify-content: space-between; font: 600 12px var(--mono); color: #EAF1F2; }
+  .f-legal span { background: rgba(23,42,51,.82); padding: 5px 10px; border-radius: 999px; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Static journey (small screens / reduced motion) */
+  .static .journey { height: auto; }
+  .static .j-sticky { position: static; height: auto; overflow: visible; }
+  .static .j-track { position: static; width: auto; flex-direction: column; transform: none !important; }
+  .static .panel { width: auto; height: auto; grid-template-columns: 1fr; padding: 72px 24px; }
+  .static .deck, .static .j-capy, .static .j-steps { display: none; }
+  .static .panel .ai-chat .b { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    .reveal, .pylon { opacity: 1; transform: none; }
+    .hero h1 .line span { transform: none; }
+    .hero p, .hero .ctas { opacity: 1; }
+  }
+  @media (max-width: 900px) {
+    .nav ul { display: none; }
+    .calc, .about-grid, .faq, .results { grid-template-columns: 1fr; }
+    .pylons, .vals, .f-grid { grid-template-columns: 1fr 1fr; }
+    .f-in { position: static; padding: 48px 0; }
+    #hero-say, .chips-row { display: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<!-- Mascot template: carpincho-robot "Nea" -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="capy-art">
+      <g class="flip">
+        <ellipse cx="80" cy="118" rx="58" ry="6" fill="#172A33" opacity=".15"/>
+        <g class="leg a"><rect x="34" y="84" width="13" height="30" rx="6" fill="#7E4A2B"/></g>
+        <g class="leg b"><rect x="52" y="84" width="13" height="30" rx="6" fill="#7E4A2B"/></g>
+        <g class="leg b"><rect x="92" y="84" width="13" height="30" rx="6" fill="#7E4A2B"/></g>
+        <g class="leg a"><rect x="108" y="84" width="13" height="30" rx="6" fill="#7E4A2B"/></g>
+        <g class="bodyg">
+          <rect x="20" y="40" width="108" height="56" rx="27" fill="#A0613A" stroke="#172A33" stroke-width="2.5"/>
+          <rect x="38" y="56" width="38" height="20" rx="6" fill="#274B57" stroke="#172A33" stroke-width="2"/>
+          <circle class="led" cx="47" cy="66" r="3.2" fill="#D9572B"/><circle class="led" cx="57" cy="66" r="3.2" fill="#D9572B"/><circle class="led" cx="67" cy="66" r="3.2" fill="#D9572B"/>
+          <line x1="108" y1="22" x2="103" y2="6" stroke="#172A33" stroke-width="2.5"/>
+          <circle class="bulb" cx="102" cy="5" r="5" fill="#D9572B" stroke="#172A33" stroke-width="2"/>
+          <rect x="90" y="20" width="62" height="48" rx="20" fill="#B06C42" stroke="#172A33" stroke-width="2.5"/>
+          <rect x="128" y="32" width="28" height="32" rx="13" fill="#8F5432" stroke="#172A33" stroke-width="2.5"/>
+          <ellipse cx="149" cy="41" rx="2.6" ry="2" fill="#172A33"/>
+          <path d="M140 56 q5 3 10 0" stroke="#172A33" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="100" cy="22" r="8" fill="#8F5432" stroke="#172A33" stroke-width="2.5"/>
+          <circle cx="119" cy="38" r="7" fill="#fff" stroke="#172A33" stroke-width="2"/>
+          <g class="pupil"><circle cx="120" cy="38" r="3.4" fill="#172A33"/></g>
+          <circle cx="133" cy="51" r="4" fill="#F4A47F" opacity=".8"/>
+        </g>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Principal">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Puente NEA, inicio">
+      <svg width="30" height="24" viewBox="0 0 34 28" aria-hidden="true"><path d="M10 26 L14 3 L18 26 M14 3 L2 17 M14 3 L26 17 M1 20 H33" fill="none" stroke="#D9572B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Puente NEA
+    </a>
+    <ul>
+      <li><a href="#recorrido">Qué hacemos</a></li>
+      <li><a href="#calculadora">Calculadora</a></li>
+      <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+      <li><a href="#quienes-somos">Nosotros</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+    </ul>
+    <a class="btn btn-terra" href="#hablemos">Hablemos</a>
+  </div>
+</nav>
+
+<main id="contenido">
+  <header class="hero" id="top">
+    <img class="hero-img" id="hero-img" src="assets/hero-puente.jpg" width="1942" height="809" alt="Ilustración del puente General Belgrano entre Corrientes y Resistencia: de un lado en planos y andamios, del otro terminado al atardecer, con paneles de software conectados.">
+    <div class="wrap hero-copy">
+      <h1><span class="line"><span>Tu negocio,</span></span><span class="line"><span>del otro lado.</span></span></h1>
+      <p>Software a medida, automatización e IA para pymes. Te ayudamos a cruzar del Excel, el WhatsApp desbordado y la carga doble a un negocio que funciona ordenado.</p>
+      <div class="ctas"><a class="btn btn-terra" href="#recorrido">Cruzá con nosotros →</a><a class="btn btn-cream" href="#hablemos">Hablemos</a></div>
+    </div>
+    <svg class="capy hero-capy" id="hero-capy" viewBox="0 0 160 124" role="button" tabindex="0" aria-label="Nea, el carpincho-robot. Presioná Enter para que te dé un dato."><use href="#capy-art"/></svg>
+    <div class="speech" id="hero-say" style="left:calc(6% + 120px);bottom:calc(7% + 130px);z-index:4" aria-live="polite">¡Hola! Soy Nea, el carpincho del equipo. ¿Cruzamos?</div>
+    <div class="chips-row" aria-hidden="true"><span>Software a medida</span><span>Automatización</span><span>IA para pymes</span></div>
+  </header>
+
+  <section class="journey" id="recorrido" aria-label="Qué hacemos: el recorrido de tu negocio">
+    <div class="j-sticky">
+      <div class="j-steps" role="tablist" aria-label="Tramos del recorrido">
+        <button type="button" data-i="0">Hoy</button><button type="button" data-i="1">Software</button><button type="button" data-i="2">Automatización</button><button type="button" data-i="3">IA</button><button type="button" data-i="4">Del otro lado</button>
+      </div>
+      <div class="j-track" id="track">
+        <svg class="deck" viewBox="0 0 5000 200" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="0" y="150" width="5000" height="50" fill="#A8CFE3"/>
+          <rect x="0" y="118" width="5000" height="14" fill="#D9572B"/>
+          <rect x="0" y="132" width="5000" height="4" fill="#A23C16"/>
+          <g fill="#A23C16"><rect x="980" y="20" width="16" height="130"/><rect x="1004" y="20" width="16" height="130"/><rect x="2980" y="20" width="16" height="130"/><rect x="3004" y="20" width="16" height="130"/></g>
+          <g stroke="#D9572B" stroke-width="2" fill="none" opacity=".75">
+            <path d="M1000 24 L700 120 M1000 24 L780 120 M1000 24 L860 120 M1000 24 L1140 120 M1000 24 L1220 120 M1000 24 L1300 120"/>
+            <path d="M3000 24 L2700 120 M3000 24 L2780 120 M3000 24 L2860 120 M3000 24 L3140 120 M3000 24 L3220 120 M3000 24 L3300 120"/>
+          </g>
+          <g stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"><path d="M200 172h60M700 184h40M1500 170h70M2300 182h50M3100 174h60M3900 184h40M4500 172h70"/></g>
+        </svg>
+
+        <article class="panel" data-say="Así arrancan muchas pymes: planillas, cuadernos y el celular explotado. ¡Tranqui, se arregla!">
+          <div>
+            <span class="kicker">Orilla 1 · Hoy</span>
+            <h2>Tu negocio creció. Tus herramientas, no.</h2>
+            <p>Planillas que no coinciden, pedidos que llegan por WhatsApp a cualquier hora, la misma información cargada tres veces y la sensación de que la IA es para empresas grandes.</p>
+            <p><strong>Scrolleá para cruzar →</strong></p>
+          </div>
+          <div class="chaos" aria-hidden="true">
+            <div class="xls jit" style="left:4%;top:4%"><b>stock_FINAL_v3(2).xlsx</b><span>Yerba 1 kg · 164</span><span class="err">Yerba 1kg · -12 · #REF!</span><span>Aceite · ver WhatsApp</span><span class="err">Harina · ¿?</span></div>
+            <div class="phone-mini jit" style="right:6%;top:0"><span class="badge">47 sin leer</span><div class="notif">“¿Precio del bulto?”</div><div class="notif">“¿Hasta qué hora abren?”</div><div class="notif">“¿Me pasás el CBU?”</div></div>
+            <div class="note jit" style="left:12%;bottom:6%;rotate:-5deg">Turno 16 h: ¿Gómez o Godoy? 🤔</div>
+            <div class="note jit" style="right:12%;bottom:12%;rotate:4deg;background:#FBD9C9">Facturar lo de ayer (otra vez)</div>
+          </div>
+        </article>
+
+        <article class="panel" data-say="Primer tramo: un sistema hecho a tu medida. Todo en un solo lugar, también desde el celular.">
+          <div>
+            <span class="kicker">Tramo 1 · Software a medida</span>
+            <h2>Un sistema que trabaja como vos.</h2>
+            <p>Diseñamos y construimos el sistema de gestión, el turnero, el catálogo o la web que tu negocio necesita. Sin adaptarte a un programa enlatado.</p>
+            <ul class="checks"><li>Stock, pedidos, clientes y cobros juntos</li><li>Turnos online con recordatorios</li><li>Tus números al día, desde el celular</li></ul>
+          </div>
+          <div class="card sys" aria-label="Ejemplo de sistema de gestión">
+            <nav aria-hidden="true"><span class="on">▤ Inicio</span><span>▦ Stock</span><span>☰ Pedidos</span><span>◷ Turnos</span><span>☺ Clientes</span></nav>
+            <div>
+              <div class="kpis"><div><small>VENTAS HOY</small><b>$ 482k</b></div><div><small>PEDIDOS</small><b>37</b></div><div><small>STOCK BAJO</small><b style="color:var(--terra-ink)">3</b></div></div>
+              <table><tbody>
+                <tr><td>#2188 · Almacén Ituzaingó</td><td><span class="tagg">Pagado</span></td></tr>
+                <tr><td>#2187 · Kiosco Plaza 25</td><td><span class="tagg w">Armando</span></td></tr>
+                <tr><td>#2186 · Despensa Barranqueras</td><td><span class="tagg">Enviado</span></td></tr>
+                <tr><td>#2185 · Autoservicio Molina</td><td><span class="tagg">Pagado</span></td></tr>
+              </tbody></table>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel" data-say="Mirá cómo viaja la info sola: entra un pedido y todo se actualiza. Nadie copia y pega.">
+          <div>
+            <span class="kicker">Tramo 2 · Automatización</span>
+            <h2>Cargás una vez. Lo demás pasa solo.</h2>
+            <p>Conectamos las herramientas que ya usás para que la información viaje sola: WhatsApp, planillas, facturación, Mercado Pago, Tiendanube.</p>
+            <ul class="checks"><li>Sin carga doble ni errores de tipeo</li><li>Facturas y avisos automáticos</li><li>Reportes que llegan solos a tu mail</li></ul>
+          </div>
+          <div class="card flow" aria-label="Diagrama: un pedido por WhatsApp actualiza stock, factura y avisa al depósito">
+            <svg viewBox="0 0 460 320" aria-hidden="true">
+              <path id="w1" class="wire" d="M120 70 C200 70 200 160 250 160"/>
+              <path id="w2" class="wire" d="M120 250 C200 250 200 160 250 160"/>
+              <path id="w3" class="wire" d="M370 160 C400 160 400 70 420 70"/>
+              <path id="w4" class="wire" d="M370 160 C400 160 400 250 420 250"/>
+              <g class="node"><rect x="10" y="44" width="110" height="52" rx="14"/><text x="65" y="75" text-anchor="middle">WhatsApp</text></g>
+              <g class="node"><rect x="10" y="224" width="110" height="52" rx="14"/><text x="65" y="255" text-anchor="middle">Tienda online</text></g>
+              <g class="node"><rect x="250" y="126" width="120" height="68" rx="16" style="fill:#D9572B"/><text x="310" y="157" text-anchor="middle" style="fill:#fff">Tu sistema</text><text x="310" y="176" text-anchor="middle" style="fill:#fff;font-size:11px">Puente NEA</text></g>
+              <g class="node"><rect x="380" y="44" width="76" height="52" rx="14"/><text x="418" y="75" text-anchor="middle">Factura</text></g>
+              <g class="node"><rect x="380" y="224" width="76" height="52" rx="14"/><text x="418" y="255" text-anchor="middle">Aviso</text></g>
+              <g fill="#1F5F80">
+                <circle r="6"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#w1"/></animateMotion></circle>
+                <circle r="6"><animateMotion dur="1.8s" begin=".9s" repeatCount="indefinite"><mpath href="#w2"/></animateMotion></circle>
+                <circle r="6" fill="#D9572B"><animateMotion dur="1.2s" begin=".4s" repeatCount="indefinite"><mpath href="#w3"/></animateMotion></circle>
+                <circle r="6" fill="#D9572B"><animateMotion dur="1.2s" begin="1s" repeatCount="indefinite"><mpath href="#w4"/></animateMotion></circle>
+              </g>
+            </svg>
+          </div>
+        </article>
+
+        <article class="panel" data-say="Este es mi tramo favorito: IA que atiende a tus clientes y te avisa cuando hace falta una persona.">
+          <div>
+            <span class="kicker">Tramo 3 · IA para pymes</span>
+            <h2>IA que te ayuda de verdad, no de moda.</h2>
+            <p>Te acompañamos a implementar inteligencia artificial donde rinde: un asistente que responde con la información de tu negocio, toma pedidos y turnos, y resume lo importante.</p>
+            <ul class="checks"><li>Responde a toda hora, con tus precios</li><li>Te pasa la charla cuando hace falta</li><li>Capacitamos a tu equipo para usarla</li></ul>
+          </div>
+          <div class="card ai-chat" aria-label="Ejemplo de conversación con un asistente con IA">
+            <div class="b u">Hola, ¿tienen turno para el jueves a la tarde?</div>
+            <div class="b r">¡Hola! El jueves tengo libre a las 16:30 y a las 18 h. ¿Cuál te queda mejor?</div>
+            <div class="b u">16:30. A nombre de Sofía.</div>
+            <div class="b r">Listo, Sofía. Te reservé el jueves a las 16:30 y te mando un recordatorio el día antes.</div>
+            <div class="b s">✓ Turno cargado en la agenda</div>
+          </div>
+        </article>
+
+        <article class="panel" data-say="¡Llegamos! Esto es lo que cambia cuando cruzás. ¿Vamos?">
+          <div>
+            <span class="kicker">Orilla 2 · Del otro lado</span>
+            <h2>Menos tareas repetidas. Más negocio.</h2>
+            <p>Cuando cruzás, el tiempo que se iba en copiar, responder y buscar papeles vuelve a lo que importa: vender, atender y crecer.</p>
+            <a class="btn btn-terra" href="#hablemos">Quiero cruzar →</a>
+          </div>
+          <div class="results">
+            <div class="res"><b>1 lugar</b><span>para stock, pedidos y clientes</span></div>
+            <div class="res t"><b>24/7</b><span>atención a tus clientes por WhatsApp</span></div>
+            <div class="res t"><b>0</b><span>cargas dobles entre sistemas</span></div>
+            <div class="res"><b>Al día</b><span>tus números, cuando los necesitás</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="j-capy" id="j-capy">
+        <div class="speech" id="j-say" aria-live="polite">Así arrancan muchas pymes: planillas, cuadernos y el celular explotado. ¡Tranqui, se arregla!</div>
+        <svg class="capy" id="j-capy-svg" viewBox="0 0 160 124" aria-hidden="true"><use href="#capy-art"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="calculadora" aria-labelledby="calc-title">
+    <div class="wrap calc">
+      <div class="reveal">
+        <span class="kicker">Hacé la cuenta</span>
+        <h2 id="calc-title" style="margin:14px 0 18px">¿Cuánto tiempo te devolvemos?</h2>
+        <p style="color:var(--ink-2);max-width:44ch">Mové los controles. Es una estimación simple: suponemos que automatizamos un 60% de las tareas repetitivas, en 46 semanas de trabajo al año.</p>
+      </div>
+      <div class="calc-box reveal">
+        <svg class="capy calc-capy" id="calc-capy" viewBox="0 0 160 124" aria-hidden="true"><use href="#capy-art"/></svg>
+        <div class="field"><label for="hrs">Horas por semana en tareas repetitivas <output id="hrs-out" for="hrs">10 h</output></label><input id="hrs" type="range" min="1" max="40" value="10"></div>
+        <div class="field"><label for="ppl">Personas que las hacen <output id="ppl-out" for="ppl">3</output></label><input id="ppl" type="range" min="1" max="20" value="3"></div>
+        <div class="answer" aria-live="polite"><small>Horas recuperadas por año</small><b id="saved">828 h</b><p id="equiv">Equivale a unas 21 semanas de trabajo de una persona.</p></div>
+        <p class="fine">Cargar pedidos, responder consultas, pasar datos de una planilla a otra, armar reportes…</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="como-trabajamos" aria-labelledby="proc-title" style="background:var(--sand)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:720px">
+        <span class="kicker">Cómo trabajamos</span>
+        <h2 id="proc-title" style="margin-top:14px">Cuatro pilares, ningún salto al vacío.</h2>
+      </div>
+      <div class="pylons" id="pylons">
+        <div class="pylon"><span class="n">01</span><h3>Charla</h3><p>30 minutos, gratis. Nos contás qué te frena y escuchamos antes de proponer.</p></div>
+        <div class="pylon"><span class="n">02</span><h3>Propuesta</h3><p>Qué hacemos, cuánto cuesta y cuándo lo entregamos. Por escrito, antes de arrancar.</p></div>
+        <div class="pylon"><span class="n">03</span><h3>Construcción</h3><p>Entregas cortas. Cada semana probás avances reales y ajustamos juntos.</p></div>
+        <div class="pylon"><span class="n">04</span><h3>Lanzamiento</h3><p>Lo ponemos en marcha, capacitamos a tu equipo y seguimos cerca.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block about" id="quienes-somos" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="reveal">
+          <span class="kicker">Quiénes somos</span>
+          <h2 id="about-title" style="margin:14px 0 20px">Unimos dos orillas. <em>Es lo nuestro.</em></h2>
+          <p>Somos un equipo de ingenieros y diseñadores del Noreste argentino. Así como el puente une Corrientes y Resistencia, nosotros unimos tu negocio con la tecnología que lo hace crecer.</p>
+          <p>Trabajamos cerca, con pymes del NEA, y en remoto con negocios de todo el país.</p>
+        </div>
+        <div class="postal reveal" aria-label="Postal: Corrientes y Resistencia unidas por el puente">
+          <svg viewBox="0 0 400 200" aria-hidden="true">
+            <rect width="400" height="200" rx="12" fill="#D7E9F2"/>
+            <rect y="128" width="400" height="72" fill="#A8CFE3"/>
+            <path d="M0 120 H400" stroke="#D9572B" stroke-width="6"/>
+            <g fill="#D9572B"><path d="M130 120 L150 40 L170 120 Z" opacity=".9"/><path d="M250 120 L270 40 L290 120 Z" opacity=".9"/></g>
+            <g stroke="#D9572B" stroke-width="1.5" fill="none"><path d="M150 42 L60 118 M150 42 L95 118 M150 42 L205 118 M150 42 L240 118 M270 42 L215 118 M270 42 L310 118 M270 42 L345 118"/></g>
+            <circle cx="340" cy="60" r="22" fill="#D9572B" opacity=".85"/>
+            <text x="16" y="186" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#172A33">RESISTENCIA</text>
+            <text x="384" y="186" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#172A33">CORRIENTES</text>
+          </svg>
+          <div class="meta"><span>Saludos desde el NEA</span><span>≈ 1,7 km de puente</span></div>
+        </div>
+      </div>
+      <div class="vals reveal">
+        <div><b>Respondemos en 24 h</b><span>hábiles, una persona real del equipo.</span></div>
+        <div><b>Todo es tuyo</b><span>el código, los datos y los accesos.</span></div>
+        <div><b>Hablamos claro</b><span>sin tecnicismos ni letra chica.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="preguntas" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:48px"><span class="kicker">Preguntas frecuentes</span><h2 id="faq-title" style="margin-top:14px">Preguntale a Nea.</h2></div>
+      <div class="faq">
+        <div class="qs" role="tablist" aria-label="Preguntas" id="qs">
+          <button type="button" role="tab" aria-selected="true" aria-controls="faq-answer" data-a="Depende de qué haya que resolver. Después de la primera charla te mandamos el precio cerrado por escrito, antes de arrancar. Sin sorpresas.">¿Cuánto cuesta?</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="faq-answer" data-a="Una automatización puede estar en días; un sistema de gestión, en semanas. La fecha va en la propuesta y ves avances cada semana.">¿Cuánto tarda?</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="faq-answer" data-a="No. Si tus planillas, tu facturación o tu WhatsApp te sirven, los conectamos en lugar de reemplazarlos. Muchas veces alcanza con resolver una parte.">¿Tengo que cambiar todo lo que uso?</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="faq-answer" data-a="Para nada. Elegimos juntos qué tareas conviene automatizar, lo configuramos con la información de tu negocio y capacitamos a tu equipo.">¿Necesito saber de IA?</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="faq-answer" data-a="Sí. Los datos son tuyos, con accesos que vos controlás y copias de seguridad. Nunca usamos tu información para otra cosa.">¿Mis datos quedan seguros?</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="faq-answer" data-a="¡Claro! Contanos qué te lleva tiempo o qué se te escapa, y vemos juntos por dónde empezar.">No sé qué necesito, ¿igual podemos hablar?</button>
+        </div>
+        <div class="answer-pane">
+          <svg class="capy" id="faq-capy" viewBox="0 0 160 124" aria-hidden="true"><use href="#capy-art"/></svg>
+          <div class="bub" id="faq-answer" role="tabpanel" aria-live="polite"><b>¿Cuánto cuesta?</b><span>Depende de qué haya que resolver. Después de la primera charla te mandamos el precio cerrado por escrito, antes de arrancar. Sin sorpresas.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="hablemos" aria-labelledby="cta-title">
+    <div class="wrap reveal">
+      <svg class="capy cta-capy" id="cta-capy" viewBox="0 0 160 124" aria-hidden="true"><use href="#capy-art"/></svg>
+      <h2 id="cta-title">¿Cruzamos?</h2>
+      <p>Contanos en una charla de 30 minutos qué te frena. Si no podemos ayudarte, te lo decimos de entrada.</p>
+      <div class="ctas"><a class="btn btn-terra" href="#hablemos" id="cta-btn">Escribinos por WhatsApp →</a><a class="btn btn-cream" href="#hablemos">Agendá una llamada</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <img src="assets/footer-taller.jpg" width="1944" height="809" alt="" loading="lazy">
+  <div class="f-in">
+    <div class="wrap f-grid">
+      <div><p class="f-brand">Puente NEA</p><p style="margin:0;color:#cfdde1;max-width:34ch">Software a medida, automatización e IA para pymes. Un taller digital del Noreste argentino.</p></div>
+      <div><h4>Servicios</h4><ul><li><a href="#recorrido">Software a medida</a></li><li><a href="#recorrido">Automatización</a></li><li><a href="#recorrido">IA para pymes</a></li></ul></div>
+      <div><h4>Explorar</h4><ul><li><a href="#calculadora">Calculadora</a></li><li><a href="#como-trabajamos">Cómo trabajamos</a></li><li><a href="#quienes-somos">Nosotros</a></li></ul></div>
+      <div><h4>Contacto</h4><ul><li><a href="#hablemos">WhatsApp</a></li><li><a href="#hablemos">hola@puentenea.com</a></li><li><a href="#hablemos">Corrientes · Resistencia</a></li></ul></div>
+    </div>
+  </div>
+  <svg class="capy sleep" viewBox="0 0 160 124" aria-hidden="true"><use href="#capy-art"/></svg>
+  <span class="zzz" aria-hidden="true">z z</span>
+  <div class="f-legal"><div class="wrap"><span>© 2026 Puente NEA</span><span>Hecho en el NEA, Argentina.</span></div></div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const narrow = matchMedia('(max-width: 900px)').matches;
+  if (reduce || narrow) document.documentElement.classList.add('static');
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const hop = el => { if (reduce) return; el.classList.remove('hop'); void el.getBoundingClientRect(); el.classList.add('hop'); };
+
+  // Inline the mascot art: CSS selectors and JS can't reach into <use> shadow trees
+  const art = document.getElementById('capy-art');
+  document.querySelectorAll('svg.capy use').forEach(u => { const g = art.cloneNode(true); g.removeAttribute('id'); u.replaceWith(g); });
+
+  // Eyes follow pointer on every mascot
+  const capies = [...document.querySelectorAll('svg.capy')];
+  if (!reduce) addEventListener('pointermove', e => capies.forEach(c => {
+    const r = c.getBoundingClientRect(); if (!r.width) return;
+    const flipped = c.closest('.left') ? -1 : 1;
+    const dx = clamp((e.clientX - (r.left + r.width * .75)) / 250, -1, 1) * flipped;
+    const dy = clamp((e.clientY - (r.top + r.height * .3)) / 250, -1, 1);
+    c.querySelectorAll('.pupil').forEach(p => p.style.transform = `translate(${dx * 2.6}px, ${dy * 2.4}px)`);
+  }), { passive: true });
+
+  // Hero mascot tips
+  const heroCapy = document.getElementById('hero-capy'), heroSay = document.getElementById('hero-say');
+  const tips = ['Dato: el puente que nos inspira mide casi 1,7 km. Nosotros cruzamos tu negocio en semanas.', 'Un pedido por WhatsApp puede cargarse, facturarse y avisar al depósito… solo.', 'La IA no reemplaza a tu equipo: le saca las tareas aburridas.', '¿Cinco planillas que no coinciden? Con una sola alcanza.'];
+  let tip = 0;
+  const say = (el, txt) => { el.classList.add('swap'); setTimeout(() => { el.textContent = txt; el.classList.remove('swap'); }, 200); };
+  const nextTip = () => { hop(heroCapy); say(heroSay, tips[tip++ % tips.length]); };
+  heroCapy.addEventListener('click', nextTip);
+  heroCapy.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextTip(); } });
+  setTimeout(() => hop(heroCapy), 900);
+
+  // Hero parallax + page progress
+  const heroImg = document.getElementById('hero-img'), prog = document.getElementById('progress');
+  // Journey
+  const journey = document.getElementById('recorrido'), track = document.getElementById('track');
+  const panels = [...track.querySelectorAll('.panel')], jCapy = document.getElementById('j-capy'), jSvg = document.getElementById('j-capy-svg'), jSay = document.getElementById('j-say');
+  const stepBtns = [...document.querySelectorAll('.j-steps button')];
+  let lastY = scrollY, active = -1, walkTimer;
+  const onScroll = () => {
+    const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (y / max * 100) + '%';
+    if (!reduce) heroImg.style.transform = `translateY(${Math.min(y, innerHeight) * .18}px) scale(${1 + Math.min(y, innerHeight) / innerHeight * .06})`;
+    if (document.documentElement.classList.contains('static')) return;
+    const r = journey.getBoundingClientRect();
+    const p = clamp(-r.top / (r.height - innerHeight), 0, 1);
+    track.style.transform = `translateX(${-p * (panels.length - 1) * innerWidth}px)`;
+    const i = Math.round(p * (panels.length - 1));
+    if (i !== active) {
+      active = i;
+      panels.forEach((pn, k) => pn.classList.toggle('active', k === i));
+      stepBtns.forEach((b, k) => { b.classList.toggle('on', k === i); b.setAttribute('aria-selected', String(k === i)); });
+      say(jSay, panels[i].dataset.say);
+    }
+    if (r.top < innerHeight && r.bottom > 0 && y !== lastY) {
+      jCapy.classList.toggle('left', y < lastY);
+      jSvg.classList.add('walking');
+      clearTimeout(walkTimer); walkTimer = setTimeout(() => jSvg.classList.remove('walking'), 160);
+    }
+    lastY = y;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  onScroll();
+  stepBtns.forEach(b => b.addEventListener('click', () => {
+    const top = journey.offsetTop + (+b.dataset.i / (panels.length - 1)) * (journey.offsetHeight - innerHeight);
+    scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+  }));
+
+  // Reveal
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .2 });
+  document.querySelectorAll('.reveal, #pylons').forEach(el => io.observe(el));
+
+  // Calculator
+  const hrs = document.getElementById('hrs'), ppl = document.getElementById('ppl');
+  const saved = document.getElementById('saved'), equiv = document.getElementById('equiv'), calcCapy = document.getElementById('calc-capy');
+  let lastBig = false;
+  const calc = () => {
+    const h = +hrs.value, n = +ppl.value, total = Math.round(h * n * 46 * .6);
+    document.getElementById('hrs-out').textContent = h + ' h';
+    document.getElementById('ppl-out').textContent = n;
+    saved.textContent = total.toLocaleString('es-AR') + ' h';
+    const weeks = Math.round(total / 40);
+    equiv.textContent = weeks >= 46 ? `Equivale a más de ${Math.floor(weeks / 46)} persona${weeks >= 92 ? 's' : ''} trabajando todo el año.` : `Equivale a unas ${Math.max(1, weeks)} semanas de trabajo de una persona.`;
+    const big = total > 2000;
+    if (big && !lastBig) hop(calcCapy);
+    lastBig = big;
+  };
+  hrs.addEventListener('input', calc); ppl.addEventListener('input', calc); calc();
+
+  // FAQ chat
+  const qs = [...document.querySelectorAll('#qs button')], ans = document.getElementById('faq-answer'), faqCapy = document.getElementById('faq-capy');
+  qs.forEach(q => q.addEventListener('click', () => {
+    qs.forEach(x => x.setAttribute('aria-selected', String(x === q)));
+    ans.innerHTML = `<b>${q.textContent}</b><span>${q.dataset.a}</span>`;
+    hop(faqCapy);
+  }));
+
+  // CTA mascot hops on hover
+  const ctaCapy = document.getElementById('cta-capy');
+  document.getElementById('cta-btn').addEventListener('pointerenter', () => hop(ctaCapy));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+/* IA para pymes, "El mostrador que atiende": built by figures/ai/build.mjs with the Anatomy kit (MIT) */
+  .pi-br.iso[data-theme="light"] {
+    --anatomy-paper: var(--cream); --anatomy-card: var(--cream); --anatomy-text: var(--ink-2); --anatomy-strong: var(--ink); --anatomy-muted: var(--ink-2);
+    --anatomy-face: #fff; --anatomy-top: #fff;
+    --anatomy-shade-0: color-mix(in srgb, var(--ink) 14%, var(--cream)); --anatomy-shade-1: color-mix(in srgb, var(--ink) 9%, var(--cream));
+    --anatomy-shade-2: color-mix(in srgb, var(--ink) 5%, var(--cream)); --anatomy-shade-3: color-mix(in srgb, var(--ink) 2%, var(--cream));
+    --anatomy-hi: color-mix(in srgb, var(--ink) 62%, transparent); --anatomy-mid: color-mix(in srgb, var(--ink) 42%, transparent); --anatomy-lo: color-mix(in srgb, var(--ink) 28%, transparent);
+    --anatomy-faint: color-mix(in srgb, var(--ink) 14%, transparent); --anatomy-lit: var(--terra); --anatomy-halo: var(--petrol); --anatomy-halo-opacity: .2; --anatomy-dot: var(--ink);
+    --anatomy-mono: var(--mono); --anatomy-weight: .6px;
+  }
+  .pim-paper { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #FFFDF7); --anatomy-top: #FFFFFF; --anatomy-shade-3: color-mix(in srgb, white 12%, #FFFDF7); --anatomy-shade-2: #FFFDF7; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #FFFDF7); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #FFFDF7); }
+  .pim-bank { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #E2CFAE); --anatomy-top: var(--paper); --anatomy-shade-3: color-mix(in srgb, white 12%, #E2CFAE); --anatomy-shade-2: #E2CFAE; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #E2CFAE); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #E2CFAE); }
+  .pim-terra { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, var(--terra)); --anatomy-top: color-mix(in srgb, white 22%, var(--terra)); --anatomy-shade-3: color-mix(in srgb, white 12%, var(--terra)); --anatomy-shade-2: var(--terra); --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, var(--terra)); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, var(--terra)); }
+  .pim-petrol { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, var(--petrol)); --anatomy-top: color-mix(in srgb, white 22%, var(--petrol)); --anatomy-shade-3: color-mix(in srgb, white 12%, var(--petrol)); --anatomy-shade-2: var(--petrol); --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, var(--petrol)); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, var(--petrol)); }
+  .pim-ink { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #2A3A40); --anatomy-top: #3A4C53; --anatomy-shade-3: color-mix(in srgb, white 12%, #2A3A40); --anatomy-shade-2: #2A3A40; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #2A3A40); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #2A3A40); }
+  .pim-cream { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); --anatomy-top: var(--cream); --anatomy-shade-3: color-mix(in srgb, white 12%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); --anatomy-shade-2: color-mix(in srgb, var(--petrol) 6%, var(--cream)); --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, color-mix(in srgb, var(--petrol) 6%, var(--cream))); }
+  .pim-sun { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #F08A3A); --anatomy-top: #F5A361; --anatomy-shade-3: color-mix(in srgb, white 12%, #F08A3A); --anatomy-shade-2: #F08A3A; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #F08A3A); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #F08A3A); }
+  .pim-robot { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #F5EDDE); --anatomy-top: #FFFBF2; --anatomy-shade-3: color-mix(in srgb, white 12%, #F5EDDE); --anatomy-shade-2: #F5EDDE; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #F5EDDE); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #F5EDDE); }
+  .pim-skin { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #E9B98E); --anatomy-top: #F2CBA4; --anatomy-shade-3: color-mix(in srgb, white 12%, #E9B98E); --anatomy-shade-2: #E9B98E; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #E9B98E); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #E9B98E); }
+  .pim-hair { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #3B2A22); --anatomy-top: #5A4136; --anatomy-shade-3: color-mix(in srgb, white 12%, #3B2A22); --anatomy-shade-2: #3B2A22; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #3B2A22); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #3B2A22); }
+  .pim-wood { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #C9A27A); --anatomy-top: #DDBB94; --anatomy-shade-3: color-mix(in srgb, white 12%, #C9A27A); --anatomy-shade-2: #C9A27A; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #C9A27A); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #C9A27A); }
+  .pim-lamp { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, color-mix(in srgb, var(--petrol) 14%, var(--cream))); --anatomy-top: var(--cream); --anatomy-shade-3: color-mix(in srgb, white 12%, color-mix(in srgb, var(--petrol) 14%, var(--cream))); --anatomy-shade-2: color-mix(in srgb, var(--petrol) 14%, var(--cream)); --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, color-mix(in srgb, var(--petrol) 14%, var(--cream))); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, color-mix(in srgb, var(--petrol) 14%, var(--cream))); }
+  .pim-lit { --anatomy-paper: color-mix(in srgb, var(--ink) 14%, #F7CF5A); --anatomy-top: #FFF3C4; --anatomy-shade-3: color-mix(in srgb, white 12%, #F7CF5A); --anatomy-shade-2: #F7CF5A; --anatomy-shade-1: color-mix(in srgb, var(--ink) 10%, #F7CF5A); --anatomy-shade-0: color-mix(in srgb, var(--ink) 20%, #F7CF5A); }
+  #fig-bot { display: flex; flex-direction: column; overflow: hidden; background:
+    radial-gradient(50% 40% at 50% 34%, color-mix(in srgb, #F08A3A 13%, transparent), transparent 72%),
+    linear-gradient(to bottom, var(--cream) 0%, var(--cream) 50%, color-mix(in srgb, var(--paper) 80%, var(--cream)) 100%); }
+  #fig-bot .counter { font-variant-numeric: tabular-nums; color: var(--ink); }
+  #fig-bot .flow-foot { flex-wrap: wrap; }
+  #fig-bot .flow-foot .counter { flex: 1 1 15em; }
+  #fig-bot .flow-foot .btn { flex: none; white-space: nowrap; }
+  .pi-bar { display: inline-flex; align-items: center; gap: 14px; min-width: 0; }
+  .pi-status { display: inline-flex; align-items: center; gap: 6px; color: #3E6B4A; white-space: nowrap; }
+  .pi-status i { width: 8px; height: 8px; border-radius: 50%; background: #5E8C6A; box-shadow: 0 0 0 3px color-mix(in srgb, #5E8C6A 22%, transparent); }
+  .pi-br { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; margin: 0 -10px; container-type: inline-size; }
+  .pi-stage { position: relative; container-type: inline-size; }
+  .pi-svg { touch-action: pan-y; }
+  /* Conversation: real text, over the empty top-left of the drawing when there is room, above it on phones. */
+  .pi-chat { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; margin: 0 10px 2px; font: 500 13px/1.35 var(--sans); }
+  .pi-chat .pi-out { margin-top: 22px; }
+  @container (max-width: 469px) { .pi-chat { grid-template-columns: 1fr; gap: 6px; margin: 0 8px 2px; } .pi-chat .pi-in { margin-right: 14%; } .pi-chat .pi-out { margin: 0 0 0 14%; } }
+  .pi-msg { position: relative; margin: 0; padding: 7px 11px 8px; border-radius: 14px; box-shadow: 0 6px 16px -10px rgba(30,42,47,.5); }
+  .pi-who { display: block; font: 700 12px/1.2 var(--mono); letter-spacing: .02em; margin-bottom: 2px; }
+  .pi-in { background: #fff; color: var(--ink); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+  .pi-in .pi-who { color: var(--ink-2); }
+  .pi-out { background: var(--petrol); color: var(--cream); border-bottom-right-radius: 4px; }
+  .pi-out .pi-who { color: var(--river); }
+  .pi-reply { display: block; }
+  .pi-src { display: inline-block; margin-top: 5px; padding: 2px 8px; border-radius: 999px; background: var(--terra); color: #fff; font: 700 12px/1.4 var(--mono); }
+  .pi-typing { display: none; position: absolute; left: 12px; top: 30px; gap: 4px; }
+  .pi-typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--river); animation: pi-dot 1s ease-in-out infinite; }
+  .pi-typing i:nth-child(2) { animation-delay: .15s; } .pi-typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes pi-dot { 0%, 100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+  .pi-br[data-phase="look"] .pi-typing { display: flex; }
+  .pi-br[data-phase="look"] .pi-reply, .pi-br[data-phase="look"] .pi-src { visibility: hidden; }
+  .pi-br[data-phase="ask"] [data-reply] { visibility: hidden; }
+  .pi-msg { animation: pi-pop .35s var(--ease) both; }
+  @keyframes pi-pop { from { opacity: 0; transform: translateY(6px) scale(.97); } }
+  /* Labels on the drawing (real text, at least 12px). */
+  .pi-tags { position: absolute; inset: 0; pointer-events: none; }
+  .pi-tag { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; padding: 1px 7px; border-radius: 6px; font: 700 clamp(12px, 2.4cqw, 13px)/1.35 var(--mono); color: var(--petrol); background: var(--cream); border: 1px solid color-mix(in srgb, var(--petrol) 35%, transparent); transition: transform .45s var(--ease), background-color .25s, color .25s; }
+  .pi-tag-person { transform: translate(-50%, 0); }
+  .pi-br[data-src="0"]:not([data-phase="ask"]) [data-tag="0"], .pi-br[data-src="1"]:not([data-phase="ask"]) [data-tag="1"], .pi-br[data-src="2"]:not([data-phase="ask"]) [data-tag="2"] {
+    z-index: 1; background: var(--terra); border-color: var(--terra-ink); color: #fff; transform: translate(calc(-50% + var(--dx) * 100cqw / 600), calc(-50% + var(--dy) * 100cqw / 600)); }
+  .pi-br[data-src="p"][data-phase="reply"] [data-tag="p"] { background: var(--terra); border-color: var(--terra-ink); color: #fff; }
+  /* Drawers slide out toward the viewer. */
+  .pi-drawer { transition: transform .45s var(--ease); }
+  .pi-br[data-src="0"]:not([data-phase="ask"]) [data-drawer="0"], .pi-br[data-src="1"]:not([data-phase="ask"]) [data-drawer="1"], .pi-br[data-src="2"]:not([data-phase="ask"]) [data-drawer="2"] { transform: var(--pi-pull); }
+  .pi-br[data-src="0"]:not([data-phase="ask"]) [data-drawer="0"] .pi-front, .pi-br[data-src="1"]:not([data-phase="ask"]) [data-drawer="1"] .pi-front, .pi-br[data-src="2"]:not([data-phase="ask"]) [data-drawer="2"] .pi-front {
+    --anatomy-top: #FFE7C9; --anatomy-shade-3: #FBD2A6; --anatomy-shade-2: #F7BC86; --anatomy-shade-1: #EFA46A; --anatomy-shade-0: #E58E52; --anatomy-paper: #EFA46A; }
+  /* Arm poses: one drawing each. */
+  .pi-arm { display: none; }
+  .pi-br[data-pose="rest"] [data-arm="rest"], .pi-br[data-pose="shelf0"] [data-arm="shelf0"], .pi-br[data-pose="shelf1"] [data-arm="shelf1"], .pi-br[data-pose="shelf2"] [data-arm="shelf2"], .pi-br[data-pose="bell"] [data-arm="bell"] { display: inline; }
+  /* Eyes follow the action. */
+  .pi-eyes { transition: transform .35s var(--ease); }
+  .pi-br[data-look="chat"] .pi-eyes { transform: translate(-2.2px, .6px); }
+  .pi-br[data-look="shelf"] .pi-eyes { transform: translate(2.4px, -1.2px); }
+  .pi-br[data-look="bell"] .pi-eyes { transform: translate(2px, 1.6px); }
+  .pi-br .pi-visor { fill: var(--petrol); stroke: var(--ink); stroke-width: .5px; }
+  .pi-br .pi-eye { fill: var(--river); }
+  .pi-br .pi-eye-hi { fill: #fff; }
+  .pi-br .pi-mouth { fill: none; stroke: var(--river); stroke-width: 1.1px; stroke-linecap: round; }
+  .pi-br .pi-chest { fill: var(--petrol); }
+  .pi-br .pi-chest-dot { fill: #7BC58A; }
+  /* Antenna blinks while it looks something up. */
+  .pi-br .pi-bulb-glow { fill: #F5A361; opacity: 0; }
+  .pi-br[data-phase="look"] .pi-bulb-glow { animation: pi-blink .4s steps(1, end) infinite; }
+  @keyframes pi-blink { 50% { opacity: .55; } }
+  /* Counter props. */
+  .pi-br .pi-rug { fill: color-mix(in srgb, var(--terra) 14%, var(--paper)); stroke: color-mix(in srgb, var(--terra) 30%, transparent); stroke-width: .6px; }
+  .pi-br .pi-sign-plate { fill: var(--petrol); }
+  .pi-br .pi-sign { fill: var(--cream); font-family: var(--mono); font-weight: 700; letter-spacing: .14em; }
+  .pi-br .pi-cal-head { fill: var(--terra-ink); }
+  .pi-br .pi-slot { fill: color-mix(in srgb, var(--petrol) 10%, #fff); stroke: var(--anatomy-faint); stroke-width: .4px; transition: fill .3s; }
+  .pi-br[data-kind="turno"][data-phase="reply"] [data-slot] { fill: var(--terra); stroke: var(--terra-ink); }
+  .pi-br .pi-band { fill: var(--terra); stroke: none; }
+  .pi-slip { opacity: 0; transition: opacity .3s, transform .4s var(--ease); transform: translateY(-6px); }
+  .pi-br[data-kind="pedido"][data-phase="reply"] .pi-slip { opacity: 1; transform: none; }
+  .pi-bell { transform-box: fill-box; transform-origin: 50% 100%; }
+  .pi-br[data-pose="bell"] .pi-bell { animation: pi-ding .5s ease-in-out 2; }
+  @keyframes pi-ding { 25% { transform: rotate(-7deg); } 75% { transform: rotate(7deg); } }
+  .pi-br .pi-ring { fill: none; stroke: var(--terra); stroke-width: 1.4px; stroke-linecap: round; opacity: 0; }
+  .pi-br[data-pose="bell"] .pi-ring { opacity: 1; }
+  .pi-br .pi-screen { fill: var(--petrol); }
+  .pi-br .pi-ph-in { fill: #fff; }
+  .pi-br .pi-ph-out { fill: color-mix(in srgb, var(--river) 75%, #fff); }
+  .pi-br .pi-ph-old { opacity: .45; }
+  .pi-br[data-phase="ask"] [data-ph="out"] { opacity: 0; }
+  .pi-br .pi-lamp-glow { fill: #F5C24A; opacity: 0; transition: opacity .3s; }
+  .pi-br[data-src="p"][data-phase="reply"] .pi-lamp-glow { opacity: .55; }
+  .pi-br[data-src="p"][data-phase="reply"] .pi-lamp .pim-lamp { --anatomy-top: #FFF3C4; --anatomy-shade-3: #FFE38A; --anatomy-shade-2: #F7CF5A; --anatomy-shade-1: #EDB93E; --anatomy-shade-0: #DDA32C; --anatomy-paper: #EDB93E; }
+  .pi-br .pi-hit { fill: transparent; stroke: none; cursor: pointer; outline: none; }
+  .pi-br .pi-hit:focus-visible { stroke: var(--terra); stroke-width: 2px; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+  .pi-br[data-off] *, .pi-br[data-off] *::before { animation-play-state: paused !important; }
+  /* Message chips (footer). */
+  .pi-kinds { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .pi-kind { min-height: 36px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--cream); color: var(--ink); font: 600 13px/1 var(--sans); cursor: pointer; }
+  .pi-kind:hover { border-color: var(--ink-2); }
+  .pi-kind[aria-pressed="true"] { background: var(--petrol); border-color: var(--petrol); color: var(--cream); }
+  @media (max-width: 560px) { .pi-br { margin: 0 -14px; } .pi-bar-label { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .pi-br *, .pi-br *::before { transition: none !important; animation: none !important; } }
