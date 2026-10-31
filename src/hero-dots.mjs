@@ -103,12 +103,15 @@ export function initHeroDots() {
   const title = document.getElementById('hero-title');
   if (!canvas || !copy || !title) return;
   const ctx = canvas.getContext('2d');
+  // the band under the text is painted on its own layer and composited once, so overlapping dots never add alpha
+  const soft = document.createElement('canvas');
+  const softCtx = soft.getContext('2d');
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = !still && matchMedia('(hover: hover) and (pointer: fine)').matches;
   const stats = location.search.includes('herostats'); // draw cost and glitch flag on the canvas dataset, for measuring only
   const img = new Image();
   let cells = [], colors = {}, pitch = 5, rowH = 8, mobile = false, zones = [], bridgeRows = [0, 1];
-  let deck = null, clock = 0, glitch = null, nextGlitch = 0, raf = 0, last = 0, inView = false, cost = 0;
+  let deck = null, clock = 0, glitch = null, nextGlitch = 0, raf = 0, last = 0, inView = false, cost = 0, dpr = 1;
   const cursor = { x: -1e4, y: -1e4, tx: 0, ty: 0, px: 0, py: 0 }; // canvas px, target and eased parallax
 
   const readColors = () => {
@@ -130,10 +133,13 @@ export function initHeroDots() {
   const layout = () => {
     const box = canvas.getBoundingClientRect();
     if (!box.width) return;
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(box.width * dpr);
     canvas.height = Math.round(box.height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    soft.width = canvas.width;
+    soft.height = canvas.height;
+    softCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const titleBox = measureZones();
     // scanline grid: tighter across than down; finer on phones so the small bridge keeps its detail
     mobile = box.width < 640;
@@ -205,7 +211,7 @@ export function initHeroDots() {
     if (glitch && t > glitch.start + glitch.dur) { glitch = null; nextGlitch = t + nextGlitchDelay(Math.random()); }
     if (stats) { canvas.dataset.glitch = glitch ? '1' : ''; canvas.dataset.zones = JSON.stringify(zones.map(z => [z.l, z.t, z.r, z.b].map(Math.round))); }
     const shiftMax = mobile ? 0 : 6;
-    const paths = [];
+    const paths = [], textPaths = [];
     const pulses = motion && built && deck ? [1, -1].map((d, n) => pulsePos(t, d, deck.x0, deck.x1, 4200, n * .5)) : [];
     const reach = Math.max(28, Math.min(64, (deck ? deck.x1 - deck.x0 : 0) * .05));
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -240,28 +246,39 @@ export function initHeroDots() {
       // behind the text: smaller and much fainter, wherever the dot is right now (build, glitch, parallax)
       const band = bandOf(copyFade(x, y, r, zones));
       r *= COPY_SCALE[band];
-      if (band === COPY_ALPHA.length - 1) {
-        if (!built) continue; // dots in flight stay out of the text; they would overlap and stack alpha
-        r = Math.min(r, pitch * .48); // once built, dots under the text never touch, so their alphas never add up
+      const underText = band === COPY_ALPHA.length - 1;
+      if (underText) {
+        r = Math.min(r, pitch * .48); // dots under the text never touch, so their alphas never add up
         hot = 0; // the darker pulse colour would cost the eyebrow its contrast
       }
       if (r < .3) continue;
       const k = key(band, bright ? 1 : 0, c.lvl, c.warm, hot);
-      const path = paths[k] ||= new Path2D();
+      const path = (underText ? textPaths : paths)[k] ||= new Path2D();
       path.moveTo(x + r, y);
       path.arc(x, y, r, 0, Math.PI * 2);
     }
     const flicker = glitch ? glitchFlicker(t, glitch) : 1;
-    paths.forEach((path, k) => {
+    const paint = (target, path, k, bandAlpha) => {
       const band = k % 3, q = (k - band) / 3, bright = q & 1, lv = ((q >> 1) % LEVELS) + 1, warm = (q >> 1) / LEVELS | 0;
       const hot = warm >> 1, isWarm = (warm & 1) || hot;
       // smaller (farther) dots are dimmer; cool water sits behind the warm structure
       const a = hot ? 1 : (.55 + .45 * lv / LEVELS) * (isWarm ? 1 : .75) + (bright ? .15 : 0);
-      ctx.globalAlpha = Math.min(1, a) * COPY_ALPHA[band] * flicker;
-      ctx.fillStyle = hot ? colors.hot : isWarm ? colors.warm : colors.cool;
-      ctx.fill(path);
-    });
+      target.globalAlpha = Math.min(1, a) * bandAlpha * flicker;
+      target.fillStyle = hot ? colors.hot : isWarm ? colors.warm : colors.cool;
+      target.fill(path);
+    };
+    paths.forEach((path, k) => paint(ctx, path, k, COPY_ALPHA[k % 3]));
     ctx.globalAlpha = 1;
+    // the dots behind the copy join the build with everything else: full alpha on their own layer,
+    // composited once at COPY_FLOOR so stacked neighbours cannot darken the text
+    if (textPaths.length) {
+      softCtx.clearRect(0, 0, soft.width, soft.height);
+      textPaths.forEach((path, k) => paint(softCtx, path, k, 1));
+      softCtx.globalAlpha = 1;
+      ctx.globalAlpha = COPY_ALPHA[COPY_ALPHA.length - 1] * flicker;
+      ctx.drawImage(soft, 0, 0, soft.width, soft.height, 0, 0, soft.width / dpr, soft.height / dpr);
+      ctx.globalAlpha = 1;
+    }
     if (stats) canvas.dataset.drawMs = (cost = cost * .9 + (performance.now() - t0) * .1).toFixed(2);
   };
 
