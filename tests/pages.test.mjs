@@ -74,6 +74,12 @@ test('each service page shows its own demo and links the other two', () => {
     const html = read(service.out);
     assert.match(html, new RegExp(`<main id="contenido" data-figure="${service.figure}">`), `${service.out} must load the ${service.figure} demo`);
     assert.match(html, /class="figure"/, `${service.out} must render the demo frame`);
+    // the shared Anatomy kit must load before the figure's own palette, or every shape falls back to black
+    assert.match(html, /href="\.\.\/\.\.\/styles\/figures\/iso\.css"/, `${service.out} must load the shared figure kit`);
+    assert.ok(
+      html.indexOf('styles/figures/iso.css') < html.indexOf(`styles/figures/${service.figure}.css`),
+      `${service.out} must load figures/iso.css before figures/${service.figure}.css`,
+    );
     for (const other of service.others) {
       assert.ok(html.includes(`href="../../servicios/${other}/"`), `${service.out} must link ../../servicios/${other}/`);
     }
