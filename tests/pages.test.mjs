@@ -23,6 +23,18 @@ test('every page ships one h1, the shared nav and its own canonical url', () => 
   }
 });
 
+test('the footer links the pages that exist, from any depth', () => {
+  for (const { out, depth } of PAGES) {
+    const base = '../'.repeat(depth) || './';
+    const html = read(out);
+    const footer = html.slice(html.indexOf('<footer'));
+    for (const page of ['servicios/', 'como-trabajamos/', 'servicios/software-a-medida/', 'servicios/automatizaciones/', 'servicios/inteligencia-artificial/']) {
+      assert.ok(footer.includes(`href="${base}${page}"`), `${out} footer must link ${base}${page}`);
+    }
+    assert.doesNotMatch(footer, /index\.html#que-hacemos|index\.html#como-trabajamos/, out);
+  }
+});
+
 test('no internal link, stylesheet or script points at a file that does not exist', () => {
   const missing = [];
   for (const page of PAGES) {
