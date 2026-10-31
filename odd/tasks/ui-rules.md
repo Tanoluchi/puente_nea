@@ -15,7 +15,7 @@ T1 [S3,S4] route=parent status=done commit=40cb215: hablemos on the landing toke
 T2 [S5] route=parent status=done commit=40cb215: white-on-terra figure chips (3.93:1) to AA.
 T3 [S4,S5] route=parent status=done commit=40cb215: automatic dark mode via tokens; hard-coded surface/text colors to tokens.
 T4 [S1-S6] route=parent status=done commit=40cb215: tests, README/AGENTS.md, audit at 3 widths × 2 schemes.
-T5 [S1,S4,S5] route=parent status=done commit=see L8: dark mode toggle replaces automatic mode.
+T5 [S1,S4,S5] route=parent status=done commit=9cc37f8: dark mode toggle replaces automatic mode.
 
 ## Log
 L1 (2026-10-31) User: "Aplica las reglas en el proyecto" (rules as in AGENTS.md: responsive 375/768/1280, hierarchy, tokens, consistency + dark mode, accessibility, states).
