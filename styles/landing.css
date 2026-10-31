@@ -19,9 +19,9 @@
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
     --ease: cubic-bezier(.22,.8,.26,1);
   }
-  :root { color-scheme: light dark; }
-  @media (prefers-color-scheme: dark) {
-    :root {
+  /* Dark mode is a user toggle (src/theme.mjs); the <head> script picks the first theme from the saved choice or the OS */
+  :root[data-theme="dark"] {
+      color-scheme: dark;
       --cream: #12191C;
       --paper: #182327;
       --surface: #1C282D;
@@ -34,10 +34,9 @@
       --river-ink: #8FC3DC;
       --river-tint: #18303A;
       --iso-pylon: #8FB6C8;
-    }
-    /* the light hero art cannot sit under light headline text */
-    .hero .hero-stage { margin-top: 32px; }
   }
+  /* the light hero art cannot sit under light headline text */
+  [data-theme="dark"] .hero .hero-stage { margin-top: 32px; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
@@ -70,6 +69,15 @@
   .nav ul a { text-decoration: none; color: var(--ink-2); }
   .nav ul a:hover { color: var(--ink); }
   .nav .btn { padding: 10px 18px; font-size: 15px; }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .theme-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: border-color .25s; }
+  .theme-toggle:hover { border-color: var(--ink); }
+  .theme-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-toggle .icon-sun, [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  .brand { white-space: nowrap; }
+  .nav .wrap { gap: 12px; }
+  .theme-toggle { flex: none; }
 
   /* Hero */
   .hero { position: relative; padding-top: 72px; overflow: hidden; }
@@ -284,6 +292,12 @@
     .pains-track li[aria-hidden="true"] { display: none; }
   }
   @media (max-width: 560px) {
+    .nav .btn { padding: 10px 14px; }
+    .nav-actions { gap: 8px; }
+  }
+  @media (max-width: 400px) {
+    /* icon-only brand on small phones; the link keeps its aria-label */
+    .nav .brand { font-size: 0; }
     .member { grid-template-columns: 1fr; }
     .portrait { max-width: 220px; }
   }

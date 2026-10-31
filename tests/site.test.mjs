@@ -59,13 +59,21 @@ test('white text never sits on the light terra (3.93:1); it uses the AA terra in
   }
 });
 
-test('dark mode follows the OS by redefining the shared tokens', () => {
-  const dark = css('landing.css').match(/@media \(prefers-color-scheme: dark\) \{\s*:root \{([^}]*)\}/);
-  assert.ok(dark, 'landing.css needs a prefers-color-scheme: dark :root block');
+test('dark mode is a toggle that redefines the shared tokens', () => {
+  const dark = css('landing.css').match(/:root\[data-theme="dark"\] \{([^}]*)\}/);
+  assert.ok(dark, 'landing.css needs a :root[data-theme="dark"] token block');
+  assert.doesNotMatch(css('landing.css'), /@media \(prefers-color-scheme: dark\)/);
   for (const token of ['--cream', '--paper', '--line', '--ink', '--ink-2', '--terra-ink', '--surface']) {
     assert.match(dark[1], new RegExp(`${token}:`));
   }
-  assert.match(css('landing.css'), /color-scheme: light dark/);
+  assert.match(dark[1], /color-scheme: dark;/);
+  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  for (const page of [html, form]) {
+    // the theme is set in <head> before paint, from the saved choice or the OS on first visit
+    assert.match(page, /<head>[\s\S]*localStorage\.getItem\('theme'\)[\s\S]*prefers-color-scheme: dark[\s\S]*<\/head>/);
+    assert.match(page, /<button class="theme-toggle" type="button" aria-pressed="false" aria-label="Modo oscuro">/);
+    assert.match(page, /<script type="module" src="\.\/src\/theme\.mjs"><\/script>/);
+  }
   assert.doesNotMatch(css('contact.css'), /background:#fff\b|#fff2e9|#fff3e9|#fce5d7/);
   // outside the light-scoped illustrations, text on accent/petrol fills must not be tied to a token that flips in dark mode
   for (const rule of css('landing.css').match(/\{[^{}]*\}/g)) {
