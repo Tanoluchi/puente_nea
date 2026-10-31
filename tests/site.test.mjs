@@ -163,3 +163,14 @@ test('each service card shows its real screenshot with dimensions and a descript
   }
   assert.doesNotMatch(html, /class="vg"/);
 });
+
+test('in the contact form only the person name is required, the business name is optional', () => {
+  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  assert.match(form, /<input id="name" name="name"[^>]*\brequired\b/);
+  const business = form.match(/<input id="business"[^>]*>/)?.[0] ?? '';
+  assert.ok(business, 'business input exists');
+  assert.doesNotMatch(business, /\brequired\b/);
+  assert.match(form, /<label for="business">Nombre del negocio \(opcional\)<\/label>/);
+  const js = readFileSync(new URL('../src/contact.mjs', import.meta.url), 'utf8');
+  assert.doesNotMatch(js, /field\.name === 'business'/);
+});

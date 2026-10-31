@@ -12,7 +12,6 @@ function validate(field) {
   const value = field.value.trim();
   let message = '';
   if (field.name === 'name' && value.length < 2) message = 'Escribí tu nombre.';
-  if (field.name === 'business' && value.length < 2) message = 'Escribí el nombre de tu negocio.';
   if (field.name === 'contact') {
     message = form.elements.channel.value === 'email'
       ? (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value) ? '' : 'Revisá el email (ej.: nombre@negocio.com).')
