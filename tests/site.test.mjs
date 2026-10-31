@@ -19,7 +19,7 @@ test('landing keeps every major editorial section and real local artwork', () =>
 test('landing exposes the canvas page-one structure and interactive illustrations', () => {
   for (const pattern of [
     /class="pains-band"/, /class="team-wrap/, /class="process-banner/, /class="wrap faq-grid/,
-    /Tres formas de sacarte trabajo de encima\./, /Las personas.*detrás de cada sistema\./,
+    /Tres formas de sacarte trabajo de encima</, /Las personas.*detrás de cada sistema</,
     /id="fig-ba"/, /id="fig-flow"/, /id="fig-bot"/,
     /class="iso pn-sw/, /class="iso pa-au/, /class="iso pi-br/,
   ]) assert.match(html, pattern);

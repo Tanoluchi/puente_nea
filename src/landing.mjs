@@ -33,10 +33,6 @@ import { initAi } from "./figures/ai.mjs";
   }), { threshold: .15 });
   document.querySelectorAll('.reveal, .process').forEach(el => io.observe(el));
 
-  // Pains band: a second copy of the chips makes the -50% slide loop seamless
-  const pains = document.getElementById('pains-track');
-  [...pains.children].forEach(li => { const c = li.cloneNode(true); c.setAttribute('aria-hidden', 'true'); pains.append(c); });
-
   // Hotspots: tap toggles on touch
   document.querySelectorAll('.spot button').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
 
