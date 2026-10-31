@@ -12,7 +12,7 @@ S4. "Luego genera un canvas para agregar nuevas cosas a la pagina, analiza esta 
 T1 [S1] route=worker status=done commit=a161aba: AI figure shows the concrete conversation.
 T2 [S3] route=worker status=done commit=e393bb0: context-con-style reveal that plays once.
 T3 [S2] route=worker status=done commit=e393bb0: team cards without photos.
-T5 [S4] route=worker status=done commit=pending: design system sync + 3 carousel directions on the canvas.
+T5 [S4] route=worker status=done commit=8b4204d: design system sync + 3 carousel directions on the canvas.
 T4 [S1-S3] route=parent status=done commit=a161aba,e393bb0: rebuild, full tests, screenshots at 3 widths × 2 schemes, commits.
 
 ## Log
