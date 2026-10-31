@@ -3,13 +3,14 @@
   "chosen": "01-tarjetas-altas.html",
   "handoffs": {
     "01-tarjetas-altas.html": {
-      "status": "in_progress",
+      "status": "implemented",
       "queued": false,
       "sentAt": "2026-10-31T13:47:46.058Z",
       "startedAt": "2026-10-31T13:48:06.439Z",
-      "implementedAt": null,
+      "implementedAt": "2026-10-31T13:52:53.547Z",
       "feature": "odd/tasks/ai-reply-reveal-team.md",
-      "note": "Implementing in the landing: new section between Qué hacemos and Cómo trabajamos"
+      "note": "#servicios between Qué hacemos and Cómo trabajamos; vignettes replaced by the user's seven images",
+      "previewUrl": "http://localhost:8000/#servicios"
     }
   }
 }
