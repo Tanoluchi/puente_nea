@@ -40,12 +40,12 @@ test('whatsapp links carry a short prefilled greeting', () => {
 });
 
 test('the contact page offers real destinations, a honeypot and the privacy policy', () => {
-  const page = read('hablemos.html');
+  const page = read('contacto/index.html');
   assert.doesNotMatch(page, /envío todavía no está habilitado|todavía no se envían ni se guardan/i);
   assert.match(page, new RegExp(`href="mailto:${CONTACT.email}"`));
   assert.match(page, new RegExp(`href="https://wa\\.me/${CONTACT.whatsapp}\\?text=`));
   assert.match(page, /<input[^>]*name="website"[^>]*tabindex="-1"/);
-  assert.match(page, /href="\.\/privacidad\.html"/);
+  assert.match(page, /href="\.\.\/privacidad\.html"/);
   for (const id of ['notice-mail', 'notice-sent', 'notice-error']) assert.match(page, new RegExp(`id="${id}"[^>]*hidden`));
 });
 

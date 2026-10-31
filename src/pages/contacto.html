@@ -1,0 +1,38 @@
+<!-- page {"out": "contacto/index.html", "title": "Hablemos · Puente NEA", "description": "Contanos qué necesita tu negocio. Puente NEA — software, automatización e IA para pymes.", "ogTitle": "Hablemos de tu proyecto · Puente NEA", "ogDescription": "Tres pasos cortos para contarnos tu situación. Respondemos por email o WhatsApp.", "depth": 1, "styles": ["contact.css"], "scripts": ["src/contact.mjs"]} -->
+<main id="contenido" class="contact-main"><div class="wrap contact-grid">
+    <section class="contact-intro" aria-labelledby="contact-title">
+      <span class="eyebrow">Empecemos</span>
+      <h1 id="contact-title">Contanos qué <em>te frena.</em></h1>
+      <p class="lead">Son tres pasos cortos para entender tu negocio y el problema que querés resolver.</p>
+      <ol class="contact-next" aria-label="Cómo trabajamos">
+        <li><b>Nos contás tu situación</b><span>Tu nombre, cómo contactarte y el problema cotidiano.</span></li>
+        <li><b>Charlamos lo necesario</b><span>Entendemos cómo trabaja tu equipo.</span></li>
+        <li><b>Definimos un camino</b><span>Alcance, inversión y etapas por escrito.</span></li>
+      </ol>
+      <p class="contact-direct"><b>¿Preferís escribirnos directo?</b><a href="https://wa.me/5493790000000?text=Hola%2C%20quiero%20hacer%20una%20consulta">WhatsApp</a><a href="mailto:holapuentenea@gmail.com">holapuentenea@gmail.com</a></p>
+    </section>
+    <div class="contact-card">
+      <ol class="contact-progress" aria-label="Progreso del formulario"><li aria-current="step">1 · Vos</li><li>2 · Contacto</li><li>3 · Tu problema</li></ol>
+      <form id="contact-form" novalidate>
+        <fieldset class="contact-step" data-step="0"><legend tabindex="-1">¿Con quién hablamos?</legend><p>Así sabemos a quién escribirle.</p>
+          <div class="contact-field"><label for="name">Tu nombre</label><input id="name" name="name" autocomplete="name" required aria-describedby="name-error" placeholder="Ej.: Laura Gómez"><span class="field-error" id="name-error" aria-live="polite"></span></div>
+          <div class="contact-field"><label for="business">Nombre del negocio (opcional)</label><input id="business" name="business" autocomplete="organization" placeholder="Ej.: Ferretería del Centro"></div>
+          <!-- Honeypot: hidden from people; the backend drops requests that fill it -->
+          <div class="contact-trap" aria-hidden="true"><label for="website">Sitio web</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        </fieldset>
+        <fieldset class="contact-step" data-step="1" hidden><legend tabindex="-1">¿Cómo te contactamos?</legend><p>Elegí el medio que más usás. Solo sería para responder esta consulta.</p>
+          <div class="contact-field"><span class="field-label" id="channel-label">Preferís que te escribamos por</span><div class="contact-channels" role="radiogroup" aria-labelledby="channel-label"><label><input type="radio" name="channel" value="email" checked><span>Email</span></label><label><input type="radio" name="channel" value="whatsapp"><span>WhatsApp</span></label></div></div>
+          <div class="contact-field"><label for="contact" id="contact-label">Tu email</label><input id="contact" name="contact" type="email" autocomplete="email" inputmode="email" required aria-describedby="contact-error" placeholder="nombre@negocio.com"><span class="field-error" id="contact-error" aria-live="polite"></span></div>
+        </fieldset>
+        <fieldset class="contact-step" data-step="2" hidden><legend tabindex="-1">¿Qué te gustaría resolver?</legend><p>Marcá lo que aplique y contanos un poco más con tus palabras.</p>
+          <div class="contact-field"><span class="field-label" id="topics-label">Tipo de problema (opcional)</span><div class="contact-topics" role="group" aria-labelledby="topics-label"><label><input type="checkbox" name="topic" value="Planillas y stock"><span>Planillas y stock</span></label><label><input type="checkbox" name="topic" value="WhatsApp saturado"><span>WhatsApp saturado</span></label><label><input type="checkbox" name="topic" value="Carga doble de datos"><span>Carga doble de datos</span></label><label><input type="checkbox" name="topic" value="Turnos y agenda"><span>Turnos y agenda</span></label><label><input type="checkbox" name="topic" value="Empezar con IA"><span>Empezar con IA</span></label><label><input type="checkbox" name="topic" value="Otro"><span>Otro</span></label></div></div>
+          <div class="contact-field"><label for="problem">Contanos el problema</label><textarea id="problem" name="problem" required aria-describedby="problem-error" placeholder="Ej.: Llevamos el stock en tres planillas distintas y nunca coinciden con el depósito."></textarea><span class="field-error" id="problem-error" aria-live="polite"></span></div>
+        </fieldset>
+        <div class="contact-actions"><span id="step-count" aria-live="polite">Paso 1 de 3</span><div class="contact-buttons"><button class="btn btn-ghost" type="button" id="previous" hidden>← Atrás</button><button class="btn btn-primary" type="button" id="next">Siguiente →</button></div></div>
+        <div id="notice-mail" class="contact-notice" role="status" tabindex="-1" hidden><p>Tu consulta está lista. Abrí tu correo para enviarla a <b>holapuentenea@gmail.com</b>.</p><a class="btn btn-primary mini" id="mail-link" href="mailto:holapuentenea@gmail.com">Abrir mi correo</a></div>
+        <div id="notice-sent" class="contact-notice" role="status" tabindex="-1" hidden><p>Recibimos tu consulta. Te vamos a responder por <span id="sent-channel">email</span>.</p></div>
+        <div id="notice-error" class="contact-notice" role="alert" tabindex="-1" hidden><p>No pudimos enviar la consulta. Probá de nuevo o escribinos a <a href="mailto:holapuentenea@gmail.com">holapuentenea@gmail.com</a>.</p></div>
+        <p class="contact-privacy">Usamos tus datos solo para responder esta consulta. <a href="{{BASE}}privacidad.html">Política de privacidad</a></p>
+      </form>
+    </div>
+  </div></main>

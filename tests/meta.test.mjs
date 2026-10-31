@@ -37,7 +37,7 @@ test('the share image is the finished hero at 1200x630 and ships with the site',
 
 test('the home footer reaches the team by form, email and WhatsApp, and links the privacy policy', () => {
   const footer = html.match(/<footer class="footer">[\s\S]*?<\/footer>/)[0];
-  assert.match(footer, /href="\.\/hablemos\.html"/);
+  assert.match(footer, /href="\.\/contacto\/"/);
   assert.match(footer, new RegExp(`href="mailto:${CONTACT.email}"`));
   assert.match(footer, new RegExp(`href="https://wa\\.me/${CONTACT.whatsapp}\\?text=`));
   assert.match(footer, /href="\.\/privacidad\.html"/);
@@ -47,7 +47,7 @@ test('the home footer reaches the team by form, email and WhatsApp, and links th
 
 test('the sitemap lists every public page with its absolute URL', () => {
   const sitemap = read('sitemap.xml');
-  for (const page of ['', 'hablemos.html', 'privacidad.html']) {
+  for (const page of ['', 'contacto/', 'privacidad.html']) {
     assert.match(sitemap, new RegExp(`<loc>${SITE}${page.replace('.', '\\.')}</loc>`));
   }
   assert.doesNotMatch(sitemap, /design\//);

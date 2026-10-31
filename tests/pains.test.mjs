@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('the pains band is one compact moving row with no visible pause button', () => {
-  const tpl = read('src/landing.template.html');
+  const tpl = read('index.html');
   assert.doesNotMatch(tpl, /pains-toggle/);
   // keyboard users can reach the row; focusing it pauses the motion (WCAG 2.2.2)
   assert.match(tpl, /<div class="pains-viewport" tabindex="0">/);

@@ -31,8 +31,8 @@ test('landing exposes the canvas page-one structure and interactive illustration
 
 test('every contact call to action opens a separate, honest three-step form', () => {
   assert.doesNotMatch(html, /04-hablemos\.html|hola@puentenea\.com|Nombre Apellido|href="#hablemos"/);
-  assert.ok((html.match(/href="\.\/hablemos\.html"/g) || []).length >= 5);
-  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  assert.ok((html.match(/href="\.\/contacto\/"/g) || []).length >= 5);
+  const form = readFileSync(new URL('../contacto/index.html', import.meta.url), 'utf8');
   for (const name of ['name', 'business', 'channel', 'contact', 'topic', 'problem']) {
     assert.match(form, new RegExp(`name="${name}"`));
   }
@@ -44,8 +44,8 @@ test('every contact call to action opens a separate, honest three-step form', ()
 const css = (path) => readFileSync(new URL(`../styles/${path}`, import.meta.url), 'utf8');
 
 test('both pages share one token set and the same button components', () => {
-  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
-  for (const page of [html, form]) assert.match(page, /href="\.\/styles\/landing\.css"/);
+  const form = readFileSync(new URL('../contacto/index.html', import.meta.url), 'utf8');
+  for (const page of [html, form]) assert.match(page, /href="[^"]*styles\/landing\.css"/);
   assert.ok(!existsSync(new URL('../styles/site.css', import.meta.url)));
   assert.doesNotMatch(form, /class="button\b/);
   assert.match(form, /class="btn btn-primary"/);
@@ -68,13 +68,13 @@ test('dark mode is a toggle that redefines the shared tokens', () => {
     assert.match(dark[1], new RegExp(`${token}:`));
   }
   assert.match(dark[1], /color-scheme: dark;/);
-  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  const form = readFileSync(new URL('../contacto/index.html', import.meta.url), 'utf8');
   for (const page of [html, form]) {
     // light is the default; only a saved dark choice switches the theme, in <head> before paint
     assert.match(page, /<head>[\s\S]*localStorage\.getItem\('theme'\) === 'dark'[\s\S]*<\/head>/);
     assert.doesNotMatch(page, /prefers-color-scheme/);
     assert.match(page, /<button class="theme-toggle" type="button" aria-pressed="false" aria-label="Modo oscuro">/);
-    assert.match(page, /<script type="module" src="\.\/src\/theme\.mjs"><\/script>/);
+    assert.match(page, /<script type="module" src="[^"]*src\/theme\.mjs"><\/script>/);
   }
   assert.doesNotMatch(css('contact.css'), /background:#fff\b|#fff2e9|#fff3e9|#fce5d7/);
   // outside the light-scoped illustrations, text on accent/petrol fills must not be tied to a token that flips in dark mode
@@ -104,8 +104,7 @@ test('scroll reveal plays once, stays visible without JS and honors reduced moti
 });
 
 test('if the landing module never runs, the reveal gate lifts so content is not left hidden', () => {
-  const tpl = readFileSync(new URL('../src/landing.template.html', import.meta.url), 'utf8');
-  const head = tpl.match(/<head>([\s\S]*)<\/head>/)[1];
+  const head = readFileSync(new URL('../src/partials/head.html', import.meta.url), 'utf8');
   assert.match(head, /setTimeout\([\s\S]*?reveal-ready[\s\S]*classList\.remove\('js'\)/);
   const js = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
   assert.match(js, /classList\.add\('reveal-ready'\)/);
@@ -135,7 +134,7 @@ test('servicios carousel sits between Qué hacemos and Cómo trabajamos with all
   assert.match(section, /<button[^>]*aria-label="Servicio siguiente"/);
   // the process banner right below owns the "Contanos qué necesitás" button; here it is a quiet text link
   assert.doesNotMatch(section, /Contanos qué necesitás|class="btn/);
-  assert.match(section, /<p class="lead">[^<]*<a href="\.\/hablemos\.html">contanos<\/a><\/p>/);
+  assert.match(section, /<p class="lead">[^<]*<a href="\.\/contacto\/">contanos<\/a><\/p>/);
   assert.doesNotMatch(section, /class="num"|Siete formas/);
 });
 
@@ -166,7 +165,7 @@ test('each service card shows its real screenshot with dimensions and a descript
 });
 
 test('in the contact form only the person name is required, the business name is optional', () => {
-  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  const form = readFileSync(new URL('../contacto/index.html', import.meta.url), 'utf8');
   assert.match(form, /<input id="name" name="name"[^>]*\brequired\b/);
   const business = form.match(/<input id="business"[^>]*>/)?.[0] ?? '';
   assert.ok(business, 'business input exists');
@@ -201,7 +200,7 @@ test('the home describes itself to search engines and link previews', () => {
 });
 
 test('the contact page never implies the business name is required', () => {
-  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  const form = readFileSync(new URL('../contacto/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(form, /Nombre, negocio/);
 });
 
@@ -224,7 +223,7 @@ test('the hero carries the brief copy and its two CTAs', () => {
   assert.match(hero, /<span class="eyebrow">Tecnología que conecta<\/span>/);
   assert.match(hero, /<h1 id="hero-title" aria-label="Conectamos tus ideas con soluciones reales">Conectamos tus ideas con soluciones reales<\/h1>/);
   assert.match(hero, /Desarrollamos software a medida, automatizaciones e inteligencia artificial para que tu negocio trabaje mejor y siga creciendo\./);
-  assert.match(hero, /<a class="btn btn-primary" href="\.\/hablemos\.html">Hablemos de tu proyecto <span class="arrow" aria-hidden="true">→<\/span><\/a>/);
+  assert.match(hero, /<a class="btn btn-primary" href="\.\/contacto\/">Hablemos de tu proyecto <span class="arrow" aria-hidden="true">→<\/span><\/a>/);
   assert.match(hero, /<a class="btn btn-ghost" href="#servicios">Explorá nuestros servicios<\/a>/);
   assert.match(html, /id="servicios"/);
 });

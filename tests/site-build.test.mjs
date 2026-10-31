@@ -18,7 +18,7 @@ const walk = dir => readdirSync(dir).flatMap(name => {
 const files = walk(out).map(path => relative(out, path));
 
 test('the published folder holds the pages and what they load', () => {
-  for (const file of ['index.html', 'hablemos.html', 'privacidad.html', 'sitemap.xml', 'assets/hero-puente-v2.jpg', 'styles/landing.css', 'src/landing.mjs', 'src/contact-message.mjs', 'src/figures/ai.mjs']) {
+  for (const file of ['index.html', 'hablemos.html', 'contacto/index.html', 'privacidad.html', 'sitemap.xml', 'assets/hero-puente-v2.jpg', 'styles/landing.css', 'src/landing.mjs', 'src/contact-message.mjs', 'src/figures/ai.mjs']) {
     assert.ok(files.includes(file), `missing ${file}`);
   }
 });
@@ -27,7 +27,7 @@ test('nothing internal is published', () => {
   for (const prefix of ['design/', 'odd/', 'tests/', 'scripts/', '.github/', '.checks/']) {
     assert.ok(!files.some(file => file.startsWith(prefix)), `published ${prefix}`);
   }
-  for (const file of ['README.md', 'AGENTS.md', '.gitignore', 'src/landing.template.html', 'src/figures/ai.html']) {
+  for (const file of ['README.md', 'AGENTS.md', '.gitignore', 'src/pages/index.html', 'src/partials/nav.html', 'src/figures/ai.html']) {
     assert.ok(!files.includes(file), `published ${file}`);
   }
 });
