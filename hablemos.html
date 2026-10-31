@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#FCF8EF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#12191C" media="(prefers-color-scheme: dark)">
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
+  <meta name="theme-color" content="#FCF8EF">
+  <script>try{if(localStorage.getItem('theme') === 'dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
   <meta name="description" content="Contanos qué necesita tu negocio. Puente NEA — software, automatización e IA para pymes.">
   <title>Hablemos · Puente NEA</title>
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">

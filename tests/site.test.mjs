@@ -69,8 +69,9 @@ test('dark mode is a toggle that redefines the shared tokens', () => {
   assert.match(dark[1], /color-scheme: dark;/);
   const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
   for (const page of [html, form]) {
-    // the theme is set in <head> before paint, from the saved choice or the OS on first visit
-    assert.match(page, /<head>[\s\S]*localStorage\.getItem\('theme'\)[\s\S]*prefers-color-scheme: dark[\s\S]*<\/head>/);
+    // light is the default; only a saved dark choice switches the theme, in <head> before paint
+    assert.match(page, /<head>[\s\S]*localStorage\.getItem\('theme'\) === 'dark'[\s\S]*<\/head>/);
+    assert.doesNotMatch(page, /prefers-color-scheme/);
     assert.match(page, /<button class="theme-toggle" type="button" aria-pressed="false" aria-label="Modo oscuro">/);
     assert.match(page, /<script type="module" src="\.\/src\/theme\.mjs"><\/script>/);
   }

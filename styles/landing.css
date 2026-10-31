@@ -19,7 +19,7 @@
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
     --ease: cubic-bezier(.22,.8,.26,1);
   }
-  /* Dark mode is a user toggle (src/theme.mjs); the <head> script picks the first theme from the saved choice or the OS */
+  /* Dark mode is a user toggle (src/theme.mjs); light is the default; the <head> script applies a saved dark choice before paint */
   :root[data-theme="dark"] {
       color-scheme: dark;
       --cream: #12191C;

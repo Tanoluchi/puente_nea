@@ -6,7 +6,7 @@ Objective: make `index.html` and `hablemos.html` follow the rules in `AGENTS.md`
 S1. "Responsive: 375/768/1280px+. No solo escalar desktop." Check: no horizontal overflow at 375/768/1280 on both pages, light and dark.
 S2. "Jerarquía: menos texto, destaca CTA, fácil escanear." Check: CTA keeps the strongest emphasis; copy unchanged because the landing must match the canvas ("No cambies diseños analiza todo el diseño de la pagina 1 del canvas y igualalo").
 S3. "Tokens: colores, tipografías, espaciados, bordes, sombras consistentes." Check: one token set shared by both pages; no second palette.
-S4. "Consistencia: botones, cards, inputs, modales iguales. Dark mode ok."; "Cambia el dark mode de automatico a un toogle". Check: hablemos uses the landing nav, buttons and footer; dark mode is a nav toggle on both pages, remembered across reloads and pages, first visit follows the OS.
+S4. "Consistencia: botones, cards, inputs, modales iguales. Dark mode ok."; "Cambia el dark mode de automatico a un toogle". Check: hablemos uses the landing nav, buttons and footer; dark mode is a nav toggle on both pages, remembered across reloads and pages; "Por defecto debe ser el light mode": first visit is light regardless of the OS.
 S5. "Accesibilidad: alt, aria-labels, contraste bueno." Check: audit reports no missing alt/names/labels and no text under WCAG AA in either scheme.
 S6. "Estados: empty, error, success, loading. No solo ideal." Check: form keeps field errors, status notice and honest "sending disabled" state.
 
@@ -26,3 +26,4 @@ L5: Audit (.checks/audit.js) on index.html and hablemos.html at 375/768/1280, li
 L6: Committed 40cb215 on feat/ui-rules (not pushed).
 L7 (2026-10-31) User: "Cambia el dark mode de automatico a un toogle". Supersedes L3.
 L8: Toggle in nav (`.theme-toggle`, aria-pressed, aria-label "Modo oscuro") on both pages; `src/theme.mjs` stores `theme` in localStorage; inline <head> script sets data-theme before paint (saved choice, else OS). RED `landing.css needs a :root[data-theme="dark"] token block`, GREEN 9/9. Browser: first visit OS light → light; click → dark + stored; reload and hablemos keep dark; OS dark first visit → dark; toggle keyboard-focusable. Fixed `.sun` class collision with team sun (icons renamed icon-sun/icon-moon); nav fits 320/375 (icon-only brand ≤400px, "← Inicio" ≤600px on hablemos). Audit light/dark × 375/768/1280 × both pages: no overflow, 0 alt/name/label/contrast failures.
+L9 (2026-10-31) User: "Por defecto debe ser el light mode". Supersedes the OS-based first visit from L8: the <head> script only applies a saved 'dark'; theme-color meta is the light color only.
