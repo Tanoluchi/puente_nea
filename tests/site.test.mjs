@@ -119,3 +119,45 @@ test('team cards lead with their role, with no empty photo frames', () => {
   const roles = ['Ingeniería y producto', 'Automatización e IA'];
   members.forEach((m, i) => assert.match(m, new RegExp(`<h3[^>]*>\\s*${roles[i]}\\s*</h3>`)));
 });
+
+test('servicios carousel sits between Qué hacemos and Cómo trabajamos with all seven services', () => {
+  const at = id => html.indexOf(`id="${id}"`);
+  assert.ok(at('que-hacemos') > -1 && at('servicios') > at('que-hacemos') && at('como-trabajamos') > at('servicios'));
+  const section = html.match(/<section[^>]*id="servicios"[^>]*>[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.match(section, /aria-labelledby="/);
+  for (const title of ['Software a medida', 'Automatizaciones', 'Bots', 'Agentes', 'IA para tu negocio', 'Diseño de páginas web', 'Integraciones']) {
+    assert.match(section, new RegExp(`<h3>${title}</h3>`));
+  }
+  assert.equal((section.match(/class="svc-card/g) ?? []).length, 7);
+  assert.match(section, /<ul class="svc-track[^"]*"[^>]*aria-label="/);
+  assert.match(section, /<button[^>]*aria-label="Servicio anterior"/);
+  assert.match(section, /<button[^>]*aria-label="Servicio siguiente"/);
+  assert.match(section, /Contanos qué necesitás/);
+  assert.match(section, /href="\.\/hablemos\.html"/);
+});
+
+test('carousel behaviour lives in src/carousel.mjs, is wired from landing.mjs and is not autoplay', () => {
+  assert.ok(existsSync(new URL('../src/carousel.mjs', import.meta.url)));
+  const main = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
+  assert.match(main, /from "\.\/carousel\.mjs"/);
+  const js = readFileSync(new URL('../src/carousel.mjs', import.meta.url), 'utf8');
+  assert.match(js, /prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(js, /setInterval|setTimeout/);
+  const styles = readFileSync(new URL('../styles/landing.css', import.meta.url), 'utf8');
+  assert.match(styles, /\.svc-track \{[^}]*scroll-snap-type: x mandatory/);
+  assert.match(styles, /:root, \.figure, \.hero-stage, \.svc-card/);
+});
+
+test('each service card shows its real screenshot with dimensions and a description', () => {
+  const names = ['software-a-medida', 'automatizaciones', 'bots', 'agentes', 'ia-para-tu-negocio', 'diseno-web', 'integraciones'];
+  for (const name of names) {
+    const src = `./assets/servicios/${name}.jpg`;
+    const tag = html.match(new RegExp(`<img[^>]*src="${src.replace(/[./]/g, '\\$&')}"[^>]*>`))?.[0] ?? '';
+    assert.ok(tag, `${name}: <img> missing from index.html`);
+    assert.match(tag, /width="720"/);
+    assert.match(tag, /height="1080"/);
+    assert.match(tag, /alt="[^"]+"/);
+    assert.ok(existsSync(new URL(`../assets/servicios/${name}.jpg`, import.meta.url)), `${name}.jpg missing on disk`);
+  }
+  assert.doesNotMatch(html, /class="vg"/);
+});

@@ -1,6 +1,7 @@
 import { initSoftware } from "./figures/software.mjs";
 import { initAuto } from "./figures/auto.mjs";
 import { initAi } from "./figures/ai.mjs";
+import { initCarousel } from "./carousel.mjs";
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // SMIL ignores the CSS reduced-motion rules: freeze every SVG timeline at its first frame
@@ -52,4 +53,5 @@ import { initAi } from "./figures/ai.mjs";
   initSoftware();
   initAuto();
   initAi();
+  initCarousel();
 })();

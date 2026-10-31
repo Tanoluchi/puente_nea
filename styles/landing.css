@@ -1,5 +1,5 @@
-  /* Illustrations (.figure, .hero-stage) keep the light palette in dark mode, like the photos */
-  :root, .figure, .hero-stage {
+  /* Illustrations (.figure, .hero-stage, .svc-card, .svc-arrow) keep the light palette in dark mode, like the photos */
+  :root, .figure, .hero-stage, .svc-card, .svc-arrow {
     color-scheme: light;
     --cream: #FCF8EF;
     --paper: #F5EDDE;
@@ -147,6 +147,38 @@
   .mini { min-height: 44px; padding: 8px 16px; font-size: 14px; }
 
 
+  /* Services carousel: petrol band, tall cards with a screenshot cropped by the bottom edge, native scroll-snap */
+  .svc { background: var(--petrol); color: #EAF1F2; }
+  .svc :focus-visible { outline-color: #F4A47F; }
+  .svc .eyebrow { display: block; color: #F4A47F; margin-bottom: 16px; }
+  .svc h2 { color: #fff; text-wrap: balance; }
+  .svc .lead { color: #c4d4d8; margin: 16px 0 0; }
+  .svc-head { text-align: center; }
+  .svc-head .lead { margin-inline: auto; }
+  /* gutter lines the first card up with .wrap; percentages resolve against the full-width track */
+  .svc-track { --gutter: max(24px, calc((100% - 1200px) / 2)); display: flex; gap: 20px; list-style: none; margin: 48px 0 0; padding: 0 var(--gutter) 8px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; overscroll-behavior-x: contain; }
+  .svc-track::-webkit-scrollbar { display: none; }
+  .svc-track:focus-visible { outline-offset: -3px; border-radius: 0; }
+  .svc-card { flex: 0 0 360px; height: 560px; scroll-snap-align: start; display: flex; flex-direction: column; overflow: hidden; background: var(--cream); color: var(--ink); border-radius: 20px; text-align: center; }
+  .svc-text { padding: 32px 24px 0; }
+  .svc-card .num { display: block; margin-bottom: 8px; font: 600 13px var(--mono); color: var(--terra-ink); }
+  .svc-card h3 { font-size: 32px; line-height: 1.1; text-wrap: balance; }
+  .svc-card p { margin: 12px 0 0; color: var(--ink-2); font-size: 17px; line-height: 1.5; text-wrap: pretty; }
+  /* the screenshot's cream is the card's cream, so only the bottom edge crops it */
+  .svc-card img { display: block; flex: 1 1 0; min-height: 0; width: 100%; margin-top: 16px; object-fit: cover; object-position: top center; }
+  .svc-ctl { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px; }
+  .svc-prog { position: relative; flex: 1; max-width: 240px; height: 4px; border-radius: 4px; overflow: hidden; background: color-mix(in srgb, #EAF1F2 24%, transparent); }
+  .svc-prog i { position: absolute; top: 0; bottom: 0; left: 0; width: 30%; border-radius: 4px; background: #F4A47F; }
+  .svc-arrows { display: flex; gap: 8px; }
+  .svc-arrow { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: var(--cream); color: var(--ink); cursor: pointer; transition: border-color .2s var(--ease), transform .15s var(--ease), opacity .2s var(--ease); }
+  .svc-arrow:hover:not(:disabled) { border-color: #F4A47F; }
+  .svc-arrow:active:not(:disabled) { transform: scale(.96); }
+  .svc-arrow:disabled { opacity: .4; cursor: default; }
+  .svc-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .svc-after { display: flex; justify-content: center; margin-top: 40px; }
+  .svc-after .btn { background: var(--terra-ink); border-color: var(--terra-ink); color: var(--cream); }
+  .svc-after .btn:hover { background: var(--ink); border-color: var(--ink); }
+
   /* Process */
   .process { position: relative; }
   .process-head { text-align: center; max-width: 900px; margin: 0 auto 56px; }
@@ -267,6 +299,8 @@
     .process-banner { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
     .service:nth-child(even) .figure { order: 0; }
     .problems, .steps, .footer-grid { grid-template-columns: 1fr 1fr; }
+    .svc-card { flex-basis: 320px; height: 520px; }
+    .svc-card h3 { font-size: 28px; }
     .footer-grid > :first-child { grid-column: 1 / -1; }
     .team { grid-template-columns: 1fr; gap: 16px; }
     .member { border-radius: 20px; border-bottom: 1px solid rgba(255,255,255,.16); }
@@ -277,6 +311,16 @@
   }
   @media (max-width: 640px) {
     .spot { display: none; }
+    .svc-head { text-align: left; }
+    .svc-head .lead { margin-inline: 0; font-size: 17px; }
+    .svc h2 { font-size: 34px; }
+    .svc-track { margin-top: 32px; gap: 12px; }
+    .svc-card { flex-basis: 82vw; height: 500px; }
+    .svc-text { padding: 28px 20px 0; }
+    .svc-card h3 { font-size: 26px; }
+    .svc-card p { font-size: 16px; }
+    .svc-after { margin-top: 24px; }
+    .svc-after .btn { width: 100%; justify-content: center; }
     .problems, .steps { grid-template-columns: 1fr; }
     .problem, .problem + .problem { padding: 24px 0; border-right: 0; border-bottom: 1px solid var(--line); }
     .steps::before { display: none; }
