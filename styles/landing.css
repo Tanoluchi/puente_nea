@@ -76,6 +76,11 @@
   .theme-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .theme-toggle .icon-sun, [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  .menu-toggle { display: none; place-items: center; flex: none; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: border-color .2s var(--ease); }
+  .menu-toggle:hover { border-color: var(--ink); }
+  .menu-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+  .menu-toggle .icon-close, .menu-toggle[aria-expanded="true"] .icon-menu { display: none; }
+  .menu-toggle[aria-expanded="true"] .icon-close { display: block; }
   .brand { white-space: nowrap; }
   .nav .wrap { gap: 12px; }
   .theme-toggle { flex: none; }
@@ -292,6 +297,9 @@
   }
   @media (max-width: 900px) {
     .nav ul { display: none; }
+    .menu-toggle { display: grid; }
+    .nav.open ul { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; padding: 8px 24px 16px; background: var(--cream); border-bottom: 1px solid var(--line); font-size: 17px; }
+    .nav.open ul a { display: block; padding: 12px 0; color: var(--ink); }
     /* stacked hero copy is taller, so the art no longer tucks under it */
     .hero .hero-stage { margin-top: 32px; }
     .hero-copy, .sec-head, .service, .faq-grid { grid-template-columns: 1fr; }

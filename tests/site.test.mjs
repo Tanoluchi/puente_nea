@@ -174,3 +174,32 @@ test('in the contact form only the person name is required, the business name is
   const js = readFileSync(new URL('../src/contact.mjs', import.meta.url), 'utf8');
   assert.doesNotMatch(js, /field\.name === 'business'/);
 });
+
+test('below 900px a menu button opens the section links; the dead main.mjs menu is gone', () => {
+  const button = html.match(/<button class="menu-toggle"[^>]*>/)?.[0] ?? '';
+  assert.ok(button, 'menu button exists');
+  assert.match(button, /aria-expanded="false"/);
+  assert.match(button, /aria-controls="nav-menu"/);
+  assert.match(button, /aria-label="Menú"/);
+  assert.match(html, /<ul id="nav-menu">/);
+  assert.match(html, /<script type="module" src="\.\/src\/nav\.mjs"><\/script>/);
+  const styles = css('landing.css');
+  assert.match(styles, /\.menu-toggle \{[^}]*display: none/);
+  assert.match(styles, /@media \(max-width: 900px\) \{[\s\S]*?\.menu-toggle \{ display: grid; \}/);
+  const nav = readFileSync(new URL('../src/nav.mjs', import.meta.url), 'utf8');
+  assert.match(nav, /Escape/);
+  assert.ok(!existsSync(new URL('../src/main.mjs', import.meta.url)));
+});
+
+test('the home describes itself to search engines and link previews', () => {
+  const head = html.match(/<head>([\s\S]*)<\/head>/)[1];
+  assert.match(head, /<meta name="description" content="[^"]{70,160}">/);
+  for (const p of ['og:title', 'og:description', 'og:type', 'og:locale', 'og:site_name']) {
+    assert.match(head, new RegExp(`<meta property="${p}" content="[^"]+">`));
+  }
+});
+
+test('the contact page never implies the business name is required', () => {
+  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  assert.doesNotMatch(form, /Nombre, negocio/);
+});
