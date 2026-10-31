@@ -10,6 +10,8 @@ python3 -m http.server 8000
 
 Abrí [http://localhost:8000](http://localhost:8000). No necesita instalar dependencias. Para los tests de los ejemplos y la estructura: `node --test tests/*.test.mjs`.
 
+Las dos páginas comparten `styles/landing.css`: tokens, botones, nav y footer. El modo oscuro sigue la preferencia del sistema operativo (`prefers-color-scheme`); las ilustraciones conservan su paleta clara. Las reglas de UI están en `AGENTS.md`.
+
 La portada se genera desde `src/landing.template.html` y los tres módulos en `src/figures/` con `node scripts/build-landing.mjs`. Editá esas fuentes y regenerá `index.html`; el sitio publicado solo necesita los archivos estáticos, no el directorio `design/`.
 
 ## Antes de publicarla

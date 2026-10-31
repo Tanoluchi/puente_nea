@@ -3,18 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#fcf8ef">
+  <meta name="theme-color" content="#FCF8EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12191C" media="(prefers-color-scheme: dark)">
   <meta name="description" content="Contanos qué necesita tu negocio. Puente NEA — software, automatización e IA para pymes.">
   <title>Hablemos · Puente NEA</title>
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
-  <link rel="stylesheet" href="./styles/site.css">
+  <link rel="stylesheet" href="./styles/landing.css">
   <link rel="stylesheet" href="./styles/contact.css">
   <script type="module" src="./src/contact.mjs"></script>
 </head>
 <body>
   <a class="skip" href="#contenido">Saltar al formulario</a>
-  <nav class="nav" aria-label="Principal"><div class="wrap nav-inner">
-    <a class="brand" href="./index.html" aria-label="Puente NEA, volver al inicio"><svg viewBox="0 0 100 45" aria-hidden="true"><path d="M4 32h92l-5 4H9zM17 30 31 2h4l6 28h-5l-4-17-8 17zm59 0 8-17-4 17h-5l6-28h4l14 28z" fill="currentColor"/><circle cx="50" cy="15" r="7" fill="#ed7944"/></svg><span>Puente NEA</span></a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="isotipo" viewBox="0 -1 100 45">
+    <g id="iso-pylon" fill="var(--iso-pylon, #274B57)">
+      <polygon points="31,0 34,0 27,43 15.5,43"/>
+      <polygon points="33.5,0 35.5,0 41,43 31.5,43"/>
+      <polygon points="30,6 31.6,7.6 9.6,30.8 7,30.8"/>
+      <polygon points="29.2,12.4 30.6,14 14.6,30.8 12,30.8"/>
+    </g>
+    <use href="#iso-pylon" transform="translate(100 0) scale(-1 1)"/>
+    <circle cx="50" cy="12.5" r="7.5" fill="var(--iso-sun, #F08A3A)"/>
+    <polygon points="0,30.6 100,30.6 94,34 6,34" fill="var(--iso-deck, #E8642F)"/>
+  </symbol>
+</svg>
+  <nav class="nav" aria-label="Principal"><div class="wrap">
+    <a class="brand" href="./index.html" aria-label="Puente NEA, volver al inicio"><svg class="iso" width="58" height="26" aria-hidden="true"><use href="#isotipo"/></svg>Puente NEA</a>
     <a class="back-link" href="./index.html">← Volver al inicio</a>
   </div></nav>
   <main id="contenido" class="contact-main"><div class="wrap contact-grid">
@@ -43,12 +57,12 @@
           <div class="contact-field"><span class="field-label" id="topics-label">Tipo de problema (opcional)</span><div class="contact-topics" role="group" aria-labelledby="topics-label"><label><input type="checkbox" name="topic" value="Planillas y stock"><span>Planillas y stock</span></label><label><input type="checkbox" name="topic" value="WhatsApp saturado"><span>WhatsApp saturado</span></label><label><input type="checkbox" name="topic" value="Carga doble de datos"><span>Carga doble de datos</span></label><label><input type="checkbox" name="topic" value="Turnos y agenda"><span>Turnos y agenda</span></label><label><input type="checkbox" name="topic" value="Empezar con IA"><span>Empezar con IA</span></label><label><input type="checkbox" name="topic" value="Otro"><span>Otro</span></label></div></div>
           <div class="contact-field"><label for="problem">Contanos el problema</label><textarea id="problem" name="problem" required aria-describedby="problem-error" placeholder="Ej.: Llevamos el stock en tres planillas distintas y nunca coinciden con el depósito."></textarea><span class="field-error" id="problem-error" aria-live="polite"></span></div>
         </fieldset>
-        <div class="contact-actions"><span id="step-count" aria-live="polite">Paso 1 de 3</span><div class="contact-buttons"><button class="button button-text" type="button" id="previous" hidden>← Atrás</button><button class="button button-primary" type="button" id="next">Siguiente →</button></div></div>
+        <div class="contact-actions"><span id="step-count" aria-live="polite">Paso 1 de 3</span><div class="contact-buttons"><button class="btn btn-ghost" type="button" id="previous" hidden>← Atrás</button><button class="btn btn-primary" type="button" id="next">Siguiente →</button></div></div>
         <p id="delivery-notice" class="contact-notice" role="status" hidden>El envío todavía no está habilitado. No se guardaron ni enviaron tus datos. Estamos confirmando el canal de contacto del equipo.</p>
         <p class="contact-privacy">Los datos que escribís permanecen en este navegador mientras la página esté abierta; todavía no se envían ni se guardan.</p>
       </form>
     </div>
   </div></main>
-  <footer class="footer contact-footer"><img src="./assets/footer-taller.jpg" width="1944" height="809" loading="lazy" alt=""><div class="wrap legal">© 2026 Puente NEA · Hecho en el NEA, Argentina.</div></footer>
+  <footer class="footer contact-footer"><img src="./assets/footer-taller.jpg" width="1944" height="809" loading="lazy" alt=""><div class="legal"><div class="wrap"><span>© 2026 Puente NEA</span><span>Hecho en el NEA, Argentina.</span></div></div></footer>
 </body>
 </html>

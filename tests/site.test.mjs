@@ -39,3 +39,37 @@ test('every contact call to action opens a separate, honest three-step form', ()
   assert.match(form, /envío todavía no está habilitado/i);
   assert.doesNotMatch(form, /hola@puentenea\.com|menos de 24 h|tu consulta le llega/);
 });
+
+const css = (path) => readFileSync(new URL(`../styles/${path}`, import.meta.url), 'utf8');
+
+test('both pages share one token set and the same button components', () => {
+  const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
+  for (const page of [html, form]) assert.match(page, /href="\.\/styles\/landing\.css"/);
+  assert.ok(!existsSync(new URL('../styles/site.css', import.meta.url)));
+  assert.doesNotMatch(form, /class="button\b/);
+  assert.match(form, /class="btn btn-primary"/);
+  assert.doesNotMatch(css('contact.css'), /var\(--(paper|ink-soft|river|sun)\)/);
+});
+
+test('white text never sits on the light terra (3.93:1); it uses the AA terra ink', () => {
+  for (const file of ['landing.css', 'contact.css', 'figures/auto.css', 'figures/ai.css', 'figures/software.css']) {
+    for (const rule of css(file).match(/\{[^{}]*\}/g)) {
+      assert.ok(!(/background: ?var\(--terra\)[;\s]/.test(rule) && /color: ?#fff\b/.test(rule)), `${file}: ${rule.slice(0, 90)}`);
+    }
+  }
+});
+
+test('dark mode follows the OS by redefining the shared tokens', () => {
+  const dark = css('landing.css').match(/@media \(prefers-color-scheme: dark\) \{\s*:root \{([^}]*)\}/);
+  assert.ok(dark, 'landing.css needs a prefers-color-scheme: dark :root block');
+  for (const token of ['--cream', '--paper', '--line', '--ink', '--ink-2', '--terra-ink', '--surface']) {
+    assert.match(dark[1], new RegExp(`${token}:`));
+  }
+  assert.match(css('landing.css'), /color-scheme: light dark/);
+  assert.doesNotMatch(css('contact.css'), /background:#fff\b|#fff2e9|#fff3e9|#fce5d7/);
+  // outside the light-scoped illustrations, text on accent/petrol fills must not be tied to a token that flips in dark mode
+  for (const rule of css('landing.css').match(/\{[^{}]*\}/g)) {
+    assert.ok(!(/background: var\(--terra-ink\)/.test(rule) && /color: #fff\b/.test(rule)), rule.slice(0, 90));
+    assert.ok(!(/background: var\(--petrol\)/.test(rule) && /color: var\(--cream\)/.test(rule)), rule.slice(0, 90));
+  }
+});

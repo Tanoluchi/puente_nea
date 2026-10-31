@@ -36,14 +36,14 @@
   .pa-order-checks { display: flex; gap: 6px; }
   .pa-tick { font: 600 12px/1 var(--mono); padding: 5px 8px; border-radius: 999px; background: var(--paper); color: var(--ink-2); transition: background .25s, color .25s; }
   .pa-tick::after { content: " ○"; }
-  .pa-tick[data-on] { background: var(--terra); color: #fff; }
+  .pa-tick[data-on] { background: var(--terra-ink); color: #fff; }
   .pa-tick[data-on]::after { content: "\00a0✓"; }
   .pa-au[data-phase="paused"] .pa-order { border-color: var(--terra); }
   .pa-au[data-phase="paused"] .pa-tick::after { content: " –"; }
   /* stage and gate verdict */
   .pa-stage { position: relative; margin: 0 -10px; }
   .pa-check { position: absolute; transform: translate(-8%, calc(-100% - 6px)); display: grid; gap: 3px; padding: 6px 9px; background: rgba(255,255,255,.94); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 16px -12px rgba(30,42,47,.55); font: 600 12px/1.25 var(--sans); color: var(--ink); white-space: nowrap; pointer-events: none; transition: border-color .25s; }
-  .pa-check-flag { display: none; margin: -6px -9px 2px; padding: 5px 9px; border-radius: 9px 9px 0 0; background: var(--terra); color: #fff; font-weight: 700; }
+  .pa-check-flag { display: none; margin: -6px -9px 2px; padding: 5px 9px; border-radius: 9px 9px 0 0; background: var(--terra-ink); color: #fff; font-weight: 700; }
   .pa-check-flag::before { content: "⚠ "; }
   .pa-check[data-bad] { border-color: var(--terra); }
   .pa-check[data-bad] .pa-check-flag { display: block; }
