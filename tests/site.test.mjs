@@ -82,3 +82,40 @@ test('dark mode is a toggle that redefines the shared tokens', () => {
     assert.ok(!(/background: var\(--petrol\)/.test(rule) && /color: var\(--cream\)/.test(rule)), rule.slice(0, 90));
   }
 });
+
+test('scroll reveal plays once, stays visible without JS and honors reduced motion', () => {
+  const css = readFileSync(new URL('../styles/landing.css', import.meta.url), 'utf8');
+  const js = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
+  // the JS class is set by the inline head script, before first paint
+  assert.match(html.split('</head>')[0], /<script>[^<]*classList\.add\('js'\)/);
+  // hidden initial state exists only behind .js and only when motion is allowed
+  assert.doesNotMatch(css.replace(/@media \(prefers-reduced-motion: no-preference\) \{[\s\S]*?\n  \}\n/, ''), /^\s*\.reveal(-items)?[^{]*\{[^}]*opacity: 0/m);
+  assert.match(css, /@media \(prefers-reduced-motion: no-preference\) \{\s*\.js \.reveal \{[^}]*opacity: 0[^}]*translateY\(28px\)/);
+  assert.match(css, /\.js \.reveal-items > \* \{[^}]*opacity: 0/);
+  // only compositor properties, one easing
+  assert.doesNotMatch(css.match(/\.js \.reveal \{[^}]*\}/)[0], /(top|left|height|width|margin)\s*:|transition:[^;]*(height|width|margin)/);
+  // observer reveals once, then stops watching
+  assert.match(js, /classList\.add\('in'\)[\s\S]{0,40}io\.unobserve\(e\.target\)/);
+  // reduced motion shows everything immediately
+  assert.match(css, /prefers-reduced-motion: reduce\) \{[\s\S]*\.reveal[\s\S]*\.reveal-items > \*[\s\S]*opacity: 1/);
+  // sibling groups opt in to the stagger
+  assert.match(html, /class="problems reveal-items"/);
+});
+
+test('if the landing module never runs, the reveal gate lifts so content is not left hidden', () => {
+  const tpl = readFileSync(new URL('../src/landing.template.html', import.meta.url), 'utf8');
+  const head = tpl.match(/<head>([\s\S]*)<\/head>/)[1];
+  assert.match(head, /setTimeout\([\s\S]*?reveal-ready[\s\S]*classList\.remove\('js'\)/);
+  const js = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
+  assert.match(js, /classList\.add\('reveal-ready'\)/);
+});
+
+test('team cards lead with their role, with no empty photo frames', () => {
+  assert.doesNotMatch(html, /portrait empty/);
+  assert.doesNotMatch(html, /Foto 4:5/);
+  assert.doesNotMatch(html, /<h3[^>]*>\s*Equipo Puente NEA/);
+  const members = html.match(/<article class="member[^"]*">[\s\S]*?<\/article>/g) ?? [];
+  assert.equal(members.length, 2);
+  const roles = ['Ingeniería y producto', 'Automatización e IA'];
+  members.forEach((m, i) => assert.match(m, new RegExp(`<h3[^>]*>\\s*${roles[i]}\\s*</h3>`)));
+});

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#FCF8EF">
-<script>try{if(localStorage.getItem('theme') === 'dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<script>document.documentElement.classList.add('js');setTimeout(()=>{if(!document.documentElement.classList.contains('reveal-ready'))document.documentElement.classList.remove('js')},3000);try{if(localStorage.getItem('theme') === 'dark')document.documentElement.dataset.theme='dark'}catch(e){}</script>
 <title>Puente NEA · Software a medida, automatización e IA para pymes</title>
 <link rel="icon" href="./assets/favicon.svg">
 <link rel="stylesheet" href="./styles/landing.css">
@@ -99,7 +99,7 @@
         <div><span class="eyebrow">El problema</span><h2 id="problemas-title">Tu negocio creció. Tus herramientas, no</h2></div>
         <p class="lead">La mayoría de las pymes no necesita “más tecnología”. Necesita que lo que ya hace todos los días deje de costar tanto tiempo.</p>
       </div>
-      <div class="problems reveal">
+      <div class="problems reveal-items">
         <article class="problem"><span class="n">01</span><p class="q">“Tengo todo en planillas y nadie sabe cuál es la buena.”</p><p class="a">Lo resolvemos con <b>software a medida</b>: un solo lugar para stock, pedidos y clientes.</p></article>
         <article class="problem"><span class="n">02</span><p class="q">“Cargo el mismo pedido en WhatsApp, la planilla y la factura.”</p><p class="a">Lo resolvemos con <b>automatización</b>: se carga una vez y aparece donde tiene que estar.</p></article>
         <article class="problem"><span class="n">03</span><p class="q">“Respondo las mismas preguntas todo el día.”</p><p class="a">Lo resolvemos con <b>un asistente con IA</b> que responde y te avisa cuando hace falta una persona.</p></article>
@@ -196,33 +196,27 @@
         <h2 id="nosotros-title" style="margin:16px 0 24px">Las personas <em>detrás de cada sistema</em></h2>
         <p class="lead">Somos un equipo de profesionales del Noreste argentino, con experiencia en ingeniería y diseño en distintas empresas. Con nosotros hablás desde la primera charla hasta que tu equipo usa lo que construimos: sin intermediarios.</p>
       </div>
-      <!-- Team photos: replace each <figure class="portrait empty">…</figure> with
-           <figure class="portrait"><img src="./assets/team-N.jpg" alt="Foto de …"></figure> (vertical 4:5 photo, min 400×500) -->
+      <!-- Team photos (none yet): to add one, put the figure below as the first child of its <article class="member">
+           and add the class has-photo to that article; the card then gets a photo column, no other change needed:
+           <figure class="portrait"><img src="./assets/team-N.jpg" alt="Foto de …" width="400" height="500"></figure>
+           Vertical 4:5 photo, min 400×500, real alt text with the person's name. -->
       <div class="team-wrap reveal">
         <div class="team">
           <article class="member">
-            <figure class="portrait empty" role="img" aria-label="Espacio para la foto del cofundador" style="margin:0">
-              <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#D9572B" stroke-width="1.2" stroke-linecap="round"><path class="bust" d="M50 30 a15 15 0 1 1 -0.1 0 M26 112 C26 86 36 76 50 76 C64 76 74 86 74 112"/></g><g stroke="#D9572B" stroke-width=".6" opacity=".55" stroke-dasharray="2 2"><line x1="50" y1="8" x2="50" y2="118"/><line x1="12" y1="45" x2="88" y2="45"/></g><g stroke="#A23C16" stroke-width="1"><path d="M8 8h8M8 8v8M92 8h-8M92 8v8M8 117h8M8 117v-8M92 117h-8M92 117v-8"/></g></svg>
-              <figcaption>Foto 4:5</figcaption>
-            </figure>
             <div class="text">
               <span class="kicker">Pilar 01</span>
-              <h3>Equipo Puente NEA</h3>
-              <p class="role">Cofundador · Ingeniería y producto</p>
+              <h3>Ingeniería y producto</h3>
+              <p class="role">Cofundador</p>
               <p class="bio">Es con quien hablás primero. Entiende cómo opera tu negocio y lo convierte en un sistema que tu equipo usa todos los días.</p>
               <a class="link" href="./hablemos.html">Conversemos ↗</a>
             </div>
           </article>
           <span class="sun" aria-hidden="true"></span>
           <article class="member">
-            <figure class="portrait empty" role="img" aria-label="Espacio para la foto del cofundador" style="margin:0">
-              <svg viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#D9572B" stroke-width="1.2" stroke-linecap="round"><path class="bust" d="M50 30 a15 15 0 1 1 -0.1 0 M26 112 C26 86 36 76 50 76 C64 76 74 86 74 112"/></g><g stroke="#D9572B" stroke-width=".6" opacity=".55" stroke-dasharray="2 2"><line x1="50" y1="8" x2="50" y2="118"/><line x1="12" y1="45" x2="88" y2="45"/></g><g stroke="#A23C16" stroke-width="1"><path d="M8 8h8M8 8v8M92 8h-8M92 8v8M8 117h8M8 117v-8M92 117h-8M92 117v-8"/></g></svg>
-              <figcaption>Foto 4:5</figcaption>
-            </figure>
             <div class="text">
               <span class="kicker">Pilar 02</span>
-              <h3>Equipo Puente NEA</h3>
-              <p class="role">Cofundador · Automatización e IA</p>
+              <h3>Automatización e IA</h3>
+              <p class="role">Cofundador</p>
               <p class="bio">Diseña las automatizaciones y los asistentes con IA que le sacan a tu equipo las tareas repetidas.</p>
               <a class="link" href="./hablemos.html">Conversemos ↗</a>
             </div>
@@ -241,7 +235,7 @@
         <h2 id="faq-title" style="margin-top:16px">Lo que nos preguntan antes de escribir</h2>
         <div class="help"><b>¿Te quedó alguna duda?</b><p style="margin:4px 0 16px;color:var(--ink-2)">Contanos tu situación en el formulario; el envío todavía no está habilitado.</p><a class="btn btn-ghost mini" href="./hablemos.html">Ver formulario</a></div>
       </div>
-      <div class="reveal">
+      <div class="reveal-items">
         <details open><summary>¿Cuánto cuesta?<span class="plus" aria-hidden="true">+</span></summary><p>Depende de qué haya que resolver. Después de la primera charla te mandamos el precio cerrado por escrito, antes de arrancar.</p></details>
         <details><summary>¿Cuánto tarda?<span class="plus" aria-hidden="true">+</span></summary><p>Depende del alcance. Una automatización puede estar en días; un sistema de gestión, en semanas. La fecha va en la propuesta y ves avances cada semana.</p></details>
         <details><summary>¿Tengo que cambiar todo lo que uso?<span class="plus" aria-hidden="true">+</span></summary><p>No. Si tus planillas, tu facturación o tu WhatsApp te sirven, los conectamos en lugar de reemplazarlos. Muchas veces alcanza con resolver una parte.</p></details>

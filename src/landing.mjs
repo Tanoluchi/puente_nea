@@ -27,11 +27,23 @@ import { initAi } from "./figures/ai.mjs";
   };
   walk(h1);
 
-  // Reveal on scroll
+  // Reveal on scroll: once per element, small stagger by position among siblings
+  const items = document.querySelectorAll('.reveal, .reveal-items, .process');
+  items.forEach(el => {
+    const i = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0;
+    el.style.setProperty('--d', Math.min(.3, .06 * i) + 's');
+    if (el.classList.contains('reveal-items')) [...el.children].forEach((c, n) => c.style.setProperty('--d', (.2 + .06 * n) + 's'));
+  });
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { threshold: .15 });
-  document.querySelectorAll('.reveal, .process').forEach(el => io.observe(el));
+  }), { rootMargin: '0px 0px -8% 0px', threshold: .01 });
+  // tells the <head> fallback the reveal is running; without it the hidden state is lifted after 3s
+  document.documentElement.classList.add('reveal-ready');
+  items.forEach(el => {
+    // already on screen at load: show right away, no motion
+    if (el.getBoundingClientRect().top < innerHeight * .92) el.classList.add('in', 'instant');
+    else io.observe(el);
+  });
 
   // Hotspots: tap toggles on touch
   document.querySelectorAll('.spot button').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
