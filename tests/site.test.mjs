@@ -224,7 +224,7 @@ test('the hero carries the brief copy and its two CTAs', () => {
   assert.match(hero, /<h1 id="hero-title" aria-label="Conectamos tus ideas con soluciones reales">Conectamos tus ideas con soluciones reales<\/h1>/);
   assert.match(hero, /Desarrollamos software a medida, automatizaciones e inteligencia artificial para que tu negocio trabaje mejor y siga creciendo\./);
   assert.match(hero, /<a class="btn btn-primary" href="\.\/contacto\/">Hablemos de tu proyecto <span class="arrow" aria-hidden="true">→<\/span><\/a>/);
-  assert.match(hero, /<a class="btn btn-ghost" href="#servicios">Explorá nuestros servicios<\/a>/);
+  assert.match(hero, /<a class="btn btn-ghost" href="\.\/servicios\/">Ver los servicios<\/a>/);
   assert.match(html, /id="servicios"/);
 });
 

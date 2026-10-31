@@ -41,8 +41,9 @@
 .rail li { display: grid; grid-template-columns: 64px 1fr; gap: clamp(16px, 3vw, 32px); padding: 28px 0; border-top: 1px solid var(--line); }
 .rail li:last-child { border-bottom: 1px solid var(--line); }
 .rail .n { font: 600 14px var(--mono); color: var(--terra-ink); padding-top: 6px; }
-.rail h2 { font: 500 clamp(22px, 2.4vw, 30px)/1.2 var(--serif); margin: 0 0 8px; }
+.rail h2, .rail h3 { font: 500 clamp(22px, 2.4vw, 30px)/1.2 var(--serif); margin: 0 0 8px; }
 .rail p { margin: 0; color: var(--ink-2); max-width: 60ch; }
+.rail-more { margin: 24px 0 0; }
 .rail .result { display: inline-block; margin-top: 12px; font-size: 14px; color: var(--river-ink); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; }
 
 @media (max-width: 900px) {

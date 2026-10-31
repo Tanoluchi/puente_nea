@@ -102,3 +102,27 @@ test('every page loads the shared page module, which runs its own reveal and dem
     assert.ok(html.includes(`src="${base}src/page.mjs"`), `${page.out} must load ${base}src/page.mjs`);
   }
 });
+
+test('the home keeps one diagnosis, five linked steps and no stale form copy', () => {
+  const home = read('index.html');
+  // the pains band now opens the problems section instead of owning its own one
+  const problems = home.match(/<section id="problemas"[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.match(problems, /class="pains-band"/);
+  assert.equal((home.match(/class="pains-band"/g) ?? []).length, 1);
+  // five steps that match the process page, each linking to it
+  const rail = home.match(/<ol class="rail reveal-items">[\s\S]*?<\/ol>/)?.[0] ?? '';
+  assert.equal((rail.match(/<li>/g) ?? []).length, 5);
+  assert.match(home, /href="\.\/como-trabajamos\/">Ver cómo trabajamos/);
+  assert.doesNotMatch(home, /class="steps"/);
+  // nothing on the home claims the form does not send
+  assert.doesNotMatch(home, /todavía no envía|no está habilitado/);
+  // one label for the main call to action inside the page (the nav keeps its short "Hablemos")
+  const main = home.slice(home.indexOf('<main'), home.indexOf('</main>'));
+  const ctas = main.match(/class="btn btn-primary"[^>]*>([^<]+)/g) ?? [];
+  assert.ok(ctas.length >= 2);
+  for (const cta of ctas) assert.match(cta, />Hablemos de tu proyecto/);
+  // every carousel card leads somewhere
+  const cards = home.match(/<li class="svc-card">[\s\S]*?<\/li>/g) ?? [];
+  assert.equal(cards.length, 7);
+  for (const card of cards) assert.match(card, /<a class="link" href="(?:\.\/servicios\/|\.\/contacto\/)/);
+});
