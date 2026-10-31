@@ -3,3 +3,6 @@
 .playwright-cli/
 .taste-skill/
 design/**/.screenshots/
+
+# Built site for GitHub Pages (scripts/build-site.mjs)
+_site/

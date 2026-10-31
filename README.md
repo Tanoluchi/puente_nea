@@ -14,6 +14,14 @@ Las dos páginas comparten `styles/landing.css`: tokens, botones, nav y footer. 
 
 La portada se genera desde `src/landing.template.html` y los tres módulos en `src/figures/` con `node scripts/build-landing.mjs`. Editá esas fuentes y regenerá `index.html`; el sitio publicado solo necesita los archivos estáticos, no el directorio `design/`.
 
+## Publicación
+
+GitHub Pages publica solo el sitio, no el repositorio: `.github/workflows/pages.yml` corre los tests y, si pasan, arma `_site/` con `node scripts/build-site.mjs` y lo publica. Quedan afuera `design/`, `odd/`, los tests, los scripts, el template y los archivos internos.
+
+- Se ejecuta en cada push a `master` o a mano desde la pestaña Actions.
+- Configuración necesaria una sola vez: Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+- Para ver lo que se publicaría: `node scripts/build-site.mjs` y servir `_site/` (`python3 -m http.server 8000 -d _site`). El script se niega a escribir en el repositorio o en una carpeta que lo contenga, porque borra la carpeta de salida antes de copiar.
+
 ## Antes de publicarla
 
 El sitio se publica en GitHub Pages: https://tanoluchi.github.io/puente_nea/ (lo usan `canonical`, `og:url` y `sitemap.xml`).
