@@ -132,8 +132,10 @@ test('servicios carousel sits between Qué hacemos and Cómo trabajamos with all
   assert.match(section, /<ul class="svc-track[^"]*"[^>]*aria-label="/);
   assert.match(section, /<button[^>]*aria-label="Servicio anterior"/);
   assert.match(section, /<button[^>]*aria-label="Servicio siguiente"/);
-  assert.match(section, /Contanos qué necesitás/);
-  assert.match(section, /href="\.\/hablemos\.html"/);
+  // the process banner right below owns the "Contanos qué necesitás" button; here it is a quiet text link
+  assert.doesNotMatch(section, /Contanos qué necesitás|class="btn/);
+  assert.match(section, /<p class="lead">[^<]*<a href="\.\/hablemos\.html">contanos<\/a><\/p>/);
+  assert.doesNotMatch(section, /class="num"|Siete formas/);
 });
 
 test('carousel behaviour lives in src/carousel.mjs, is wired from landing.mjs and is not autoplay', () => {
