@@ -36,7 +36,7 @@ function render(page) {
   let body = page.body.replace(/<!-- FIGURE_(SOFTWARE|AUTO|AI) -->/g, (_, name) => read(`src/figures/${name.toLowerCase()}.html`));
 
   const extraHead = (page.styles ?? []).map(style => `<link rel="stylesheet" href="${base}styles/${style}">`).join('\n');
-  const scripts = ['src/theme.mjs', 'src/nav.mjs', ...(page.scripts ?? [])]
+  const scripts = ['src/theme.mjs', 'src/nav.mjs', 'src/page.mjs', ...(page.scripts ?? [])]
     .map(script => `<script type="module" src="${base}${script}"></script>`)
     .join('\n');
 

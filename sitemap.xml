@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://tanoluchi.github.io/puente_nea/como-trabajamos/</loc></url>
   <url><loc>https://tanoluchi.github.io/puente_nea/contacto/</loc></url>
   <url><loc>https://tanoluchi.github.io/puente_nea/</loc></url>
   <url><loc>https://tanoluchi.github.io/puente_nea/privacidad.html</loc></url>
+  <url><loc>https://tanoluchi.github.io/puente_nea/servicios/automatizaciones/</loc></url>
+  <url><loc>https://tanoluchi.github.io/puente_nea/servicios/inteligencia-artificial/</loc></url>
+  <url><loc>https://tanoluchi.github.io/puente_nea/servicios/software-a-medida/</loc></url>
+  <url><loc>https://tanoluchi.github.io/puente_nea/servicios/</loc></url>
 </urlset>

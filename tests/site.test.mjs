@@ -86,7 +86,7 @@ test('dark mode is a toggle that redefines the shared tokens', () => {
 
 test('scroll reveal plays once, stays visible without JS and honors reduced motion', () => {
   const css = readFileSync(new URL('../styles/landing.css', import.meta.url), 'utf8');
-  const js = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
+  const js = readFileSync(new URL('../src/page.mjs', import.meta.url), 'utf8');
   // the JS class is set by the inline head script, before first paint
   assert.match(html.split('</head>')[0], /<script>[^<]*classList\.add\('js'\)/);
   // hidden initial state exists only behind .js and only when motion is allowed
@@ -106,7 +106,7 @@ test('scroll reveal plays once, stays visible without JS and honors reduced moti
 test('if the landing module never runs, the reveal gate lifts so content is not left hidden', () => {
   const head = readFileSync(new URL('../src/partials/head.html', import.meta.url), 'utf8');
   assert.match(head, /setTimeout\([\s\S]*?reveal-ready[\s\S]*classList\.remove\('js'\)/);
-  const js = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
+  const js = readFileSync(new URL('../src/page.mjs', import.meta.url), 'utf8');
   assert.match(js, /classList\.add\('reveal-ready'\)/);
 });
 
