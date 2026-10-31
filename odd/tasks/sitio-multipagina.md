@@ -17,7 +17,7 @@ T1 [S2] route=parent status=done commit=edfb49d: mobile menu on the home (src/na
 T2 [S3] route=parent status=done commit=edfb49d: home meta description + Open Graph (no domain-bound tags).
 T3 [S4] route=parent status=done commit=edfb49d: contact sidebar copy no longer lists the business as required.
 T4 [S1,S5] route=parent status=blocked commit=-: form delivery, WhatsApp, email, privacy page, canonical/og:url/og:image; waiting for the user's data (domain, email, WhatsApp, form receiver).
-T10 [S7] route=parent status=in_progress commit=-: dot-matrix animated bridge behind the hero copy (bridge only, no panels or hotspots).
+T10 [S7] route=parent status=done commit=1773f7a: dot-matrix animated bridge behind the hero copy (bridge only, no panels or hotspots).
 T5 [S6] route=- status=pending commit=-: phase 1, shared head/header/footer partials in the build, `/contacto/`, sitemap and robots.
 T6 [S6] route=- status=pending commit=-: phase 2, concise home (merge problems, compact demos with links, linked carousel, 5-step rail, unify CTAs, copy).
 T7 [S6] route=- status=pending commit=-: phase 3, services hub + three service pages.
@@ -31,3 +31,4 @@ L3. Phase 0 split: T1-T3 need no business data and start now; T4 waits for the u
 L4. T1-T3 verified in Chrome (menu at 375 light / 768 dark: opens, Escape closes and returns focus, link closes; hidden at 1280; no overflow) and committed in edfb49d. Suite 25/25.
 L5. User: "Ademas la imagen del puente quiero que lo hagas motion y que sea pixelado, como este ejemplo /Users/lucianovalenzuela/Downloads/image.webp, ademas el puente quiero que quede de fondo, detras del texto principal de la landing". Both hero assets (assets/hero-puente-v2.jpg, design/puente-nea-landing/assets/hero-puente.jpg) bake the four software panels into the picture, so the panels and their four hotspots need a decision.
 L6. User chose "Solo el puente en puntos (recomendado)": dots for the bridge, river and sun only; the four panels and their hotspots are removed. Source: assets/hero-puente-v2.jpg cropped from row 260 (panels sit in rows 130-250), sampled at runtime in a canvas; no new asset.
+L7. T10 verified in Chrome: 1280 light/dark, 768 dark, 375 light, 375 dark reduced motion; canvas animates (frames differ) and is static under reduced motion; no ink under the copy (measured 0); no page overflow; no console errors. Suite 30/30. Commit 1773f7a.
