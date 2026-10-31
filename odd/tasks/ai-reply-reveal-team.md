@@ -9,11 +9,11 @@ S3. "Quiero que agregues un efecto como en esta pagina https://context-con.com/,
 S4. "Luego genera un canvas para agregar nuevas cosas a la pagina, analiza esta pagina como inspiracion https://milanote.com/es, me gustaria agregar un carrousel como este donde podemos nombrar otros servicios que podemos ofrecer ya que por ahi no podemos nombrar todo en la pagina web tan grande porque se hace tedioso de leer todo." Services: "software a medida, automatizaciones, bots, agentes, IA para tu negocio, diseño de paginas web, integraciones". "Me gusta la forma tan facil de leer de la pagina web de inspiracion tambien." Reference capture: `design/servicios-carrusel/refs/milanote-carrusel.png`. Check: design system synced to `design/system.md` + `design/system.html`; `design/servicios-carrusel/` holds 3 clearly different carousel directions on the project tokens, each naming all seven services, readable at 375/768/1280, opened on the canvas. Design only: no production code until the user picks one.
 
 ## Tasks
-T1 [S1] route=worker status=done commit=pending: AI figure shows the concrete conversation.
-T2 [S3] route=worker status=done commit=pending: context-con-style reveal that plays once.
-T3 [S2] route=worker status=in_progress commit=-: team cards without photos.
-T5 [S4] route=worker status=in_progress commit=-: design system sync + 3 carousel directions on the canvas.
-T4 [S1-S3] route=parent status=pending commit=-: rebuild, full tests, screenshots at 3 widths × 2 schemes, commits.
+T1 [S1] route=worker status=done commit=a161aba: AI figure shows the concrete conversation.
+T2 [S3] route=worker status=done commit=e393bb0: context-con-style reveal that plays once.
+T3 [S2] route=worker status=done commit=e393bb0: team cards without photos.
+T5 [S4] route=worker status=done commit=pending: design system sync + 3 carousel directions on the canvas.
+T4 [S1-S3] route=parent status=done commit=a161aba,e393bb0: rebuild, full tests, screenshots at 3 widths × 2 schemes, commits.
 
 ## Log
 L1. User: "Aplica las sugerencias lo de la figura de IA donde seria mostrar mas la respuesta concreta del asistente para agregarle mas valor. Las tarjetas del equipo. Ademas Quiero que agregues un efecto como en esta pagina https://context-con.com/, el efecto que vaya apareciendo las cosas a medida que vas bajando, pero este efecto que solo aparezca una vez, cuando subas y luego bajes nuevamente ya vas a ver las cosas cargadas y no va a aplicarse el efecto nuevamente."
@@ -23,3 +23,5 @@ L4. User decision on S2: "Rediseñar sin fotos por ahora" (option: "Saco los mar
 L5. User: "Luego genera un canvas para agregar nuevas cosas a la pagina, analiza esta pagina como inspiracion https://milanote.com/es, me gustaria agregar un carrousel como este donde podemos nombrar otros servicios que podemos ofrecer ya que por ahi no podemos nombrar todo en la pagina web tan grande porque se hace tedioso de leer todo. [captura de pantalla], ahi estaria software a medida, automatizaciones, bots, agentes, IA para tu negocio, diseño de paginas web, integraciones. Me gusta la forma tan facil de leer de la pagina web de inspiracion tambien."
 L6. T2 verified by parent: reveal per context-con (28px, .75s, stagger .06s, unobserve once, JS-gated, reduced-motion visible); parent added a 3s <head> fallback that lifts the gate if src/landing.mjs never runs (test pinned); suite 12/12.
 L7. T1 verified by parent from worker screenshots (375/768/1280, four kinds, no text <12px, no overflow); parent removed the redundant fig-bar label that collided with "Asistente activo" at 1280. Suite 13/13. User asked to start the local server: http://localhost:8000.
+L8. T3 verified by parent (screens 1280 light, 375 dark). Suite 13/13 after rebuild. Slice boundary: a161aba (AI figure) and e393bb0 (reveal + team + index.html) close the S1-S3 slice; T5 design artifacts go in their own commit.
+L9. Design: design/system.md + design/system.html synced from styles/landing.css (+ figure CSS, index.html). design/servicios-carrusel/ holds 01-tarjetas-altas.html (Milanote-like tall cards with code-built vignettes, between "Qué hacemos" and "Cómo trabajamos"), 02-selector-y-panel.html (list + one large panel), 03-rejilla-densa.html (compact grid, swipe rail under 1024px). Opened on the canvas; waiting for the user to pick one. Not checked: dark mode, real touch, screen reader; 03 rail lacks a visible focus ring under 1024px.

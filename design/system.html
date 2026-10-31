@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puente NEA · Sistema de diseño</title>
+<style>
+  :root {
+    --cream: #FCF8EF; --paper: #F5EDDE; --line: #E6D9C3; --ink: #1E2A2F; --ink-2: #4A5459;
+    --terra: #D9572B; --terra-ink: #A23C16; --river: #A8CFE3; --river-ink: #2B6684; --petrol: #274B57;
+    --surface: #FFFFFF; --terra-tint: #FBE6DA; --river-tint: #E2EFF6;
+    --serif: ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --ease: cubic-bezier(.22,.8,.26,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 var(--sans); }
+  :focus-visible { outline: 3px solid var(--terra); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; margin: 0; }
+  h1 { font-size: clamp(44px, 6vw, 72px); line-height: .98; }
+  h2 { font-size: 32px; line-height: 1.1; margin-bottom: 8px; }
+  .eyebrow { font: 500 14px/1.2 var(--mono); color: var(--terra-ink); }
+  .lead { color: var(--ink-2); font-size: 19px; max-width: 56ch; margin: 16px 0 0; }
+  header { padding: 64px 0 40px; }
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  .src { font: 500 13px var(--mono); color: var(--ink-2); margin: 0 0 24px; }
+  .grid { display: grid; gap: 16px; }
+  .sw { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); }
+  .chip { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+  .chip i { display: block; height: 64px; border-bottom: 1px solid var(--line); }
+  .chip div { padding: 12px 16px; font-size: 14px; }
+  .chip b { display: block; font: 600 13px var(--mono); }
+  .chip span { color: var(--ink-2); font: 500 12px var(--mono); }
+  .on-petrol { background: var(--petrol); border-radius: 20px; padding: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 16px; }
+  .on-petrol span { font: 500 13px var(--mono); }
+  .type-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .type-row small { font: 500 13px var(--mono); color: var(--ink-2); }
+  .space { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; }
+  .space div { text-align: center; font: 500 12px var(--mono); color: var(--ink-2); }
+  .space i { display: block; background: var(--terra); margin: 0 auto 8px; width: 24px; opacity: .85; }
+  .radii { display: flex; flex-wrap: wrap; gap: 24px; }
+  .radii div { text-align: center; font: 500 12px var(--mono); color: var(--ink-2); }
+  .radii i { display: block; width: 88px; height: 64px; background: var(--paper); border: 1.5px solid var(--ink); margin-bottom: 8px; }
+  .shadows { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .shadows div { background: var(--cream); border: 1px solid var(--line); border-radius: 20px; padding: 24px; min-height: 120px; font: 500 12px/1.5 var(--mono); color: var(--ink-2); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; font: 600 16px var(--sans); text-decoration: none; border: 1.5px solid var(--ink); cursor: pointer; transition: transform .15s var(--ease), background-color .2s var(--ease), border-color .2s var(--ease); }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--ink); color: var(--cream); }
+  .btn-primary:hover { background: var(--terra-ink); border-color: var(--terra-ink); }
+  .btn-ghost { background: transparent; color: var(--ink); }
+  .mini { min-height: 44px; padding: 8px 16px; font-size: 14px; }
+  .round { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+  .round:hover { border-color: var(--ink); }
+  .round svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .comps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; align-items: start; }
+  .comp-title { font: 500 13px var(--mono); color: var(--ink-2); margin: 0 0 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
+  .card h3 { font-size: 24px; line-height: 1.15; margin-bottom: 8px; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .tags li { border: 1px solid var(--line); background: var(--cream); padding: 6px 12px; border-radius: 8px; font-size: 14px; }
+  .pill { display: inline-block; font: 500 13px var(--mono); color: var(--terra-ink); background: var(--terra-tint); padding: 4px 8px; border-radius: 6px; }
+  .tile { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: var(--terra-tint); }
+  .tile.cool { background: var(--river-tint); }
+  .tile svg { width: 38px; height: 38px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .band { background: var(--petrol); color: #fff; border-radius: 20px; padding: 24px; }
+  .band p { margin: 0 0 16px; font: 500 24px/1.2 var(--serif); }
+  .band .btn { background: var(--terra-ink); border-color: var(--terra-ink); color: var(--cream); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 900px) { .comps, .shadows { grid-template-columns: 1fr; } .type-row { grid-template-columns: 1fr; gap: 4px; } }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <span class="eyebrow">Sistema de diseño · sincronizado desde el proyecto</span>
+  <h1>Puente NEA</h1>
+  <p class="lead">Fuentes leídas: <code>styles/landing.css</code>, <code>styles/figures/software.css</code>, <code>styles/figures/auto.css</code>, <code>index.html</code>. Detalle y orígenes en <code>design/system.md</code>.</p>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="c-title">
+    <h2 id="c-title">Colores</h2>
+    <p class="src">styles/landing.css · :root (claro)</p>
+    <div class="grid sw">
+      <div class="chip"><i style="background:var(--cream)"></i><div><b>--cream</b><span>#FCF8EF · fondo</span></div></div>
+      <div class="chip"><i style="background:var(--paper)"></i><div><b>--paper</b><span>#F5EDDE · sección alterna</span></div></div>
+      <div class="chip"><i style="background:var(--surface)"></i><div><b>--surface</b><span>#FFFFFF · tarjetas</span></div></div>
+      <div class="chip"><i style="background:var(--line)"></i><div><b>--line</b><span>#E6D9C3 · bordes</span></div></div>
+      <div class="chip"><i style="background:var(--ink)"></i><div><b>--ink</b><span>#1E2A2F · texto</span></div></div>
+      <div class="chip"><i style="background:var(--ink-2)"></i><div><b>--ink-2</b><span>#4A5459 · texto 2</span></div></div>
+      <div class="chip"><i style="background:var(--terra)"></i><div><b>--terra</b><span>#D9572B · foco, bordes</span></div></div>
+      <div class="chip"><i style="background:var(--terra-ink)"></i><div><b>--terra-ink</b><span>#A23C16 · acento texto</span></div></div>
+      <div class="chip"><i style="background:var(--terra-tint)"></i><div><b>--terra-tint</b><span>#FBE6DA · relleno cálido</span></div></div>
+      <div class="chip"><i style="background:var(--river)"></i><div><b>--river</b><span>#A8CFE3</span></div></div>
+      <div class="chip"><i style="background:var(--river-ink)"></i><div><b>--river-ink</b><span>#2B6684 · acento frío</span></div></div>
+      <div class="chip"><i style="background:var(--river-tint)"></i><div><b>--river-tint</b><span>#E2EFF6 · relleno frío</span></div></div>
+      <div class="chip"><i style="background:var(--petrol)"></i><div><b>--petrol</b><span>#274B57 · bandas oscuras</span></div></div>
+    </div>
+    <p class="src" style="margin-top:32px">Literales sobre petrol (landing.css, no son tokens)</p>
+    <div class="on-petrol">
+      <span style="color:#fff">#FFFFFF · títulos</span><span style="color:#EAF1F2">#EAF1F2 · cuerpo</span><span style="color:#D5E2E5">#D5E2E5 · rol, enlaces</span><span style="color:#C4D4D8">#C4D4D8 · secundario</span><span style="color:#F4A47F">#F4A47F · acento</span><span style="color:#F08A3A">#F08A3A · sol del isotipo</span><span style="color:#E8642F">#E8642F · tablero del isotipo</span>
+    </div>
+    <p class="src" style="margin-top:24px">Modo oscuro: :root[data-theme="dark"] sobrescribe 12 tokens (ver system.md). Las ilustraciones conservan la paleta clara.</p>
+  </section>
+
+  <section aria-labelledby="t-title">
+    <h2 id="t-title">Tipografía</h2>
+    <p class="src">styles/landing.css · --serif, --sans, --mono</p>
+    <div class="type-row"><small>h1 · serif 500 · clamp(44, 6vw, 84)</small><div style="font:500 64px/.98 var(--serif);letter-spacing:-.02em">Software a medida</div></div>
+    <div class="type-row"><small>h2 · serif 500 · clamp(36, 4.4vw, 56)</small><div style="font:500 48px/1.05 var(--serif);letter-spacing:-.02em">Tres formas de sacarte trabajo</div></div>
+    <div class="type-row"><small>h3 · serif 500 · 40 / 30 / 24</small><div style="font:500 30px/1.1 var(--serif);letter-spacing:-.02em">Entendemos tu día a día</div></div>
+    <div class="type-row"><small>lead · sans 19</small><div style="font-size:19px;color:var(--ink-2)">Dejá el Excel, los mensajes repetidos y la carga doble.</div></div>
+    <div class="type-row"><small>cuerpo · sans 17 / 15</small><div>Construimos el sistema que tu negocio necesita y te acompañamos a usarlo.</div></div>
+    <div class="type-row"><small>eyebrow · mono 500 14</small><div class="eyebrow">Qué hacemos</div></div>
+    <div class="type-row"><small>meta · mono 600 13 / 12</small><div style="font:600 13px var(--mono);color:var(--ink-2)">Ejemplo ilustrativo</div></div>
+  </section>
+
+  <section aria-labelledby="s-title">
+    <h2 id="s-title">Espaciado</h2>
+    <p class="src">styles/landing.css · grilla de 4px · valores en uso</p>
+    <div class="space">
+      <div><i style="height:4px"></i>4</div><div><i style="height:8px"></i>8</div><div><i style="height:12px"></i>12</div><div><i style="height:16px"></i>16</div><div><i style="height:20px"></i>20</div><div><i style="height:24px"></i>24</div><div><i style="height:32px"></i>32</div><div><i style="height:40px"></i>40</div><div><i style="height:48px"></i>48</div><div><i style="height:56px"></i>56</div><div><i style="height:64px"></i>64</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="r-title">
+    <h2 id="r-title">Radios y sombras</h2>
+    <p class="src">styles/landing.css · styles/figures/auto.css</p>
+    <div class="radii">
+      <div><i style="border-radius:6px"></i>6 · pill</div><div><i style="border-radius:8px"></i>8 · tags</div><div><i style="border-radius:10px"></i>10 · botones</div><div><i style="border-radius:12px"></i>12 · tips</div><div><i style="border-radius:16px"></i>16 · ayuda</div><div><i style="border-radius:20px"></i>20 · tarjetas</div><div><i style="border-radius:999px"></i>999 · redondo</div>
+    </div>
+    <div class="shadows" style="margin-top:40px">
+      <div style="box-shadow:0 4px 12px rgba(30,42,47,.16)">0 4px 12px<br>rgba(30,42,47,.16)<br>botones redondos</div>
+      <div style="box-shadow:0 30px 60px -40px rgba(30,42,47,.35)">0 30px 60px -40px<br>rgba(30,42,47,.35)<br>.figure</div>
+      <div style="box-shadow:0 8px 18px -14px rgba(30,42,47,.5)">0 8px 18px -14px<br>rgba(30,42,47,.5)<br>tarjetas en figuras</div>
+      <div style="background:var(--paper);box-shadow:0 0 0 8px var(--cream)">0 0 0 8px var(--cream)<br>halo del paso</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="k-title">
+    <h2 id="k-title">Componentes</h2>
+    <p class="src">styles/landing.css</p>
+    <div class="comps">
+      <div>
+        <p class="comp-title">.btn</p>
+        <div class="row"><a class="btn btn-primary" href="#k-title">Agendá una charla <span aria-hidden="true">→</span></a><a class="btn btn-ghost" href="#k-title">Ver qué hacemos</a></div>
+        <p class="comp-title" style="margin-top:24px">.mini · control redondo 44px</p>
+        <div class="row"><a class="btn btn-ghost mini" href="#k-title">Reiniciar</a>
+          <button class="round" type="button" aria-label="Anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="round" type="button" aria-label="Siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>
+        <p class="comp-title" style="margin-top:24px">Tags · pill</p>
+        <ul class="tags"><li>Stock</li><li>Pedidos</li><li>Clientes</li></ul>
+        <p style="margin:12px 0 0"><span class="pill">Charlamos lo necesario</span></p>
+      </div>
+      <div>
+        <p class="comp-title">Tarjeta (.step .card)</p>
+        <div class="card"><div class="row" style="margin-bottom:16px"><span class="tile"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 5h14l6 6v24H10z"/><path d="M14 16h12M14 21h12M14 26h7"/></svg></span><span class="tile cool"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M14 20l4 4 8-8"/></svg></span></div><h3>Entendemos tu día a día</h3><p>Charlamos todo lo que haga falta para entender tu problema.</p></div>
+      </div>
+      <div>
+        <p class="comp-title">Banda petrol</p>
+        <div class="band"><p>No necesitás tener la solución. Empecemos por el problema</p><a class="btn" href="#k-title">Contanos qué necesitás <span aria-hidden="true">→</span></a></div>
+        <p class="comp-title" style="margin-top:24px">Foco visible</p>
+        <a class="btn btn-ghost" href="#k-title" style="outline:3px solid var(--terra);outline-offset:3px">Tabulá hasta acá</a>
+      </div>
+    </div>
+  </section>
+</main>
+<div style="height:64px"></div>
+</body>
+</html>

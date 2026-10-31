@@ -1,0 +1,10 @@
+{
+  "title": "Servicios · carrusel",
+  "brief": "Section for the Puente NEA landing that names all seven services (software a medida, automatizaciones, bots, agentes, IA para tu negocio, diseño de páginas web, integraciones) without lengthening the page. Inspired by milanote.com/es: short headline, one idea per block, a small artifact per service, a carousel with the next card peeking. Spanish UI copy with voseo, no hype, no invented claims.",
+  "feature": "odd/tasks/ai-reply-reveal-team.md",
+  "artboards": [
+    { "file": "01-tarjetas-altas.html", "title": "Tarjetas altas", "tradeoff": "Closest to Milanote: tall cards on a petrol band, each with a small code-built artifact, scroll-snap, round arrows and the next card peeking; the most visual and memorable, but one swipe per few services and the artifacts are the heaviest to build and maintain. Sits between Qué hacemos and Cómo trabajamos.", "width": 1440, "height": 1946 },
+    { "file": "02-selector-y-panel.html", "title": "Selector y panel", "tradeoff": "One list of seven names always visible plus one large panel: nothing is hidden behind swiping and every service is one tap away, with the biggest artifact; shows one service at a time and needs a click to read the rest. Continues Qué hacemos on the same paper background; on phones the list becomes a row of chips.", "width": 1440, "height": 1707 },
+    { "file": "03-rejilla-densa.html", "title": "Rejilla densa", "tradeoff": "Lightest and densest: all seven services as compact icon cards in a 4-column grid (a two-row swipe rail on tablet and phone), no artifacts, so it is the shortest and the fastest to build; less visual proof of what each service does. Sits right under the Te pasa esto band so the full list is visible from the start.", "width": 1440, "height": 1217 }
+  ]
+}
