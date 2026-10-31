@@ -1,10 +1,14 @@
+import { CONTACT, mailtoHref, payloadOf } from './contact-message.mjs';
+
 const form = document.querySelector('#contact-form');
 const steps = [...form.querySelectorAll('.contact-step')];
 const progress = [...document.querySelectorAll('.contact-progress li')];
 const previous = document.querySelector('#previous');
 const next = document.querySelector('#next');
 const count = document.querySelector('#step-count');
-const notice = document.querySelector('#delivery-notice');
+const [noticeMail, noticeSent, noticeError] = ['notice-mail', 'notice-sent', 'notice-error'].map(id => document.getElementById(id));
+const notices = [noticeMail, noticeSent, noticeError];
+const SEND_LABEL = 'Enviar consulta →';
 const contact = form.elements.contact;
 let current = 0;
 
@@ -32,10 +36,15 @@ function showStep(index) {
     item.classList.toggle('done', i < index);
   });
   previous.hidden = index === 0;
-  next.textContent = index === steps.length - 1 ? 'Revisar consulta →' : 'Siguiente →';
+  next.textContent = index === steps.length - 1 ? SEND_LABEL : 'Siguiente →';
   count.textContent = `Paso ${index + 1} de ${steps.length}`;
   steps[index].querySelector('legend').focus();
-  notice.hidden = true;
+  showNotice(null);
+}
+
+function showNotice(el) {
+  notices.forEach(n => { n.hidden = n !== el; });
+  el?.focus();
 }
 
 function advance() {
@@ -43,7 +52,48 @@ function advance() {
   const invalid = fields.filter(field => !validate(field));
   if (invalid.length) return invalid[0].focus();
   if (current < steps.length - 1) showStep(current + 1);
-  else notice.hidden = false;
+  else send();
+}
+
+const formData = () => ({
+  name: form.elements.name.value,
+  business: form.elements.business.value,
+  channel: form.elements.channel.value,
+  contact: contact.value,
+  topics: [...form.querySelectorAll('[name=topic]:checked')].map(input => input.value),
+  problem: form.elements.problem.value,
+  website: form.elements.website.value,
+});
+
+async function send() {
+  const data = formData();
+  // No backend yet: hand a prefilled email to the visitor's mail app
+  if (!CONTACT.endpoint) {
+    document.getElementById('mail-link').href = mailtoHref(data);
+    return showNotice(noticeMail);
+  }
+  next.disabled = true;
+  next.setAttribute('aria-busy', 'true');
+  next.textContent = 'Enviando…';
+  try {
+    const response = await fetch(CONTACT.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payloadOf(data)),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    document.getElementById('sent-channel').textContent = data.channel === 'whatsapp' ? 'WhatsApp' : 'email';
+    form.querySelectorAll('.contact-step, .contact-actions').forEach(el => { el.hidden = true; });
+    showNotice(noticeSent);
+  } catch {
+    // keep everything typed so the visitor can retry or write by email
+    showNotice(noticeError);
+  } finally {
+    next.disabled = false;
+    next.removeAttribute('aria-busy');
+    next.textContent = SEND_LABEL;
+  }
 }
 
 form.addEventListener('submit', event => { event.preventDefault(); advance(); });
@@ -56,7 +106,7 @@ form.addEventListener('keydown', event => {
 });
 form.addEventListener('input', event => {
   if (event.target.matches('[required]') && event.target.getAttribute('aria-invalid') === 'true') validate(event.target);
-  if (current === steps.length - 1) notice.hidden = true;
+  if (current === steps.length - 1) showNotice(null);
 });
 form.addEventListener('change', event => {
   if (event.target.name !== 'channel') return;

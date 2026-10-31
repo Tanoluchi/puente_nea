@@ -36,7 +36,8 @@ test('every contact call to action opens a separate, honest three-step form', ()
   for (const name of ['name', 'business', 'channel', 'contact', 'topic', 'problem']) {
     assert.match(form, new RegExp(`name="${name}"`));
   }
-  assert.match(form, /envío todavía no está habilitado/i);
+  // real destination (the team's confirmed address), no invented address and no response-time promise
+  assert.match(form, /holapuentenea@gmail\.com/);
   assert.doesNotMatch(form, /hola@puentenea\.com|menos de 24 h|tu consulta le llega/);
 });
 
