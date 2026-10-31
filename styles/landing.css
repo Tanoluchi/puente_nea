@@ -58,8 +58,8 @@
   .btn:hover .arrow { transform: translateX(4px); }
 
   /* Nav */
-  .nav { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--cream) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s var(--ease); }
-  .nav.scrolled { border-color: var(--line); }
+  .nav { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--cream) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s var(--ease), background-color .3s var(--ease); }
+  .nav.scrolled { border-color: var(--line); background: color-mix(in srgb, var(--cream) 94%, transparent); }
   .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
   .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; letter-spacing: -.01em; font-size: 18px; }
   .iso { flex: none; overflow: visible; }
@@ -84,16 +84,16 @@
   .theme-toggle { flex: none; }
 
   /* Hero */
-  .hero { position: relative; padding-top: clamp(56px, 8vw, 96px); overflow: hidden; }
+  .hero { position: relative; padding: clamp(56px, 8vw, 96px) 0 clamp(40px, 6vw, 96px); overflow: hidden; }
   .hero-copy { position: relative; z-index: 2; max-width: 880px; text-align: center; }
   .hero h1 { margin-top: 16px; font-size: clamp(40px, 6vw, 80px); line-height: 1; text-wrap: balance; }
   .hero h1 em { color: var(--terra-ink); }
   .hero .lead { margin: 24px auto 32px; }
   .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
   .hero-copy .hero-ctas { justify-content: center; }
-  /* The dotted bridge rises behind the copy (src/hero-dots.mjs); without JS there is no scene and the copy stands alone */
-  .hero-scene { display: none; position: relative; z-index: 1; aspect-ratio: 3 / 1; margin-top: calc(-1 * clamp(96px, 13vw, 200px)); }
-  .js .hero-scene { display: block; }
+  /* The dotted bridge sits behind the whole hero (src/hero-dots.mjs), faint under the text; without JS there is no scene and the copy stands alone */
+  .hero-scene { display: none; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .js .hero-scene { display: block; -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent); mask-image: linear-gradient(to bottom, #000 86%, transparent); }
   .hero-dots { display: block; width: 100%; height: 100%; }
 
   /* Pains band: one slow row (src/pains.mjs) that pauses under the pointer, on keyboard focus or on tap; static and swipeable without JS or with reduced motion */
@@ -289,18 +289,22 @@
   }
   .hero h1 .w { display: inline-block; opacity: 0; transform: translateY(.4em); animation: rise .9s var(--ease) forwards; }
   @keyframes rise { to { opacity: 1; transform: none; } }
+  /* entrance of the rest of the hero copy, timed with the bridge build (src/hero-dots.mjs) */
+  .js .hero-copy .eyebrow, .js .hero-copy .lead, .js .hero-copy .hero-ctas { opacity: 0; transform: translateY(14px); animation: rise .8s var(--ease) forwards; }
+  .js .hero-copy .eyebrow { display: inline-block; animation-delay: .05s; }
+  .js .hero-copy .lead { animation-delay: .65s; }
+  .js .hero-copy .hero-ctas { animation-delay: .85s; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
     .reveal, .reveal-items > * { opacity: 1; transform: none; }
-    .hero h1 .w { opacity: 1; transform: none; }
+    .hero h1 .w, .js .hero-copy .eyebrow, .js .hero-copy .lead, .js .hero-copy .hero-ctas { opacity: 1; transform: none; }
   }
   @media (max-width: 900px) {
     .nav ul { display: none; }
     .menu-toggle { display: grid; }
     .nav.open ul { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; padding: 8px 24px 16px; background: var(--cream); border-bottom: 1px solid var(--line); font-size: 17px; }
     .nav.open ul a { display: block; padding: 12px 0; color: var(--ink); }
-    .hero-scene { aspect-ratio: 2 / 1; margin-top: -64px; }
     .sec-head, .service, .faq-grid { grid-template-columns: 1fr; }
     .pains-band .tag { display: none; }
     .process-banner { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
@@ -314,7 +318,8 @@
     .sun { width: 44px; height: 44px; }
   }
   @media (max-width: 640px) {
-    .hero-scene { aspect-ratio: 5 / 4; margin-top: -32px; }
+    .hero { padding-bottom: calc(22vw + 40px); } /* room for the whole bridge under the copy */
+    .js .hero-scene { -webkit-mask-image: linear-gradient(to bottom, #000 94%, transparent); mask-image: linear-gradient(to bottom, #000 94%, transparent); }
     .svc-head { text-align: left; }
     .svc-head .lead { margin-inline: 0; font-size: 17px; }
     .svc h2 { font-size: 34px; }

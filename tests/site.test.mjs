@@ -12,7 +12,7 @@ test('landing keeps every major editorial section and real local artwork', () =>
   // the hero bridge is drawn as dots from the original illustration
   assert.match(readFileSync(new URL('../src/hero-dots.mjs', import.meta.url), 'utf8'), /assets\/hero-puente-v2\.jpg/);
   for (const image of ['hero-puente-v2.jpg', 'footer-taller.jpg']) assert.ok(existsSync(new URL(`../assets/${image}`, import.meta.url)));
-  assert.match(html, /Software a medida, automatización e/);
+  assert.match(html, /Conectamos tus ideas con soluciones reales/);
   assert.match(html, /<script type="module" src="\.\/src\/landing\.mjs"><\/script>/);
 });
 
@@ -217,4 +217,21 @@ test('the hero bridge is a dot matrix behind the copy, without the old panels an
   assert.match(dots, /prefers-reduced-motion/);
   assert.match(dots, /IntersectionObserver/);
   assert.doesNotMatch(css('landing.css'), /\.spot|\.legend|\.hero-stage/);
+});
+
+test('the hero carries the brief copy and its two CTAs', () => {
+  const hero = html.match(/<header class="hero"[\s\S]*?<\/header>/)?.[0] ?? '';
+  assert.match(hero, /<span class="eyebrow">Tecnología que conecta<\/span>/);
+  assert.match(hero, /<h1 id="hero-title" aria-label="Conectamos tus ideas con soluciones reales">Conectamos tus ideas con soluciones reales<\/h1>/);
+  assert.match(hero, /Desarrollamos software a medida, automatizaciones e inteligencia artificial para que tu negocio trabaje mejor y siga creciendo\./);
+  assert.match(hero, /<a class="btn btn-primary" href="\.\/hablemos\.html">Hablemos de tu proyecto <span class="arrow" aria-hidden="true">→<\/span><\/a>/);
+  assert.match(hero, /<a class="btn btn-ghost" href="#servicios">Explorá nuestros servicios<\/a>/);
+  assert.match(html, /id="servicios"/);
+});
+
+test('the hero bridge builds once, pauses when hidden and keeps cursor effects to fine pointers', () => {
+  const dots = readFileSync(new URL('../src/hero-dots.mjs', import.meta.url), 'utf8');
+  assert.match(dots, /visibilitychange/);
+  assert.match(dots, /hover: hover\) and \(pointer: fine/);
+  assert.match(css('landing.css'), /\.hero-scene[^}]*mask-image/);
 });
