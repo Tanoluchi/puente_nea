@@ -186,9 +186,8 @@
             <span class="err" id="name-err" aria-live="polite"></span>
           </div>
           <div class="field">
-            <label for="business">Nombre del negocio</label>
-            <input id="business" name="business" autocomplete="organization" required aria-describedby="business-err" placeholder="Ej.: Ferretería del Centro">
-            <span class="err" id="business-err" aria-live="polite"></span>
+            <label for="business">Nombre del negocio (opcional)</label>
+            <input id="business" name="business" autocomplete="organization" placeholder="Ej.: Ferretería del Centro">
           </div>
         </fieldset>
 
@@ -265,7 +264,6 @@
 
   const rules = {
     name: v => v.trim().length >= 2 || 'Escribí tu nombre.',
-    business: v => v.trim().length >= 2 || 'Escribí el nombre de tu negocio.',
     contact: v => form.channel.value === 'email'
       ? /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Revisá el email: falta algo (ej.: nombre@negocio.com).'
       : v.replace(/\D/g, '').length >= 10 || 'Escribí tu WhatsApp con código de área (ej.: 379 412-3456).',
@@ -323,9 +321,9 @@
     document.getElementById('done-title').textContent = `¡Listo, ${first}!`;
     document.getElementById('done-text').textContent = `Te escribimos por ${via} en menos de 24 h hábiles. Mientras tanto, así nos llegó tu consulta:`;
     const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    document.getElementById('mail-head').innerHTML = `<b>Para:</b> hola@puentenea.com<br><b>Asunto:</b> Nueva consulta · ${esc(d.get('business').trim())}`;
+    document.getElementById('mail-head').innerHTML = `<b>Para:</b> hola@puentenea.com<br><b>Asunto:</b> Nueva consulta · ${esc(d.get('business').trim() || d.get('name').trim())}`;
     document.getElementById('mail-body').textContent =
-      `Nombre: ${d.get('name').trim()}\nNegocio: ${d.get('business').trim()}\nContacto (${via}): ${d.get('contact').trim()}\nTemas: ${topics.length ? topics.join(', ') : 'Sin marcar'}\n\n${d.get('problem').trim()}`;
+      `Nombre: ${d.get('name').trim()}\nNegocio: ${d.get('business').trim() || 'Sin indicar'}\nContacto (${via}): ${d.get('contact').trim()}\nTemas: ${topics.length ? topics.join(', ') : 'Sin marcar'}\n\n${d.get('problem').trim()}`;
     document.getElementById('card').classList.add('sent');
     document.getElementById('done-title').focus();
   };
