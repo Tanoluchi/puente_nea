@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
 test('landing keeps every major editorial section and real local artwork', () => {
-  for (const id of ['contenido', 'top', 'problemas', 'que-hacemos', 'como-trabajamos', 'quienes-somos', 'preguntas', 'hablemos']) {
+  for (const id of ['contenido', 'top', 'problemas', 'como-trabajamos', 'quienes-somos', 'preguntas', 'hablemos']) {
     assert.match(html, new RegExp(`id="${id}"`));
   }
   assert.match(html, /assets\/footer-taller\.jpg/);
@@ -16,17 +16,20 @@ test('landing keeps every major editorial section and real local artwork', () =>
   assert.match(html, /<script type="module" src="\.\/src\/landing\.mjs"><\/script>/);
 });
 
-test('landing exposes the canvas page-one structure and interactive illustrations', () => {
+test('landing exposes the canvas page-one structure and keeps the demos on their own pages', () => {
   for (const pattern of [
     /class="pains-band"/, /class="team-wrap/, /class="process-banner/, /class="wrap faq-grid/,
-    /Tres formas de sacarte trabajo de encima</, /Las personas.*detrás de cada sistema</,
-    /id="fig-ba"/, /id="fig-flow"/, /id="fig-bot"/,
-    /class="iso pn-sw/, /class="iso pa-au/, /class="iso pi-br/,
+    /Las personas.*detrás de cada sistema</,
   ]) assert.match(html, pattern);
+  // the three demos live on their service pages, not on the home
+  assert.doesNotMatch(html, /id="fig-(ba|flow|bot)"/);
+  assert.doesNotMatch(html, /id="que-hacemos"/);
   for (const name of ['software', 'auto', 'ai']) {
     assert.ok(existsSync(new URL(`../src/figures/${name}.mjs`, import.meta.url)));
     assert.ok(existsSync(new URL(`../styles/figures/${name}.css`, import.meta.url)));
   }
+  // every figure shares one kit, so a page that loads a single figure still gets its colours
+  assert.ok(existsSync(new URL('../styles/figures/iso.css', import.meta.url)));
 });
 
 test('every contact call to action opens a separate, honest three-step form', () => {
@@ -120,9 +123,9 @@ test('team cards lead with their role, with no empty photo frames', () => {
   members.forEach((m, i) => assert.match(m, new RegExp(`<h3[^>]*>\\s*${roles[i]}\\s*</h3>`)));
 });
 
-test('servicios carousel sits between Qué hacemos and Cómo trabajamos with all seven services', () => {
+test('servicios carousel sits between Problemas and Cómo trabajamos with all seven services', () => {
   const at = id => html.indexOf(`id="${id}"`);
-  assert.ok(at('que-hacemos') > -1 && at('servicios') > at('que-hacemos') && at('como-trabajamos') > at('servicios'));
+  assert.ok(at('servicios') > at('problemas') && at('como-trabajamos') > at('servicios'));
   const section = html.match(/<section[^>]*id="servicios"[^>]*>[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.match(section, /aria-labelledby="/);
   for (const title of ['Software a medida', 'Automatizaciones', 'Bots', 'Agentes', 'IA para tu negocio', 'Diseño de páginas web', 'Integraciones']) {

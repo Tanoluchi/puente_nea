@@ -138,19 +138,9 @@
   .problem .a b { color: var(--river-ink); }
   .problem .n { font: 600 13px var(--mono); color: var(--terra-ink); }
 
-  /* Services */
-  .services { background: var(--paper); }
-  .service { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
-  .service:nth-child(even) .figure { order: -1; }
-  .service .num { font: 600 13px var(--mono); color: var(--terra-ink); }
-  .service h3 { font-size: 40px; line-height: 1.05; margin: 8px 0 16px; }
-  .service p { color: var(--ink-2); margin: 0 0 16px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 16px; list-style: none; }
-  .tags li { border: 1px solid var(--line); background: var(--cream); padding: 6px 12px; border-radius: 8px; font-size: 14px; }
   /* Grid children default to min-width:auto, so a wide figure could push the page sideways */
-  .service > * { min-width: 0; }
+  .split > * { min-width: 0; }
   .figure { max-width: 100%; overflow: hidden; }
-  .example { max-width: 60ch; font-size: 14px; color: var(--ink-2); border-left: 3px solid var(--terra); padding-left: 12px; }
   .figure { background: var(--cream); border: 1px solid var(--line); border-radius: 20px; padding: 24px; min-height: 380px; position: relative; box-shadow: 0 30px 60px -40px rgba(30,42,47,.35); }
   .fig-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font: 600 12px var(--mono); color: var(--ink-2); }
   .dots { display: flex; gap: 6px; } .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--terra); opacity: .8; }
@@ -296,10 +286,9 @@
     .menu-toggle { display: grid; }
     .nav.open ul { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; padding: 8px 24px 16px; background: var(--cream); border-bottom: 1px solid var(--line); font-size: 17px; }
     .nav.open ul a { display: block; padding: 12px 0; color: var(--ink); }
-    .sec-head, .service, .faq-grid { grid-template-columns: 1fr; }
+    .sec-head, .faq-grid { grid-template-columns: 1fr; }
     .pains-band .tag { display: none; }
     .process-banner { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
-    .service:nth-child(even) .figure { order: 0; }
     .problems, .footer-grid { grid-template-columns: 1fr 1fr; }
     .problem .q { min-height: 0; }
     .svc-card { flex-basis: 320px; height: 520px; }

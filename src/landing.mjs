@@ -1,6 +1,3 @@
-import { initSoftware } from "./figures/software.mjs";
-import { initAuto } from "./figures/auto.mjs";
-import { initAi } from "./figures/ai.mjs";
 import { initHeroDots } from "./hero-dots.mjs";
 import { initCarousel } from "./carousel.mjs";
 import "./page.mjs";
@@ -23,9 +20,6 @@ import "./page.mjs";
   walk(h1);
 
   // the home is the only page that shows all three demos
-  initSoftware();
-  initAuto();
-  initAi();
   initHeroDots();
   initCarousel();
 })();
