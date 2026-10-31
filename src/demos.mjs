@@ -27,10 +27,10 @@ const order = {
 export const orderView = problem => order[problem ? 'problem' : 'normal'];
 
 const messages = {
-  precio: { question: '¿Cuánto sale el taladro 650W?', answer: 'Sale $ 89.900. ¿Te lo reservo?', source: 'Precios', readout: 'Respondido con tu lista de precios' },
-  turno: { question: 'Agendame el jueves a las 10 h.', answer: 'Listo, te agendé el jueves a las 10 h.', source: 'Agenda', readout: 'Turno agendado en tu agenda' },
-  pedido: { question: 'Quiero 10 bultos de yerba', answer: 'Listo, pedido cargado para mañana.', source: 'Pedidos', readout: 'Pedido cargado en tus pedidos' },
-  reclamo: { question: 'Tengo un reclamo', answer: 'Te paso con una persona del equipo.', source: 'Persona del equipo', readout: 'Derivado a una persona del equipo' },
+  precio: { question: '¿Cuánto sale el taladro 650W?', answer: 'Sale $ 89.900. ¿Te lo reservo?', source: 'Precios', readout: 'Respondido con tu lista de precios', sourceNote: 'Usó tu info: Precios', card: { title: 'Taladro 650W', rows: [['Precio', '$ 89.900']] } },
+  turno: { question: 'Agendame el jueves a las 10 h.', answer: 'Listo, te agendé el jueves a las 10 h.', source: 'Agenda', readout: 'Turno agendado en tu agenda', sourceNote: 'Usó tu info: Agenda', card: { title: 'Turno agendado', rows: [['Día', 'Jueves'], ['Hora', '10 h']] } },
+  pedido: { question: 'Quiero 10 bultos de yerba', answer: 'Listo, pedido cargado para mañana.', source: 'Pedidos', readout: 'Pedido cargado en tus pedidos', sourceNote: 'Usó tu info: Pedidos', card: { title: 'Pedido cargado', rows: [['Producto', 'Yerba'], ['Cantidad', '10 bultos'], ['Entrega', 'Mañana']] } },
+  reclamo: { question: 'Tengo un reclamo', answer: 'Te paso con una persona del equipo.', source: 'Persona del equipo', readout: 'Derivado a una persona del equipo', sourceNote: 'Lo deriva a: Persona del equipo', card: { title: 'Derivado a una persona', rows: [['Motivo', 'Reclamo'], ['Pasa a', 'Persona del equipo']] } },
 };
 export const assistantView = type => messages[type];
 

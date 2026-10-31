@@ -28,3 +28,15 @@ test('assistant uses company sources and escalates complaints', () => {
   assert.equal(complaint.source, 'Persona del equipo');
   assert.match(complaint.answer, /persona/);
 });
+
+test('assistant reply shows the concrete result and the source for each kind', () => {
+  const price = assistantView('precio');
+  assert.equal(price.card.title, 'Taladro 650W');
+  assert.deepEqual(price.card.rows, [['Precio', '$ 89.900']]);
+  assert.equal(price.sourceNote, 'Usó tu info: Precios');
+  assert.deepEqual(assistantView('turno').card.rows, [['Día', 'Jueves'], ['Hora', '10 h']]);
+  assert.deepEqual(assistantView('pedido').card.rows, [['Producto', 'Yerba'], ['Cantidad', '10 bultos'], ['Entrega', 'Mañana']]);
+  const complaint = assistantView('reclamo');
+  assert.deepEqual(complaint.card.rows, [['Motivo', 'Reclamo'], ['Pasa a', 'Persona del equipo']]);
+  assert.equal(complaint.sourceNote, 'Lo deriva a: Persona del equipo');
+});
