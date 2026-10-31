@@ -1,15 +1,21 @@
 import { realpathSync } from 'node:fs';
-import { basename, dirname, isAbsolute, relative } from 'node:path';
+import { basename, dirname, isAbsolute, join, relative, sep } from 'node:path';
 
-// Real path of a folder that may not exist yet: resolve the nearest existing parent.
-// Symlinks matter: on macOS /var is /private/var, and comparing the two spellings once let a parent through.
+// Real on-disk path of a folder that may not exist yet: resolve the nearest existing parent.
+// .native returns the disk's own spelling, so symlinks (macOS /var -> /private/var) and
+// case variants on case-insensitive disks (REPO vs repo) collapse to one path.
 const real = path => {
-  try { return realpathSync(path); }
-  catch { return dirname(path) === path ? path : `${real(dirname(path))}/${basename(path)}`; }
+  try { return realpathSync.native(path); }
+  catch { return dirname(path) === path ? path : join(real(dirname(path)), basename(path)); }
 };
 
-// True when wiping `out` would delete the repository: it is the repository or one of its parents.
+// Compare by segments: a folder named "..foo" is not a parent reference.
+const outside = rel => rel.split(sep)[0] === '..' || isAbsolute(rel);
+
+// The build wipes its output folder, so only <repo>/_site or a folder outside the repository is safe.
 export function unsafeOut(out, root) {
-  const fromOut = relative(real(out), real(root));
-  return fromOut === '' || (!fromOut.startsWith('..') && !isAbsolute(fromOut));
+  const o = real(out), r = real(root);
+  const rel = relative(r, o);
+  if (rel === '_site') return false;
+  return !outside(rel) || !outside(relative(o, r)) || rel === '';
 }
