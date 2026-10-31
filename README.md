@@ -16,4 +16,12 @@ La portada se genera desde `src/landing.template.html` y los tres módulos en `s
 
 ## Antes de publicarla
 
-Los enlaces «Hablemos» llevan a `hablemos.html`, con un formulario de tres pasos inspirado en el artboard. Podés recorrerlo y validar los campos, pero **el envío todavía no está habilitado**: los datos no se guardan ni se transmiten. No hay dirección de correo ni proveedor de entrega confirmados. Confirmar ambos e integrar un endpoint antes de habilitar el envío o prometer una respuesta. Las identidades/fotos del equipo tampoco están confirmadas: las tarjetas de «Quiénes somos» van sin foto; para sumar una, seguí el comentario HTML sobre `.team-wrap` (clase `has-photo` + `<figure class="portrait">`). Las imágenes del puente y el taller están copiadas desde `design/puente-nea-landing/assets/` a `assets/` para que la web no dependa del directorio de diseño.
+El sitio se publica en GitHub Pages: https://tanoluchi.github.io/puente_nea/ (lo usan `canonical`, `og:url` y `sitemap.xml`).
+
+Los enlaces «Hablemos» llevan a `hablemos.html`, un formulario de tres pasos. Los destinos de contacto están en `src/contact-message.mjs`:
+
+- `email`: holapuentenea@gmail.com.
+- `whatsapp`: **número de ejemplo** (+54 9 379 000-0000). Cambialo antes de publicar, en ese archivo y en `hablemos.html`; la home lo toma de ahí al correr `node scripts/build-landing.mjs`.
+- `endpoint`: URL del backend propio. Vacío, el último paso abre el correo del visitante con la consulta armada. Con una URL, el formulario hace `POST` en JSON con `name`, `business`, `channel`, `contact`, `topics`, `problem` y `website`; el backend debe descartar los envíos con `website` completo (es una trampa para bots) y permitir el origen `https://tanoluchi.github.io` (CORS).
+
+La política de privacidad está en `privacidad.html`; conviene que la revise alguien con formación legal. Las identidades/fotos del equipo tampoco están confirmadas: las tarjetas de «Quiénes somos» van sin foto; para sumar una, seguí el comentario HTML sobre `.team-wrap` (clase `has-photo` + `<figure class="portrait">`). Las imágenes del puente y el taller están copiadas desde `design/puente-nea-landing/assets/` a `assets/` para que la web no dependa del directorio de diseño.
