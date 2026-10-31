@@ -8,10 +8,10 @@ test('landing keeps every major editorial section and real local artwork', () =>
   for (const id of ['contenido', 'top', 'problemas', 'que-hacemos', 'como-trabajamos', 'quienes-somos', 'preguntas', 'hablemos']) {
     assert.match(html, new RegExp(`id="${id}"`));
   }
-  for (const image of ['hero-puente-v2.jpg', 'footer-taller.jpg']) {
-    assert.match(html, new RegExp(`assets/${image}`));
-    assert.ok(existsSync(new URL(`../assets/${image}`, import.meta.url)));
-  }
+  assert.match(html, /assets\/footer-taller\.jpg/);
+  // the hero bridge is drawn as dots from the original illustration
+  assert.match(readFileSync(new URL('../src/hero-dots.mjs', import.meta.url), 'utf8'), /assets\/hero-puente-v2\.jpg/);
+  for (const image of ['hero-puente-v2.jpg', 'footer-taller.jpg']) assert.ok(existsSync(new URL(`../assets/${image}`, import.meta.url)));
   assert.match(html, /Software a medida, automatización e/);
   assert.match(html, /<script type="module" src="\.\/src\/landing\.mjs"><\/script>/);
 });
@@ -147,7 +147,7 @@ test('carousel behaviour lives in src/carousel.mjs, is wired from landing.mjs an
   assert.doesNotMatch(js, /setInterval|setTimeout/);
   const styles = readFileSync(new URL('../styles/landing.css', import.meta.url), 'utf8');
   assert.match(styles, /\.svc-track \{[^}]*scroll-snap-type: x mandatory/);
-  assert.match(styles, /:root, \.figure, \.hero-stage, \.svc-card/);
+  assert.match(styles, /:root, \.figure, \.svc-card/);
 });
 
 test('each service card shows its real screenshot with dimensions and a description', () => {
@@ -202,4 +202,18 @@ test('the home describes itself to search engines and link previews', () => {
 test('the contact page never implies the business name is required', () => {
   const form = readFileSync(new URL('../hablemos.html', import.meta.url), 'utf8');
   assert.doesNotMatch(form, /Nombre, negocio/);
+});
+
+test('the hero bridge is a dot matrix behind the copy, without the old panels and hotspots', () => {
+  const hero = html.match(/<header class="hero"[\s\S]*?<\/header>/)?.[0] ?? '';
+  assert.match(hero, /<canvas class="hero-dots" role="img" aria-label="[^"]*puente[^"]*"/i);
+  assert.ok(hero.indexOf('hero-copy') < hero.indexOf('hero-dots') || /hero-scene/.test(hero));
+  assert.doesNotMatch(hero, /class="spot"|class="legend"|class="overlay"|<img/);
+  const js = readFileSync(new URL('../src/landing.mjs', import.meta.url), 'utf8');
+  assert.match(js, /import \{ initHeroDots \} from "\.\/hero-dots\.mjs"/);
+  assert.doesNotMatch(js, /\.spot button/);
+  const dots = readFileSync(new URL('../src/hero-dots.mjs', import.meta.url), 'utf8');
+  assert.match(dots, /prefers-reduced-motion/);
+  assert.match(dots, /IntersectionObserver/);
+  assert.doesNotMatch(css('landing.css'), /\.spot|\.legend|\.hero-stage/);
 });

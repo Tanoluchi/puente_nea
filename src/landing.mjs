@@ -1,6 +1,7 @@
 import { initSoftware } from "./figures/software.mjs";
 import { initAuto } from "./figures/auto.mjs";
 import { initAi } from "./figures/ai.mjs";
+import { initHeroDots } from "./hero-dots.mjs";
 import { initCarousel } from "./carousel.mjs";
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -46,12 +47,11 @@ import { initCarousel } from "./carousel.mjs";
     else io.observe(el);
   });
 
-  // Hotspots: tap toggles on touch
-  document.querySelectorAll('.spot button').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
 
 
   initSoftware();
   initAuto();
   initAi();
+  initHeroDots();
   initCarousel();
 })();

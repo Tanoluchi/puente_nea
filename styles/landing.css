@@ -1,5 +1,5 @@
-  /* Illustrations (.figure, .hero-stage, .svc-card, .svc-arrow) keep the light palette in dark mode, like the photos */
-  :root, .figure, .hero-stage, .svc-card, .svc-arrow {
+  /* Illustrations (.figure, .svc-card, .svc-arrow) keep the light palette in dark mode, like the photos */
+  :root, .figure, .svc-card, .svc-arrow {
     color-scheme: light;
     --cream: #FCF8EF;
     --paper: #F5EDDE;
@@ -35,8 +35,6 @@
       --river-tint: #18303A;
       --iso-pylon: #8FB6C8;
   }
-  /* the light hero art cannot sit under light headline text */
-  [data-theme="dark"] .hero .hero-stage { margin-top: 32px; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
@@ -86,25 +84,17 @@
   .theme-toggle { flex: none; }
 
   /* Hero */
-  .hero { position: relative; padding-top: 72px; overflow: hidden; }
-  .hero-copy { position: relative; z-index: 2; display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: end; }
-  .hero h1 { font-size: clamp(44px, 6vw, 84px); line-height: .98; }
+  .hero { position: relative; padding-top: clamp(56px, 8vw, 96px); overflow: hidden; }
+  .hero-copy { position: relative; z-index: 2; max-width: 880px; text-align: center; }
+  .hero h1 { margin-top: 16px; font-size: clamp(40px, 6vw, 80px); line-height: 1; text-wrap: balance; }
   .hero h1 em { color: var(--terra-ink); }
-  .hero .lead { margin: 0 0 24px; }
+  .hero .lead { margin: 24px auto 32px; }
   .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-  .hero-stage { position: relative; margin-top: -40px; }
-  .hero-stage img { display: block; width: 100%; height: auto; }
-  .hero-stage svg.overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .spot { position: absolute; transform: translate(-50%, -50%); z-index: 3; }
-  .spot button { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--terra); background: var(--cream); color: var(--terra-ink); font: 600 18px/1 var(--sans); cursor: pointer; position: relative; box-shadow: 0 4px 12px rgba(30,42,47,.16); transition: background-color .2s var(--ease), color .2s var(--ease); }
-  .spot button:hover, .spot.open button { background: var(--terra-ink); border-color: var(--terra-ink); color: var(--cream); }
-  /* 44px touch target around the 36px visual dot */
-  .spot button::before { content: ""; position: absolute; inset: -4px; border-radius: 50%; }
-  .spot .tip { position: absolute; left: 50%; top: calc(100% + 12px); transform: translate(-50%, 6px); width: 240px; background: var(--ink); color: var(--cream); padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.45; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease), transform .2s var(--ease); }
-  .spot .tip strong { display: block; font-size: 15px; margin-bottom: 2px; }
-  .spot:hover .tip, .spot:focus-within .tip, .spot.open .tip { opacity: 1; transform: translate(-50%, 0); }
-  .legend { position: absolute; left: 24px; bottom: 24px; z-index: 3; display: flex; gap: 8px; flex-wrap: wrap; }
-  .legend span { background: color-mix(in srgb, var(--cream) 92%, transparent); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font: 600 12px/1 var(--mono); color: var(--ink-2); }
+  .hero-copy .hero-ctas { justify-content: center; }
+  /* The dotted bridge rises behind the copy (src/hero-dots.mjs); without JS there is no scene and the copy stands alone */
+  .hero-scene { display: none; position: relative; z-index: 1; aspect-ratio: 3 / 1; margin-top: calc(-1 * clamp(96px, 13vw, 200px)); }
+  .js .hero-scene { display: block; }
+  .hero-dots { display: block; width: 100%; height: 100%; }
 
   /* Pains band */
   .pains-band { display: flex; align-items: flex-start; gap: 16px; background: var(--paper); border-block: 1px solid var(--line); padding: 20px max(24px, calc((100vw - 1200px) / 2)); }
@@ -300,9 +290,8 @@
     .menu-toggle { display: grid; }
     .nav.open ul { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; padding: 8px 24px 16px; background: var(--cream); border-bottom: 1px solid var(--line); font-size: 17px; }
     .nav.open ul a { display: block; padding: 12px 0; color: var(--ink); }
-    /* stacked hero copy is taller, so the art no longer tucks under it */
-    .hero .hero-stage { margin-top: 32px; }
-    .hero-copy, .sec-head, .service, .faq-grid { grid-template-columns: 1fr; }
+    .hero-scene { aspect-ratio: 2 / 1; margin-top: -64px; }
+    .sec-head, .service, .faq-grid { grid-template-columns: 1fr; }
     .pains-band .tag { display: none; }
     .process-banner { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
     .service:nth-child(even) .figure { order: 0; }
@@ -313,12 +302,9 @@
     .team { grid-template-columns: 1fr; gap: 16px; }
     .member { border-radius: 20px; border-bottom: 1px solid rgba(255,255,255,.16); }
     .sun { width: 44px; height: 44px; }
-    .legend { display: none; }
-    /* The last tooltip opens leftwards so it stays inside the hero */
-    .hero-stage .spot:nth-last-child(2) .tip, .hero-stage .spot:nth-last-child(2):is(:hover, :focus-within, .open) .tip { left: auto; right: -8px; transform: none; }
   }
   @media (max-width: 640px) {
-    .spot { display: none; }
+    .hero-scene { aspect-ratio: 5 / 4; margin-top: -32px; }
     .svc-head { text-align: left; }
     .svc-head .lead { margin-inline: 0; font-size: 17px; }
     .svc h2 { font-size: 34px; }
