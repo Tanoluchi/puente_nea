@@ -11,10 +11,10 @@ S5. "Accesibilidad: alt, aria-labels, contraste bueno." Check: audit reports no 
 S6. "Estados: empty, error, success, loading. No solo ideal." Check: form keeps field errors, status notice and honest "sending disabled" state.
 
 ## Tasks
-T1 [S3,S4] route=parent status=done commit=see L6: hablemos on the landing tokens and components; remove `styles/site.css`.
-T2 [S5] route=parent status=done commit=see L6: white-on-terra figure chips (3.93:1) to AA.
-T3 [S4,S5] route=parent status=done commit=see L6: automatic dark mode via tokens; hard-coded surface/text colors to tokens.
-T4 [S1-S6] route=parent status=done commit=see L6: tests, README/AGENTS.md, audit at 3 widths × 2 schemes.
+T1 [S3,S4] route=parent status=done commit=40cb215: hablemos on the landing tokens and components; remove `styles/site.css`.
+T2 [S5] route=parent status=done commit=40cb215: white-on-terra figure chips (3.93:1) to AA.
+T3 [S4,S5] route=parent status=done commit=40cb215: automatic dark mode via tokens; hard-coded surface/text colors to tokens.
+T4 [S1-S6] route=parent status=done commit=40cb215: tests, README/AGENTS.md, audit at 3 widths × 2 schemes.
 
 ## Log
 L1 (2026-10-31) User: "Aplica las reglas en el proyecto" (rules as in AGENTS.md: responsive 375/768/1280, hierarchy, tokens, consistency + dark mode, accessibility, states).
@@ -22,3 +22,4 @@ L2: Audit (master @216ca2d): no overflow, no missing alt/names/labels on both pa
 L3 User chose: "Dark mode automático (recomendado)" — follow prefers-color-scheme, no toggle, dark palette derived from current tokens.
 L4: T1 RED was the base itself (hablemos linked styles/site.css); T2 RED `figures/auto.css: { background: var(--terra); color: #fff; }` (test also caught hidden `.pa-check-flag`); T3 RED `landing.css needs a prefers-color-scheme: dark :root block`. All GREEN: node tests 9/9.
 L5: Audit (.checks/audit.js) on index.html and hablemos.html at 375/768/1280, light and dark: scrollWidth = viewport, 0 missing alt/names/labels, 0 contrast failures. Dark-mode fixes found by audit: process-banner button text and pains tag. Hero headline overlapped the light hero art in dark, so the dark block removes the -40px overlap. S2 copy unchanged by design (canvas lock). S6 form states unchanged: field errors, aria-live step count, role=status notice.
+L6: Committed 40cb215 on feat/ui-rules (not pushed).
